@@ -1,6 +1,6 @@
 from django.db import models
 #from django.contrib.auth.models import User as AuthUser
-
+from users.models import CustomUser
 # Create your models here.
 
 # Need to change User so that it either extends AuthUser,
@@ -20,24 +20,24 @@ from django.db import models
 # "last_name" varchar(150) NOT NULL);
 
 # Need username + college to be unique!!!!
-class User(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    username = models.CharField(max_length=200)
-    firstName = models.CharField(max_length=200)
-    lastName = models.CharField(max_length=200)
-    college = models.CharField(default='humboldt.edu', max_length=200)
-    gender = models.CharField(max_length=1)
-    password = models.CharField(max_length=100)
-    isVerified = models.BooleanField(default=False)
-    verificationCode = models.CharField(max_length=200)
-    verificationDate = models.DateTimeField('date verified')
-    hasAcceptedTOS = models.BooleanField(default=False)
-    creationDate = models.DateTimeField('date created')
-    isAdminUser = models.BooleanField(default=False)
-    isActive = models.BooleanField(default=False)
-    
-    def __str__(self):
-        return self.username
+# class User(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     username = models.CharField(max_length=200)
+#     firstName = models.CharField(max_length=200)
+#     lastName = models.CharField(max_length=200)
+#     college = models.CharField(default='humboldt.edu', max_length=200)
+#     gender = models.CharField(max_length=1)
+#     password = models.CharField(max_length=100)
+#     isVerified = models.BooleanField(default=False)
+#     verificationCode = models.CharField(max_length=200)
+#     verificationDate = models.DateTimeField('date verified')
+#     hasAcceptedTOS = models.BooleanField(default=False)
+#     creationDate = models.DateTimeField('date created')
+#     isAdminUser = models.BooleanField(default=False)
+#     isActive = models.BooleanField(default=False)
+#     
+#     def __str__(self):
+#         return self.username
 
 #class UserProfile(models.Model):
 #    user_id = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
@@ -89,7 +89,7 @@ class Course(models.Model):
     
 class StudyGroup(models.Model):
     id = models.BigAutoField(primary_key=True)
-    creatorUserId = models.ForeignKey(User, on_delete=models.CASCADE)
+    creatorUserId = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     isActive = models.BooleanField(default=True)
     
@@ -97,16 +97,16 @@ class StudyGroup(models.Model):
         return '{}, {}, {}'.format(self.id, self.creatorUserId, self.course)
     
 class BlockList(models.Model):
-    userId = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blocker')
-    blockedUserId = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blockee')
+    userId = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='blocker')
+    blockedUserId = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='blockee')
 
 class StudyGroupUser(models.Model):
-    userId = models.ForeignKey(User, on_delete=models.CASCADE)
+    userId = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     studyGroupId = models.ForeignKey(StudyGroup, on_delete=models.CASCADE)
     
 class Message(models.Model):
     id = models.BigAutoField(primary_key=True)
-    userId = models.ForeignKey(User, on_delete=models.CASCADE)
+    userId = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     date = models.DateTimeField()
     studyGroupId = models.ForeignKey(StudyGroup, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
@@ -134,7 +134,7 @@ class StudyGroupFilter(models.Model):
 
 class SystemLog(models.Model):
     id = models.BigAutoField(primary_key=True)
-    userId = models.ForeignKey(User, on_delete=models.CASCADE)
+    userId = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     date = models.DateTimeField()
     service = models.CharField(max_length=200)
     data = models.CharField(max_length=2000)

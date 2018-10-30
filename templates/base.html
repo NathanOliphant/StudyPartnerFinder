@@ -11,7 +11,14 @@
 </script --> 
 </head>
 <body>
-<div><a href=''>My Profile</a></div>
+<div>
+    {% if user.is_authenticated %}
+  <p>Hi {{ user.username }}! . . .<a href="{% url 'logout' %}">logout</a></p>
+{% else %}
+  <p>You are not logged in . . . 
+  <a href="{% url 'login' %}">login</a> | <a href="{% url 'signup' %}">signup</a>
+  </p>
+{% endif %}</div>
   <main>
     {% block content %}
     {% endblock %}
