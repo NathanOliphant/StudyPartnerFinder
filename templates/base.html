@@ -10,7 +10,7 @@
     </script> 
 </head>
 <body>
-    <div id='header'>
+    <div id='header' class='header'>
         <div class="logo"><img src="{% static "images/SPF-Logo.jpg" %}" width="150" height="75"  alt="Study Partner Finder" /></div>
         <div class="dropdown">
                 <button class="dropbtn">Subjects</button>
@@ -20,13 +20,9 @@
                     <a href="#">Zoology</a>
                 </div>
         </div>
-        |
-        Courses
-        |
-        Search
-        |
-        About
-        |
+        <div>Courses</div>
+        <div>Search</div>
+        <div>About</div>
         {% if user.is_authenticated %}
            <div class="dropdown">
                 <button class="dropbtn">{{ user.username }} &#9662;</button>
@@ -37,7 +33,7 @@
                 </div>
             </div>
         {% else %}
-            You are not logged in . . . <a class="header" href="{% url 'login' %}">login</a> | <a href="{% url 'signup' %}">signup</a>
+           <div>You are not logged in . . . <a class="header" href="{% url 'login' %}">login</a> | <a href="{% url 'signup' %}">signup</a></div>
         {% endif %}
     </div>
     <main>
