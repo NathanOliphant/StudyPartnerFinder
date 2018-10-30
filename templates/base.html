@@ -3,25 +3,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>{% block title %}Django Auth Tutorial{% endblock %}</title>
-  <script type="text/javascript" src="{{ STATIC_URL }}/static/static_jquery/js/jquery.js">
-  </script>
-  <!-- script type="text/javascript" src="{{ STATIC_URL }}/js/jquery-3.3.1.js">
-</script --> 
+    <meta charset="utf-8">
+    <title>{% block title %}Django Auth Tutorial{% endblock %}</title>
+    <link rel="stylesheet" href="{% static "css/spf.css" %}">
+    <script type="text/javascript" src="{{ STATIC_URL }}/static/static_jquery/js/jquery.js">
+    </script> 
 </head>
 <body>
-<div>
-    {% if user.is_authenticated %}
-  <p>Hi {{ user.username }}! . . .<a href="{% url 'logout' %}">logout</a></p>
-{% else %}
-  <p>You are not logged in . . . 
-  <a href="{% url 'login' %}">login</a> | <a href="{% url 'signup' %}">signup</a>
-  </p>
-{% endif %}</div>
-  <main>
-    {% block content %}
-    {% endblock %}
-  </main>
+    <div id='header'>
+        <div class="logo"><img src="{% static "images/SPF-Logo.jpg" %}" width="150" height="75"  alt="Study Partner Finder" /></div>
+        <div class="dropdown">
+                <button class="dropbtn">Subjects</button>
+                <div class="dropdown-content">
+                    <a href="#">Aardvarkology</a>
+                    <a href="#">Some More</a>
+                    <a href="#">Zoology</a>
+                </div>
+        </div>
+        |
+        Courses
+        |
+        Search
+        |
+        About
+        |
+        {% if user.is_authenticated %}
+           <div class="dropdown">
+                <button class="dropbtn">{{ user.username }} &#9662;</button>
+                <div class="dropdown-content">
+                    <a href="#">My Profile</a>
+                    <a href="#">My Study Groups</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+        {% else %}
+            You are not logged in . . . <a class="header" href="{% url 'login' %}">login</a> | <a href="{% url 'signup' %}">signup</a>
+        {% endif %}
+    </div>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
 </body>
 </html>
