@@ -9,6 +9,14 @@ p {
     font-family:  sans-serif;
 }
 
+#main {
+	width: 100%;
+    display:flex;
+    /*align-items: center;  Vertical center alignment */
+    justify-content: center;
+	
+}
+
 #header {
 	border:  2px solid green;
 	background-color:  #9fe37f;
@@ -58,6 +66,13 @@ p {
 	
 }
 
+.header a {
+	color:  white;
+	text-decoration: none;
+}
+
+a:hover {text-decoration: underline; }
+
 
 .box1,
 .box2,
@@ -70,7 +85,7 @@ p {
 }
 
 .box3 {
-  width: 250px;
+  width: 300px;
  vertical-align: middle;
   display: inline-block;
   *display: inline;
@@ -85,7 +100,7 @@ p {
 */
 #search-form_3 {
 background: #e1e1e1; /* Fallback color for non-css3 browsers */
-width: 250px;
+width: 300px;
 margin: 5px auto;
 
 /* Gradients */
@@ -116,7 +131,7 @@ border-right: 1px solid rgba(255,255,255,.8);
 font-size: 16px;
 margin: 4px;
 padding: 5px;
-width: 135px;
+width: 185px;
 
 /* Rounded Corners */
 border-radius: 17px;

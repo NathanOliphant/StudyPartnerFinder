@@ -4,9 +4,11 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+<div id="main">
 {% if user.is_authenticated %}
-  <p>Would show landing here</p>
+  <p>THINGS!!!!</p>
 {% else %}
   <p>Would show login or default for non-logged in users here</p>
 {% endif %}
+</div>
 {% endblock %}
