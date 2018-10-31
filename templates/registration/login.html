@@ -4,10 +4,63 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
+<div id="login" >
+    <div style="width: 100%; margin: 0 auto; text-align: center">
+    <h2>Study Buddy</h2>
+    <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p></p>
+    <input type="button" class="button2" value="Create Account" onClick="javascript:document.location='{% url 'signup' %}'" />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="button" class="button2" value="Recover Account" onClick="javascript:document.location='{% url 'password_reset' %}'" />
+    <p></p>
+    <button id="loginButton" type="submit" class="button">Login</button>
+    </form>
+    </div>
+</div>
+<script name="JavaScript" type="text/javascript">
+$(document).ready(function() {
+	$('#loginButton').focus();
+    var watermark_u = 'Username';
+
+    //init, set watermark text and class
+    $('#id_username').val(watermark_u).addClass('watermark');
+
+    //if blur and no value inside, set watermark text and class again.
+    $('#id_username').blur(function(){
+        if ($(this).val().length == 0){
+            $(this).val(watermark_u).addClass('watermark');
+        }
+    });
+
+    //if focus and text is watermrk, set it to empty and remove the watermark class
+    $('#id_username').focus(function(){
+        if ($(this).val() == watermark_u){
+            $(this).val('').removeClass('watermark');
+        }
+    });
+    
+    var watermark_p = 'Password';
+
+    //init, set watermark text and class
+    $('#id_password').attr('type', 'text');
+    $('#id_password').val(watermark_p).addClass('watermark');
+    //if blur and no value inside, set watermark text and class again.
+    $('#id_password').blur(function(){
+        if ($(this).val().length == 0){
+        	$(this).attr('type', 'text');
+            $(this).val(watermark_p).addClass('watermark');
+        }
+    });
+
+    //if focus and text is watermrk, set it to empty and remove the watermark class
+    $('#id_password').focus(function(){
+        if ($(this).val() == watermark_p){
+            $(this).val('').removeClass('watermark');
+            $(this).attr('type', 'password');
+        }
+    });
+});
+</script>
 {% endblock %}

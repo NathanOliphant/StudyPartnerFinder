@@ -19,7 +19,7 @@ from django.views.generic.base import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 
-urlpatterns = [
+urlpatterns = [    
     path('study/', include('study.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')), # new

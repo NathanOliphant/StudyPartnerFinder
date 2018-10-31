@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from django.conf.global_settings import EMAIL_BACKEND
 
 
 ### Adding this in, because I THINK we need it.  May want to delete, though.
@@ -50,6 +51,19 @@ INSTALLED_APPS = [
 ]
 
 
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Host for sending e-mail.
+EMAIL_HOST = 'smtp.mailtrap.io'
+
+# Port for sending e-mail.
+EMAIL_PORT = 465
+
+# Optional SMTP authentication information for EMAIL_HOST.
+EMAIL_HOST_USER = '2d2166773bc5ab'
+EMAIL_HOST_PASSWORD = 'e1e694ae560b31'
+EMAIL_USE_TLS = False
 
 
 # Uncomment this, and above ref to UsersConfig, once we figure out how to extend user

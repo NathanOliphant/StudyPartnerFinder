@@ -14,8 +14,37 @@ p {
     display:flex;
     /*align-items: center;  Vertical center alignment */
     justify-content: center;
-	
+	text-align: justify;
+	color: #ffffff;
 }
+
+#main a {
+	color: #ffffff;
+}
+
+
+.button2 {
+    background-color: #ffffff;
+    border: 1px solid green;
+    color: green;
+    padding: 5px 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button2:hover {
+    background-color: green;
+    border: 1px solid white;
+    color: white;
+}
+
+
 
 #header {
 	border:  2px solid green;
@@ -92,7 +121,92 @@ a:hover {text-decoration: underline; }
   zoom: 1
 }
 
+.button {
+    background-color: #ffffff;
+    border: 1px solid green;
+    color: green;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
 
+.button:hover {
+    background-color: green;
+    border: 1px solid white;
+    color: white;
+}
+
+#login 
+{
+	position: relative;
+	align: center;
+	background-color: #9fe37f;
+	/* Rounded Corners */
+    border-radius: 17px;
+    -webkit-border-radius: 17px;
+    -moz-border-radius: 17px;
+    margin-top: 20px;
+    padding-top: 1px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 375px;
+    text-align: justify;
+    -ms-text-justify: distribute-all-lines;
+    text-justify: distribute-all-lines;
+    vertical-align: middle;
+}
+
+#login label{
+   display: none;
+}
+
+.greenBox
+{
+	position: relative;
+    align: center;
+    background-color: #9fe37f;
+    /* Rounded Corners */
+    border-radius: 17px;
+    -webkit-border-radius: 17px;
+    -moz-border-radius: 17px;
+    margin-top: 20px;
+    padding-top: 1px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    /*width: 375px;*/
+    text-align: justify;
+    -ms-text-justify: distribute-all-lines;
+    text-justify: distribute-all-lines;
+    vertical-align: middle;
+}
+
+#id_username {
+	  width: 300px;
+	  color: green;
+	::-webkit-input-placeholder  { color:green; } /* Webkit */
+    :-moz-placeholder { color:green; }  /* Firefox <= 18 */
+    ::-moz-placeholder { color:green; }  /* Firefox >= 19 */
+    :-ms-input-placeholder {  color:green; } /* Internet Explorer */
+    
+}
+
+#id_password {
+	width: 300px;
+	color: green;
+    ::-webkit-input-placeholder  { color:green } /* Webkit */
+    :-moz-placeholder { color:green; }  /* Firefox <= 18 */
+    ::-moz-placeholder { color:green; }  /* Firefox >= 19 */
+    :-ms-input-placeholder {  color:green; } /* Internet Explorer */
+    
+}
 
 /* search box*/
 /*

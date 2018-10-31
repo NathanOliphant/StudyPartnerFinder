@@ -13,13 +13,12 @@
     <div id='header' class='header'>
         <div class="box1"><div class="logo"><img src="{% static "images/SPF-Logo.jpg" %}" width="150" height="75"  alt="Study Partner Finder" /></div></div>
         
-        <div class="box3">
-	        <!-- search form 3 -->
+       <!--  <div class="box3">
 			<form id="search-form_3">
 			<input type="text" class="search_3"/>
 			<input type="submit" class="submit_3" value="Search" />
              </form>
-        </div>
+        </div> -->
         
         <div class="box1">
         {% if user.is_authenticated %}
@@ -38,9 +37,11 @@
         
         <span class="stretch"></span>
     </div>
+    <div id="main">
     <main>
         {% block content %}
         {% endblock %}
     </main>
+    </div>
 </body>
 </html>
