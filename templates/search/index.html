@@ -1,0 +1,98 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Course Search{% endblock %}
+
+{% block content %}
+<div class="greenBox">
+<h1>Study Buddy Search</h1>
+<form id="searchForm" name="searchForm">
+<div>Semester:
+<select id="studySemester">
+    <option value="Fall">Fall</option>
+    <option value="Spring" selected="selected">Spring</option>
+    <option value="Summer">Summer</option>
+</select></div>
+<div>Semester:
+<select id="studyYear">
+    <option value="2018">2018</option>
+    <option value="2019" selected="selected">2019</option>
+</select></div>
+{% if subject_list %}
+    <select id="studySubjects" class="target">
+     <option value="">Select a subject</option>
+    {% for subject in subject_list %}
+        <option value="courses_{{ subject.id }}" id="{{ subject.id }}">{{ subject.name }}</option>
+    {% endfor %}
+    </select>
+{% else %}
+    <p>No subjects are available.</p>
+{% endif %}
+<div id="classesDiv" style="visibility: hidden;">
+<select id="studyCourses"><option>Select a course</option></select>
+</div>
+</form>
+</div>
+
+<script language="JavaScript" type="text/javascript">
+
+function course(id, name, instructor, semester, year, subject, cnn)
+{
+    this.id = id;
+    this.name = name;
+    this.instructor = instructor;
+    this.semester = semester;
+    this.year = year;
+    this.subjectId = subject;
+    this.cnn = cnn;
+}
+
+/*
+$('#mySelectBox option').each(function() {
+    if (this.selected)
+       alert('this option is selected');
+     else
+       alert('this is not');
+});*/
+{% for subject in subject_list %}
+let courses_{{ subject.id }} = [];
+{% endfor %}
+
+
+{% if course_list %}
+{% for course in course_list %}
+c = new course({{ course.id }}, '{{ course.className }}', '{{ course.instructor }}', '{{ course.semester }}', {{ course.year }}, {{ course.subject_id }}, {{ course.cNNumber }});
+courses_{{ course.subject_id }}.push(c);
+{% endfor %}
+//alert(c);
+{% endif %}
+//alert(courses_66[0].name);
+$(document).ready(function(){ 
+    if ($('#studySubjects :selected').val() != "")
+    {
+    	 classList = eval($('#studySubjects :selected').val());
+         // alert(classList[0].name);
+          var option = '';
+          for (var i=0;i<classList.length;i++){
+             option += '<option value="'+ classList[i].id + '">' + classList[i].name + '</option>';
+          }
+          $('#studyCourses').append(option);
+          $("#classesDiv").css("visibility", "visible");
+    	
+    }
+      $('#studySubjects').change(function(){
+    	  //alert(eval($('#studySubjects :selected').val())[0].name);
+    	  classList = eval($('#studySubjects :selected').val());
+    	 // alert(classList[0].name);
+          var option = '<option value="">Select a course</option>';
+          for (var i=0;i<classList.length;i++){
+             option += '<option value="'+ classList[i].id + '">' + classList[i].name + '</option>';
+          }
+          $('#studyCourses').empty();
+          $('#studyCourses').append(option);
+          $("#classesDiv").css("visibility", "visible");
+      });
+}); 
+</script>
+{% endblock %}
+

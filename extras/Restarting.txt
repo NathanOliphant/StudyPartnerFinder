@@ -1,12 +1,4 @@
-DATA:
-1. Delete contents of study_subject.
-2. Reset auto-incr:  UPDATE SQLITE_SEQUENCE SET SEQ = 0 WHERE NAME='study_course';
-3. Insert into study_subject from Subject List.
-4. Run python3 scraper.py
-5. Should we delete all migrations at the start of this and delete all tables -- start fresh?
-
-
-
+1. Drop data:
 drop table auth_group;
 drop table auth_group_permissions;
 drop table auth_permission;
@@ -27,3 +19,8 @@ drop table study_filter;
 drop table study_message;
 drop table study_studygroup;
 drop table study_studygroupfilter;
+
+2. python manage.py makemigrations
+3. python manage.py migrate
+4. python manage.py createsuperuser . . .
+
