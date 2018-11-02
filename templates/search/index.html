@@ -13,14 +13,13 @@
     <option value="Spring" selected="selected">Spring</option>
     <option value="Summer">Summer</option>
 </select></div>
-<div>Semester:
+<div>Year:
 <select id="studyYear">
     <option value="2018">2018</option>
     <option value="2019" selected="selected">2019</option>
 </select></div>
 {% if subject_list %}
     <select id="studySubjects" class="target">
-     <option value="">Select a subject</option>
     {% for subject in subject_list %}
         <option value="courses_{{ subject.id }}" id="{{ subject.id }}">{{ subject.name }}</option>
     {% endfor %}
@@ -28,9 +27,10 @@
 {% else %}
     <p>No subjects are available.</p>
 {% endif %}
-<div id="classesDiv" style="visibility: hidden;">
-<select id="studyCourses"><option>Select a course</option></select>
+<div id="classesDiv" style="visibility: visible;">
+<select id="studyCourses"></select>
 </div>
+<div id="courseCount"><span></span></div>
 </form>
 </div>
 
@@ -47,6 +47,8 @@ function course(id, name, instructor, semester, year, subject, cnn)
     this.cnn = cnn;
 }
 
+
+
 /*
 $('#mySelectBox option').each(function() {
     if (this.selected)
@@ -54,43 +56,52 @@ $('#mySelectBox option').each(function() {
      else
        alert('this is not');
 });*/
-{% for subject in subject_list %}
-let courses_{{ subject.id }} = [];
-{% endfor %}
-
+// 
+{% for subject in subject_list %}{% for year in year_list %}{% for s in semester_list %}
+let courses_{{ subject.id }}_{{ year.year }}_{{ s.semester }} = [];{% endfor %}{% endfor %}{% endfor %}
 
 {% if course_list %}
 {% for course in course_list %}
 c = new course({{ course.id }}, '{{ course.className }}', '{{ course.instructor }}', '{{ course.semester }}', {{ course.year }}, {{ course.subject_id }}, {{ course.cNNumber }});
-courses_{{ course.subject_id }}.push(c);
-{% endfor %}
-//alert(c);
+courses_{{ course.subject_id }}_{{ course.year }}_{{ course.semester }}.push(c);{% endfor %}
 {% endif %}
 //alert(courses_66[0].name);
 $(document).ready(function(){ 
+	
+	function updateCourses()
+	{
+	    myString = $('#studySubjects :selected').val() + '_' + $('#studyYear :selected').val() + '_' + $('#studySemester :selected').val();
+	    classList = eval(myString);
+	    var option = '<option value="">Select a course</option>';
+	    // Check for existence of classList, as may not be available for all semester/year options.
+	    if (typeof classList !== 'undefined') {
+	        for (var i=0;i<classList.length;i++){
+	            option += '<option value="'+ classList[i].id + '">' + classList[i].name + '</option>';
+	         }
+	    }
+	    else {
+	        option = '<option value="">No courses. Try another search.</option>';
+	    }
+	  $('#studyCourses').empty().append(option);
+	  $('#courseCount span').text('There are ' + classList.length + ' ' + $('#studySubjects :selected').text() + ' courses available for ' + $('#studySemester :selected').val()  + ' ' + $('#studyYear :selected').val() );
+
+	}
+	
     if ($('#studySubjects :selected').val() != "")
     {
-    	 classList = eval($('#studySubjects :selected').val());
-         // alert(classList[0].name);
-          var option = '';
-          for (var i=0;i<classList.length;i++){
-             option += '<option value="'+ classList[i].id + '">' + classList[i].name + '</option>';
-          }
-          $('#studyCourses').append(option);
-          $("#classesDiv").css("visibility", "visible");
-    	
+    	updateCourses();
     }
+    
+    $('#studyYear').change(function() {
+    	updateCourses();
+    });
+    
+    $('#studySemester').change(function() {
+    	updateCourses();
+    });
+    
       $('#studySubjects').change(function(){
-    	  //alert(eval($('#studySubjects :selected').val())[0].name);
-    	  classList = eval($('#studySubjects :selected').val());
-    	 // alert(classList[0].name);
-          var option = '<option value="">Select a course</option>';
-          for (var i=0;i<classList.length;i++){
-             option += '<option value="'+ classList[i].id + '">' + classList[i].name + '</option>';
-          }
-          $('#studyCourses').empty();
-          $('#studyCourses').append(option);
-          $("#classesDiv").css("visibility", "visible");
+    	  updateCourses();
       });
 }); 
 </script>

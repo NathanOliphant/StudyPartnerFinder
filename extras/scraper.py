@@ -62,10 +62,9 @@ def check_class_exists(subject_id, cn, subj, instructor, semester, year, conn):
 	cur = conn.cursor()
 	cur.execute(sql,(subject_id, cn, subj, instructor, semester, year))
 
-	rows = cur.fetchall()
-
+	countValue = cur.fetchone()[0]
 	ret = False
-	if rows[0] != '0':
+	if countValue > 0:
 		ret = True
 
 	return ret
@@ -151,17 +150,19 @@ def main():
 	#
 	semester = args.semester
 	year = args.year
+	
+	print("Semester: {} {}".format(semester, year))
 
 	# If semester or year not passed, do not run!!!
 	if semester is not None and year is not None:
 		# Make sure semester is in Spring, Summer, or Fall.
-		if semester.lower == 'spring':
+		if semester.lower() == 'spring':
 			semester = 'Spring'
-		if semester.lower == 'summer':
+		if semester.lower() == 'summer':
 			semester = 'Summer'
-		if semester.lower == 'fall':
+		if semester.lower() == 'fall':
 			semester = 'Fall'
-		if semester.lower in ('spring', 'summer', 'fall'):
+		if semester.lower() in ('spring', 'summer', 'fall'):
 			# create a database connection.
 			conn = create_connection(database)
 
