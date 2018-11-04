@@ -1,15 +1,22 @@
 <!-- templates/signup.html -->
 {% extends 'base.html' %}
 
-{% block title %}Sign Up{% endblock %}
+{% block title %}Create Account{% endblock %}
 
 {% block content %}
 <div class="greenBox">
-  <h2>Sign up</h2>
-  <form method="post">
+  <h2>Create Account</h2>
+  <form method="post" onsubmit="return updateUsername()">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Sign up</button>
+    <button type="submit">Submit</button>
   </form>
   </div>
+  <script language="JavaScript" type="text/javascript">
+  function updateUsername()
+  {
+	  $( "#id_username" ).val($( "#id_email" ).val().split('@')[0]);	  
+	  return true;
+  }
+  </script>
 {% endblock %}

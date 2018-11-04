@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'course.apps.CourseConfig',
     'study.apps.StudyConfig',
     'users.apps.UsersConfig', # new
     'django_static_jquery',
@@ -154,5 +155,5 @@ STATICFILES_DIRS = (
 )
 #LOGIN_REDIRECT_URL = '/'
 #LOGOUT_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/course/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'

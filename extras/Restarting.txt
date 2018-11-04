@@ -24,3 +24,6 @@ drop table study_studygroupfilter;
 3. python manage.py migrate
 4. python manage.py createsuperuser . . .
 
+Creating new app in project:
+python manage.py startapp <project name>
+

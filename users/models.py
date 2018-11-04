@@ -6,6 +6,7 @@ from django.db import models
 # Fields in AbstractUser:
 class CustomUser(AbstractUser):
     # add additional fields in here\
+    email = models.EmailField(('email address'), unique=True)
     college = models.CharField(default='humboldt.edu', max_length=200, null=True)
     MY_GENDER_CHOICES = (
         ('U', 'Undeclared'),

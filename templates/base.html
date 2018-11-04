@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}Django Auth Tutorial{% endblock %}</title>
+    <title>{% block title %}Study Buddy{% endblock %}</title>
     <link rel="stylesheet" href="{% static "css/spf.css" %}">
     <script type="text/javascript" src="{{ STATIC_URL }}/static/static_jquery/js/jquery.js">
     </script> 
@@ -25,8 +25,9 @@
            <div class="dropdown">
                 <button class="dropbtn">{{ user.username }} &#9662;</button>
                 <div class="dropdown-content">
-                    <a href="#">My Profile</a>
+                    <a href="/accounts/view/{{ user.id }}">My Profile</a>
                     <a href="#">My Study Groups</a>
+                    <a href="/course/">Courses</a>
                     <a href="{% url 'logout' %}">Logout</a>
                 </div>
             </div>

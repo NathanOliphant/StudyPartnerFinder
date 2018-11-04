@@ -1,0 +1,18 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Edit Account{% endblock %}
+
+{% block content %}
+<p>Edit Account Here</p>
+<div class="greenBox">
+  <h2>Edit Account</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+    <a href="/accounts/password_reset/">Update Password</a>
+  </form>
+  </div>
+{% endblock %}
+

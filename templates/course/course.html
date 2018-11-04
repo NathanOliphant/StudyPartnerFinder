@@ -1,0 +1,30 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Course Search{% endblock %}
+
+{% block content %}
+<div class="greenBox">
+<h1>Course Details</h1>
+{% if course_list %}
+{% for course in course_list %}
+<p>{{ course.className }}</p>
+<p>{{ course.subject }}</p>
+
+<p>After displaying course information, should list study groups and have Add study group link???</p>
+{% endfor %}
+{% endif %}
+</div>
+<div style="color: #000000;">
+Add new StudyGroup LINK HERE!@@
+</div>
+<div style="color: #000000;">
+<!-- Study Group Links? -->
+{% if studygroup_list %}
+{% for studygroup in studygroup_list %}
+<p>{{ studygroup.creatorUserId }}</p>
+{% endfor %}
+{% endif %}
+</div>
+{% endblock %}
+
