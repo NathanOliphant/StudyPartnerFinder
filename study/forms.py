@@ -83,19 +83,13 @@ class StudyGroupCreationForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(StudyGroupCreationForm, self).__init__(*args, **kwargs)
-        with open("hello_args.txt", "w") as f:
-            f.write('args == {}\n'.format(args))
-        with open("hello_kwargs.txt", "w") as f:
-            f.write('kwargs == {}\n'.format(kwargs))
+        #with open("hello_args.txt", "w") as f:
+        #    f.write('args == {}\n'.format(args))
         
-        with open("hello12345678910.txt", "w") as f:
-            f.write('farts == {}\n'.format(args[-1]))
-            
+        
         user_id = args[-1]['userid']
         course_id = args[-1]['courseid']
-        with open("hello12345678.txt", "w") as f:
-            f.write('user_id == {}\n'.format(user_id))
-            f.write('course_id == {}\n'.format(course_id))
+        
         
         
         #self.fields['creatorUserId'].queryset = CustomUser.objects.filter(pk = user_id)

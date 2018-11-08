@@ -77,12 +77,7 @@ def View(request, id=None):
         sg.members = other_members
         
         sg.owner = CustomUser.objects.filter(id = sg.studygroup.creatorUserId.id).get()
-        #with open("hello.txt", "w") as f:
-        #    f.write('{}'.format(sg.owner.email))
-        #for member in sg.members:
-        #    with open("hello_{}.txt".format(member.id), "w") as f:
-        #        f.write('{}'.format(member.email))
-    
+        
     # Let's add some order to our studygroups.  Should we try for our groups first, in 
     # which case we need something else, or just this?  
     # It might make sense to loop through on the template, showing our owned groups,
@@ -105,9 +100,7 @@ def View(request, id=None):
     #studygroups_member = StudyGroupUser.objects.filter(userId = request.user.id).select_related('studyGroupId')
     #memberships = list()
     
-    #with open("hello.txt", "w") as f:
-    #    f.write('{}'.format(z[0].id))
-    #z = studygroups_member.StudyGroup
+
     
     #for sg in studygroups_member:
         # Get list of 
@@ -115,12 +108,7 @@ def View(request, id=None):
         
     #studygroups_owned = StudyGroup.objects.filter(creatorUserId = request.user.id, isActive = True)
     #sm = studygroups_member.studyGroupId
-    #with open("hello.txt", "w") as f:
-     #    f.write('{}'.format(len(studygroups_member))) 
-    #    for s in sm: 
-            #f.write(s.CustomUser.id  ) 
-    #        f.write(s  ) 
-            #f.write(s.StudyGroup.course.className  ) 
+    
     #studygroups_joined = StudyGroupUser.objects.filter(userId = self.request.user.id).all()
         
     context = { 'user': request.user, 'studygroup_joined_list': my_studygroups }

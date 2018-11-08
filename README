@@ -12,3 +12,6 @@
 12. View StudyGroups
 13. View StudyGroup
 
+Adding static files:
+python manage.py collectstatic
+

@@ -13,15 +13,12 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 from django.conf.global_settings import EMAIL_BACKEND
 
-
-### Adding this in, because I THINK we need it.  May want to delete, though.
-#from django.contrib.auth import get_user_model
-#User = get_user_model()
-
+# ## Adding this in, because I THINK we need it.  May want to delete, though.
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -34,7 +31,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['no2.pythonanywhere.com', '127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,11 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'course.apps.CourseConfig',
     'study.apps.StudyConfig',
-    'users.apps.UsersConfig', # new
+    'users.apps.UsersConfig',  # new
     'django_static_jquery',
     'accounts.apps.AccountsConfig',
 ]
-
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -66,10 +61,9 @@ EMAIL_HOST_USER = '2d2166773bc5ab'
 EMAIL_HOST_PASSWORD = 'e1e694ae560b31'
 EMAIL_USE_TLS = False
 
-
 # Uncomment this, and above ref to UsersConfig, once we figure out how to extend user
 # properly.  May have to reinstall everything.  Save db files!!!!!
-AUTH_USER_MODEL = 'users.CustomUser' # new
+AUTH_USER_MODEL = 'users.CustomUser'  # new
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -101,7 +95,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'StudyPartnerFinder.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -130,7 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -144,16 +136,16 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
+# STATIC_ROOT = '/home/no2/StudyPartnerFinder/StudyPartnerFinder/static/'
 STATIC_ROOT = '/Users/nathan/Documents/workspace/StudyPartnerFinder/static/'
 STATIC_URL = '/static/'
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 STATICFILES_DIRS = (
   os.path.join(SITE_ROOT, 'static/'),
 )
-#LOGIN_REDIRECT_URL = '/'
-#LOGOUT_REDIRECT_URL = '/'
+# LOGIN_REDIRECT_URL = '/'
+# LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/course/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'

@@ -16,23 +16,15 @@ def add(request, pk=None):
     template = ''
     course = None
     c = pk
-    with open("hello.txt", "w") as f:
-        f.write('{}'.format(c)) 
-    with open("hello13.txt", "w") as f:
-        f.write('{}'.format(request.user.id)) 
+    
+    
     # Need to check if POST or GET
     # If POST, and have form data, use hidden id to created SG based on Course.
     # Otherwise, this should just load the form.
     if request.method == 'POST': # If the form has been submitted...
         # Get the course value first!!!
-        #with open("hello123.txt", "w") as f:
-        #    f.write('{}\n{}'.format(request.user.id, request.POST.get('course')))
-        #request.course_id = request.POST.get('course')
-        #with open("hello1234.txt", "w") as f:
-        #    for key in request.POST:
-        #        value = request.POST[key]
-        #        f.write('{} =={}\n'.format(key, value))
-        #    f.write('userid: {}'.format(request.user.id))
+        
+        
         myVals = {'userid': request.user.id, 'courseid': request.POST.get('course')}
         form = StudyGroupCreationForm(request.POST, myVals)#, course_id = request.POST.get('course'))#, my_user = request.user) # A form bound to the POST data
         
@@ -41,17 +33,10 @@ def add(request, pk=None):
             data = form.cleaned_data
             c = data['course']
             
-            #course = Course.objects.get(id=c)
-            #with open("hello5.txt", "w") as f:
-            #        f.write('{}'.format(c)) 
-            #data['course'] = course
             
-            #with open("hello2.txt", "w") as f:
-            #        f.write('{}'.format(c)) 
+           
             data['creatorUserId'] = CustomUser.objects.get(pk=request.user.id)
-            with open("hello_data.txt", "w") as f:
-                    f.write('{}'.format(data)) 
-                # Save this SG and return to course
+            
                 
             # List all of our form fields here.
             sg = StudyGroup.objects.create(
@@ -88,19 +73,10 @@ def add(request, pk=None):
                  
                 hoursSundayEnd= data['hoursSundayEnd'] if data['hoursSundayEnd'] is not None else 2359,  
                 onlineOnly= data['onlineOnly'] if data['onlineOnly'] is not None else False )
-            #p = StudyGroup(data)
-            #
-            #p = p.objects.get_or_create()
-            #with open("hello3.txt", "w") as f:
-            #        f.write('{}'.format(p)) 
             
         return redirect('/course/{}'.format(c.id))
     
     else:
-        with open("hello12.txt", "w") as f:
-            f.write('{}'.format(c)) 
-            f.write('{}'.format(request.user))
-            
         myVals = {'userid': request.user.id, 'courseid': c}
         form = StudyGroupCreationForm(myVals)
     # If ID passed, base course on id
@@ -125,9 +101,6 @@ def add(request, pk=None):
         
         context = { 'form': form , 'course': course}
         template = 'study/add.html'
-    
-        with open("hello6.txt", "w") as f:
-                    f.write('{}'.format(course.id))
     
         # Post should return us to the course?
     
