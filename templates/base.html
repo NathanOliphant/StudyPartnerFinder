@@ -23,7 +23,12 @@
         <div class="box1">
         {% if user.is_authenticated %}
            <div class="dropdown">
-                <button class="dropbtn">{{ user.username }} &#9662;</button>
+                <button class="dropbtn">
+                {% if user.first_name != "" %} 
+                    {{ user.first_name }} 
+                 {% else %}
+                    {{ user.username }}
+                 {% endif %} &#9662;</button>
                 <div class="dropdown-content">
                     <a href="/accounts/view/{{ user.id }}">My Profile</a>
                     <a href="#">My Study Groups</a>

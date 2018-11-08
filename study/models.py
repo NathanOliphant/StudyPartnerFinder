@@ -1,6 +1,7 @@
 from django.db import models
-#from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.models import User as AuthUser
 from users.models import CustomUser
+
 # Create your models here.
 
 # Need to change User so that it either extends AuthUser,
@@ -85,13 +86,61 @@ class Course(models.Model):
     isActive = models.BooleanField(default=True)
     
     def __str__(self):
-        return '{}, {} {}, {}, {}'.format(self.className, self.semester, self.year, self.instructor, self.cNNumber)
+        #return '{}, {} {}, {}, {}'.format(self.className, self.semester, self.year, self.instructor, self.cNNumber)
+        return '{}'.format(self.id)
     
+# When StudyGroup created, also insert a record into StudyGroupUser.
+# This will simplify gathering all StudyGroups for a user.
 class StudyGroup(models.Model):
     id = models.BigAutoField(primary_key=True)
+    postTitle = models.CharField(max_length=250, default='')
     creatorUserId = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     isActive = models.BooleanField(default=True)
+    #weekday = models.BooleanField(default=True)
+    #weekend = models.BooleanField(default=True)
+    maxMembers = models.IntegerField(default=1000)
+    MY_GENDER_CHOICES = (
+         ('U', 'Undeclared'),
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('N', 'Nonbinary')
+    )
+    genderSpecific = models.CharField(max_length=15, choices=MY_GENDER_CHOICES)
+    
+    MY_DAY_CHOICES = (
+         ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'), 
+        ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday')
+    )
+    daysAvailable = models.CharField(default='', max_length=255)
+    
+    #monday = models.BooleanField(default=True)
+    hoursMondayStart = models.IntegerField(default = 0)
+    hoursMondayEnd = models.IntegerField(default = 2359)
+    #tuesday = models.BooleanField(default=True)
+    hoursTuesdayStart = models.IntegerField(default = 0)
+    hoursTuesdayEnd = models.IntegerField(default = 2359)
+    #wednesday = models.BooleanField(default=True)
+    hoursWednesdayStart = models.IntegerField(default = 0)
+    hoursWednesdayEnd = models.IntegerField(default = 2359)
+    #thursday = models.BooleanField(default=True)
+    hoursThursdayStart = models.IntegerField(default = 0)
+    hoursThursdayEnd = models.IntegerField(default = 2359)
+    #friday = models.BooleanField(default=True)
+    hoursFridayStart = models.IntegerField(default = 0)
+    hoursFridayEnd = models.IntegerField(default = 2359)
+    #saturday = models.BooleanField(default=True)
+    hoursSaturdayStart = models.IntegerField(default = 0)
+    hoursSaturdayEnd = models.IntegerField(default = 2359)
+    #sunday = models.BooleanField(default=True)
+    hoursSundayStart = models.IntegerField(default = 0)
+    hoursSundayEnd = models.IntegerField(default = 2359)
+    onlineOnly = models.BooleanField(default = False)
     
     def __str__(self):
         return '{}, {}, {}'.format(self.id, self.creatorUserId, self.course)
@@ -103,6 +152,8 @@ class BlockList(models.Model):
 class StudyGroupUser(models.Model):
     userId = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     studyGroupId = models.ForeignKey(StudyGroup, on_delete=models.CASCADE)
+    def __str__(self):
+        return '{}: {}, {}'.format(self.id, self.userId, self.studyGroupId)
     
 class Message(models.Model):
     id = models.BigAutoField(primary_key=True)
