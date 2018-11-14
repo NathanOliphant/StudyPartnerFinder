@@ -20,8 +20,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [    
-    path('study/', include('study.urls')),
-   path('course/', include ('course.urls')),
+    path('studygroups/', include('studygroups.urls')),
+   path('courses/', include ('courses.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')), # new
     path('accounts/', include('django.contrib.auth.urls')),

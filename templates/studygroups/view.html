@@ -1,0 +1,61 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Studygroup{% endblock %}
+
+{% block content %}
+<div style="color: #000000;">
+<!-- Study Group Links? -->
+<p>Studygroup</p>
+{% if studygroup %}
+
+<p>ID: {{ studygroup.id }} {% if self_owned %} <a href="" style="color:#000000;">Edit</a> | <a href="" style="color:#000000;">Deactivate</a>{% endif %}</p>
+<p>Post Title:  {{ studygroup.post_title }}</p>
+<p>Subject: {{ studygroup.course.subject }}</p>
+<p>Class: {{ studygroup.course.class_name }}</p>
+<p>Instructor: {{ studygroup.course.instructor }}</p>
+<p>Section: {{ studygroup.course.cn_number }}</p>
+<p>Semester: {{ studygroup.course.semester }}</p>
+<p>Year: {{ studygroup.course.year }}</p>
+<p>Creator:  {{ studygroup.creator.username }} {% if self_owned %} ***{% endif %}</p>
+<p>Days Available:  <span id='days_available_{{ sg.studygroup.id }}'>{{ studygroup.days_available }}</span></p>
+<p>Hours Available: {{ studygroup.hours_available_start }} to {{ studygroup.hours_available_end }}</p>
+<p>Maximum Members: {{ studygroup.max_members }}</p>
+<p>Online Only: {{ studygroup.online_only }}</p>
+<p>Gender Specific: {{ studygroup.gender_specific }}</p>
+<p>Members:
+    <ul>
+    {% for m in members_list %}
+    <li>{{ m.user.username }}</li>
+    {% endfor %}
+    </ul>
+</p>
+{% if not am_a_member %}
+<a href="" style="color:black;">Join Group</a>
+{% endif %}
+<script>
+days_string = 'Every Day';
+{% autoescape off %}
+sg_days_{{ studygroup.id }} = {{ studygroup.days_available }};
+{% endautoescape %}
+// Create a string, as we are only showing selected.
+if (sg_days_{{ studygroup.id }}.length > 0)
+{
+    days_string = '';
+    for (i = 0; i < sg_days_{{ studygroup.id }}.length; i++)
+    {
+        if (i > 0)
+        {
+            days_string += ', ';
+        }
+        days_string += sg_days_{{ studygroup.id }}[i];
+    }
+}
+$( "#days_available_{{ sg.studygroup.id }}" ).text(days_string);
+ 
+</script>
+<hr />
+{% endif %}
+</div>
+{% endblock %}
+

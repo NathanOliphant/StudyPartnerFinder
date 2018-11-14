@@ -13,23 +13,21 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 from django.conf.global_settings import EMAIL_BACKEND
 
-# ## Adding this in, because I THINK we need it.  May want to delete, though.
-# from django.contrib.auth import get_user_model
-# User = get_user_model()
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')&81wpt49!4)a-m^+!f_zjt=ogco*k*j-!k$thfb9=)jgby6r8'
+SECRET_KEY = 'abu8nj9#!p^%1^xr)65k9cp5o7qf_i=p_21r@@u=ns+fvnt781'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['no2.pythonanywhere.com', '127.0.0.1']
+
 
 # Application definition
 
@@ -40,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'course.apps.CourseConfig',
-    'study.apps.StudyConfig',
+    'courses.apps.CoursesConfig',
+    'studygroups.apps.StudygroupsConfig',
     'users.apps.UsersConfig',  # new
     'django_static_jquery',
     'accounts.apps.AccountsConfig',
@@ -61,8 +59,7 @@ EMAIL_HOST_USER = '2d2166773bc5ab'
 EMAIL_HOST_PASSWORD = 'e1e694ae560b31'
 EMAIL_USE_TLS = False
 
-# Uncomment this, and above ref to UsersConfig, once we figure out how to extend user
-# properly.  May have to reinstall everything.  Save db files!!!!!
+# We have custom user details, so point to our version of the User here.
 AUTH_USER_MODEL = 'users.CustomUser'  # new
 
 MIDDLEWARE = [
@@ -95,6 +92,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'StudyPartnerFinder.wsgi.application'
 
+
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -104,6 +102,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -123,12 +122,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'America/Los_Angeles'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -136,16 +136,18 @@ USE_L10N = True
 
 USE_TZ = True
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-# STATIC_ROOT = '/home/no2/StudyPartnerFinder/StudyPartnerFinder/static/'
+# STATIC_ROOT = '/home/no2/StudyPartnerFinder/StudyBuddy/static/'
 STATIC_ROOT = '/Users/nathan/Documents/workspace/StudyPartnerFinder/static/'
 STATIC_URL = '/static/'
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 STATICFILES_DIRS = (
   os.path.join(SITE_ROOT, 'static/'),
 )
+
 # LOGIN_REDIRECT_URL = '/'
 # LOGOUT_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = '/course/'
+LOGIN_REDIRECT_URL = '/courses/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'

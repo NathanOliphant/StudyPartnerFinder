@@ -1,0 +1,73 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Add StudyGroup{% endblock %}
+
+{% block content %}
+
+
+<div id="searchbox">
+<span  class="strokeme">
+<form action="/studygroups/add/" method="post" onsubmit="updatetime()">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+</form>
+<script>
+$('#id_course').val('{{ course }}');
+</script>
+</span>
+</div>
+<script>
+$('#id_hours_available_start').timepicker();
+$('#id_hours_available_end').timepicker();
+
+$( "#id_max_members" ).change(function() {
+	if ($( "#id_max_members" ).val() < 1)
+	{
+		alert("You need to permit at least one member (yourself) in your studygroup.");
+		$( "#id_max_members" ).val(1);
+	} 
+});
+
+
+function updatetime()
+{
+	$('#id_hours_available_start').val(breakoutTime($('#id_hours_available_start').val()));
+	$('#id_hours_available_end').val(breakoutTime($('#id_hours_available_end').val()));	
+}
+
+function breakoutTime(time)
+{
+	//hour == xx before :
+    //minute == xx after :
+    //am/pm == am/pm at end
+    hh = 0;
+    mm = 0;
+    if (time != "")
+    {
+        myArray = time.split(/([0-9]+)/)
+        hh = myArray[1];
+        //#hh= time.split(':')[0];
+        //mm = time.plit(':')[1];
+        mm = myArray[3];
+        ampm = myArray[4];
+    }
+    if (ampm == "pm")
+    {
+        hh = parseInt(hh) + 12;
+    }
+    else
+    {
+        if (parseInt(hh) < 10)
+        {
+            hh = "0" + hh;
+        }
+    }
+    
+    return(hh + ":" + mm);
+    
+}
+</script>
+{% endblock %}
+

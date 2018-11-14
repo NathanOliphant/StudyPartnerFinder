@@ -1,0 +1,47 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %} 
+{% block title %}User{% endblock %} 
+
+{% block content %}
+<div class="greenBox">
+	<h2 align="center">Account Details</h2>
+	<p>User: {{ user.username }}</p>
+	<p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+	<p>Email: {{ user.email }}</p>
+	<p>Gender: {{ user.gender }}</p>
+	<p>College: {{ user.college }}</p>
+	<p>ID: {{ user.id }}</p>
+	<a href="/accounts/password_reset/">Update Password</a> | 
+    <a href="/accounts/edit/">Update Account</a>
+</div>
+<div style="position: relative; color: #000000; align:center;margin-top:15px; align:center; text-align: justify">
+<p align="center">My Studygroups</p>
+{% for studygroup in studygroup_joined_list %}
+<div {% if forloop.counter0|divisibleby:2 %}class="whiteSG"{% else %}class="greenSG"{% endif %}> 
+    <p><a href="/studygroups/view/{{ studygroup.studygroup.id }}" style="color:blue">{{ forloop.counter }}:  {{ studygroup.studygroup.post_title }}</a></p>
+    <p>Course: {{ studygroup.studygroup.course.class_name }}</p>
+    <p>Section: {{ studygroup.studygroup.course.cn_number }}</p>
+    <p>Instructor: {{ studygroup.studygroup.course.instructor }}</p>
+    <p>Semester: {{ studygroup.studygroup.course.semester }} {{ studygroup.studygroup.course.year }}</p>
+    <p>Owner: {{ studygroup.owner.username }}
+    {% if studygroup.mine  %}
+    ***MINE***
+    {% endif %}</p>
+    <p>Active: {{ studygroup.studygroup.is_active }}</p>
+    <p>Filters:</p>
+    <p>Gender:  {{ studygroup.studygroup.gender_specific }}</p>
+    <p>Days:  {{ studygroup.studygroup.days_available }}</p>
+    <p>Hours:  {{ studygroup.studygroup.hours_available_start }} to {{ studygroup.studygroup.hours_available_end }}</p>
+    <p>Members/Max:  {{ studygroup.members|length }}/{{ studygroup.studygroup.max_members }}</p>
+    <p>Online only:  {{ studygroup.studygroup.online_only }}</p>
+    <p>Members:</p>
+    {% for member in studygroup.members %}
+    <p>{{ forloop.counter }}: {{ member.email }}</p>
+    {% endfor %}
+</div>
+{% endfor %}
+</div>
+{% endblock %}
+
+
+

@@ -12,12 +12,12 @@ from bs4 import BeautifulSoup
 import argparse
 
 class Course(object):
-	subjectAbbrev = ''
-	subjectId = 0
+	subject_abbrev = ''
+	subject_id = 0
 
-	def __init__(self, subjectAbbrev, subjectId):
-		self.subjectAbbrev = subjectAbbrev
-		self.subjectId = subjectId
+	def __init__(self, subject_abbrev, subject_id):
+		self.subject_abbrev = subject_abbrev
+		self.subject_id = subject_id
 
 def makeCourse(subj, id):
 	crs = Course(subj, id)
@@ -46,7 +46,7 @@ def select_all_subjects(conn):
     :return:
     """
     cur = conn.cursor()
-    cur.execute("SELECT id, name, scheduleAbbreviation FROM study_subject")
+    cur.execute("SELECT id, name, schedule_abbreviation FROM studygroups_subject")
 
     rows = cur.fetchall()
 
@@ -56,8 +56,8 @@ def check_class_exists(subject_id, cn, subj, instructor, semester, year, conn):
 	# If we already have this class, do not add it.
 	# Check against subject_id, cNNumber, className,
 	# instructor, semester, year.
-	sql = ''' SELECT COUNT(*) FROM study_course WHERE subject_id=? AND cNNumber=?
-		 AND className=? AND instructor=? AND semester=? AND year=? AND isActive=1 '''
+	sql = ''' SELECT COUNT(*) FROM studygroups_course WHERE subject_id=? AND cn_number=?
+		 AND class_name=? AND instructor=? AND semester=? AND year=? AND is_active=1 '''
 
 	cur = conn.cursor()
 	cur.execute(sql,(subject_id, cn, subj, instructor, semester, year))
@@ -82,7 +82,7 @@ def scrape_pages(subject, semester):
 	url_base = 'http://pine.humboldt.edu/anstud/cgi-bin/filt_schd.pl?relevant=./cschd/sched'
 
 	#
-	url = '{}{}{}.out'.format(url_base, semester, subject['scheduleAbbreviation'])
+	url = '{}{}{}.out'.format(url_base, semester, subject['schedule_abbreviation'])
 
 	#
 	subject_id = subject['id']
@@ -131,15 +131,15 @@ def add_classes(class_rows, semester, year, subject_id, conn):
 
 				# First check to see if class is already in the database.
 				if check_class_exists(subject_id, cn, subj, instructor, semester, year, conn) is False:
-					sql = ''' INSERT INTO study_Course(subject_id, cNNumber, className,
-						instructor, semester, year, isActive)
+					sql = ''' INSERT INTO studygroups_Course(subject_id, cn_number, class_name,
+						instructor, semester, year, is_active)
 						VALUES(?,?,?,?,?,?,?) '''
 					cur = conn.cursor()
 					cur.execute(sql,(subject_id, cn, subj, instructor, semester, year, 1))
 
 
 def main():
-	database = "/Users/nathan/documents/workspace/StudyPartnerFinder/db.sqlite3"
+	database = "/Users/nathan/documents/workspace/StudyBuddy/db.sqlite3"
 
 	#
 	parser = argparse.ArgumentParser()

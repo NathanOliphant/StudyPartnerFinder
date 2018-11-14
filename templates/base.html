@@ -5,8 +5,11 @@
 <head>
     <meta charset="utf-8">
     <title>{% block title %}Study Buddy{% endblock %}</title>
+    <link rel="stylesheet" href="{% static "css/jquery.timepicker.css" %}">
     <link rel="stylesheet" href="{% static "css/spf.css" %}">
-    <script type="text/javascript" src="{{ STATIC_URL }}/static/js/jquery-3.3.1.js">
+    <script type="text/javascript" src="{% static "js/jquery-3.3.1.js" %}">
+    </script>
+    <script type="text/javascript" src="{% static "js/jquery.timepicker.js" %}">
     </script>
 </head>
 <body>
@@ -30,9 +33,9 @@
                     {{ user.username }}
                  {% endif %} &#9662;</button>
                 <div class="dropdown-content">
-                    <a href="/accounts/view/{{ user.id }}">My Profile</a>
+                    <a href="/accounts/view/">My Profile</a>
                     <a href="#">My Study Groups</a>
-                    <a href="/course/">Courses</a>
+                    <a href="/courses/">Courses</a>
                     <a href="{% url 'logout' %}">Logout</a>
                 </div>
             </div>

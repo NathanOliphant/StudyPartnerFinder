@@ -1,3 +1,16 @@
+2. python manage.py makemigrations
+3. python manage.py migrate
+4. python manage.py createsuperuser . . .
+
+Creating new app in project:
+python manage.py startapp <project name>
+
+1. git add -A
+2. git commit -m "Message . . ."
+3. git push origin master
+
+git status
+
 1. Drop data:
 drop table auth_group;
 drop table auth_group_permissions;
@@ -20,16 +33,43 @@ drop table study_message;
 drop table study_studygroup;
 drop table study_studygroupfilter;
 
-2. python manage.py makemigrations
-3. python manage.py migrate
-4. python manage.py createsuperuser . . .
+create project
+create users app
+python manage.py makemigrations
+python manage.py migrate
+create accounts app
+python manage.py makemigrations
+python manage.py migrate
+create course app
+create studygroup app
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser . . .
+
+update studybuddy/studybuddy/settings.py
+
+Run SubjectList.sql
+Run scraper.py
 
 Creating new app in project:
 python manage.py startapp <project name>
 
-1. git add -A
-2. git commit -m "Message . . ."
-3. git push origin master
+Static files:
+python manage.py collectstatic
+(this copies file from app/app/static to app/static)
 
-git status
+GIT:
+Initialize new repository:
+git init
+Add our files:
+git add .
+Commit:
+git commit -m "First commit"
+Push up to github:
+git remote add origin https://github.com/NathanOliphant/StudyBuddy.git
+
+push the changes:
+git push -u origin master
+
+
 
