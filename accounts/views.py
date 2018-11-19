@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from users.models import CustomUser
-from studygroups.models import StudyGroupUser
+#from studygroups.models import StudyGroupUser
 from django.urls import reverse_lazy
 from django.views import generic
 from users.forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from studygroups.utils import SG, GetMyJoinedStudygroups
+from studygroups.utils import GetMyJoinedStudygroups
 
 # 
 class SignUp(generic.CreateView):

@@ -106,7 +106,7 @@ ul.errorlist li
     text-decoration: underline;
 }
 
-.signuplabel 
+.signup_label 
 {
     display:inline-block;
     *display: inline;     /* for IE7*/
@@ -116,7 +116,8 @@ ul.errorlist li
     text-align: right;
     width: 225px;
 }
-.signupinput {
+
+.signup_input {
 	margin-top: 1px;
     margin-bottom: 1px;
     display:inline-block;
@@ -125,7 +126,6 @@ ul.errorlist li
     vertical-align:middle;
     margin-left:20px
 }
-
 
 .account_edit_label 
 {
@@ -356,7 +356,7 @@ a:hover {text-decoration: underline; }
     cursor: pointer;
 }
 
-.whiteSG
+.white_sg
 {
     border-style: solid;
     border-width: 1px;
@@ -372,7 +372,7 @@ a:hover {text-decoration: underline; }
     padding-right: 10px;
 }
 
-.greenSG
+.green_sg
 {
     color: #ffffff;
     /*text-shadow:

@@ -12,8 +12,8 @@
     {% csrf_token %}
     {{ form.non_field_errors }}
     <p class="fieldWrapper">
-        <label for="{{ form.post_title.id_for_label }}" class="signuplabel">{{ form.post_title.label }}:</label> 
-        <span class="signupinput">{{ form.post_title }}
+        <label for="{{ form.post_title.id_for_label }}" class="signup_label">{{ form.post_title.label }}:</label> 
+        <span class="signup_input">{{ form.post_title }}
         (required)
         </span>
         {{ form.post_title.id_for_label.errors }}
@@ -21,8 +21,8 @@
     </p>
     
     <p class="fieldWrapper">
-        <label for="{{ form.max_members.id_for_label }}" class="signuplabel">{{ form.max_members.label }}:</label> 
-        <span class="signupinput">{{ form.max_members }}
+        <label for="{{ form.max_members.id_for_label }}" class="signup_label">{{ form.max_members.label }}:</label> 
+        <span class="signup_input">{{ form.max_members }}
         (optional)
         </span>
         {{ form.max_members.id_for_label.errors }}
@@ -30,8 +30,8 @@
     </p>
     
     <p class="fieldWrapper">
-        <label for="{{ form.gender_specific.id_for_label }}" class="signuplabel">{{ form.gender_specific.label }}:</label> 
-        <span class="signupinput">{{ form.gender_specific }}
+        <label for="{{ form.gender_specific.id_for_label }}" class="signup_label">{{ form.gender_specific.label }}:</label> 
+        <span class="signup_input">{{ form.gender_specific }}
         (optional)
         </span>
         {{ form.gender_specific.id_for_label.errors }}
@@ -39,8 +39,8 @@
     </p>
     
     <p class="fieldWrapper">
-        <label for="{{ form.days_available.id_for_label }}" class="signuplabel">{{ form.days_available.label }}:</label> 
-        <span class="signupinput">{{ form.days_available }}
+        <label for="{{ form.days_available.id_for_label }}" class="signup_label">{{ form.days_available.label }}:</label> 
+        <span class="signup_input">{{ form.days_available }}
         (optional)
         </span>
         {{ form.days_available.id_for_label.errors }}
@@ -48,8 +48,8 @@
     </p>
     
     <p class="fieldWrapper">
-        <label for="{{ form.hours_available_start.id_for_label }}" class="signuplabel">{{ form.hours_available_start.label }}:</label> 
-        <span class="signupinput">{{ form.hours_available_start }}
+        <label for="{{ form.hours_available_start.id_for_label }}" class="signup_label">{{ form.hours_available_start.label }}:</label> 
+        <span class="signup_input">{{ form.hours_available_start }}
         (optional)
         </span>
         {{ form.hours_available_start.id_for_label.errors }}
@@ -57,8 +57,8 @@
     </p>
     
    <p class="fieldWrapper">
-        <label for="{{ form.hours_available_end.id_for_label }}" class="signuplabel">{{ form.hours_available_end.label }}:</label> 
-        <span class="signupinput">{{ form.hours_available_end }}
+        <label for="{{ form.hours_available_end.id_for_label }}" class="signup_label">{{ form.hours_available_end.label }}:</label> 
+        <span class="signup_input">{{ form.hours_available_end }}
         (optional)
         </span>
          {{ form.hours_available_end.id_for_label.errors }}
@@ -66,8 +66,8 @@
     </p>
     
     <p class="fieldWrapper">
-        <label for="{{ form.online_only.id_for_label }}" class="signuplabel">{{ form.online_only.label }}:</label> 
-        <span class="signupinput">{{ form.online_only }}
+        <label for="{{ form.online_only.id_for_label }}" class="signup_label">{{ form.online_only.label }}:</label> 
+        <span class="signup_input">{{ form.online_only }}
         (optional)
         </span>
         {{ form.online_only.id_for_label.errors }}

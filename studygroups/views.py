@@ -135,50 +135,37 @@ def update(request, id=None):
         if form.is_valid(): # All validation rules pass
             data = form.cleaned_data
             #c = data['course']
-           
-            data['creator'] = CustomUser.objects.get(pk=request.user.id)
-            
-            
-            
-            d = Days.objects.create(days_available = data['days_available'])
             
             # Confirm this is ours!
             sg = StudyGroup.objects.get(id=id)
-            with open("hello_days.txt", "w+") as f:
-                f.write('days == {}\n'.format(sg.days_available))
-                
-            old_days_available = sg.days_available.all()
-                
-            with open("hello_days2.txt", "w+") as f:
-                for day in old_days_available:
-                    f.write('days == {}\n'.format(day))
-                    
-                f.write('days passed in == {}\n'.format(d))
+            if '{}'.format(request.user.id) is '{}'.format(sg.creator):
             
-            #old_days = Days.objects.get(days_available=sg.days_available)
+                data['creator'] = CustomUser.objects.get(pk=request.user.id)
             
-            #studygroup.objects.filter(id=id).update(
-            sg.post_title = data['post_title']
-            sg.max_members = data['max_members'] if data['max_members'] is not None else 1000
-            sg.gender_specific = data['gender_specific' ] if data['gender_specific'] is not None else 'U'
+                d = Days.objects.create(days_available = data['days_available'])
+                
+                old_days_available = sg.days_available.all()
+                
+                #studygroup.objects.filter(id=id).update(
+                sg.post_title = data['post_title']
+                sg.max_members = data['max_members'] if data['max_members'] is not None else 1000
+                sg.gender_specific = data['gender_specific' ] if data['gender_specific'] is not None else 'U'
                 #days_available.set(d),
-            sg.hours_available_start = data['hours_available_start'] if data['hours_available_start'] is not None else datetime.time(0, 1)
-            sg.hours_available_end = data['hours_available_end'] if data['hours_available_end'] is not None else datetime.time(23, 59) 
-            sg.online_only = data['online_only'] if data['online_only'] is not None else False
+                sg.hours_available_start = data['hours_available_start'] if data['hours_available_start'] is not None else datetime.time(0, 1)
+                sg.hours_available_end = data['hours_available_end'] if data['hours_available_end'] is not None else datetime.time(23, 59) 
+                sg.online_only = data['online_only'] if data['online_only'] is not None else False
             
-            if d is not None:
-                old_days_available.delete()
-                sg.days_available.add(d)
+                if d is not None:
+                    old_days_available.delete()
+                    sg.days_available.add(d)
                 
-            sg.save()
-            #form.save()
-            return redirect('/studygroups/view/{}'.format(id))
+                sg.save()
+                #form.save()
+                return redirect('/studygroups/view/{}'.format(id))
             
     else:
         studygroup = StudyGroup.objects.get(id=id)
         days_available = studygroup.days_available.all()
-        
-         
         
         # Do we own this Studygroup?
         # if request.user.is_authenticated: 
@@ -186,15 +173,14 @@ def update(request, id=None):
             template = 'studygroups/update.html'
             context = { 'form': form , 'studygroup': studygroup, 'id': id, 'days_available': days_available}
             return render(request, template, context)
-        else:
-            pass
+    
     # Days
     # Department
     # Course Name
     # Assignment????
     # Title of Post????
     # Filters . . . 
-    return HttpResponse("Hello, world. You're at the studygroup update.")
+    return redirect('/studygroups/mine')
 
 def view(request, id=None):
     #with open("sg_view_id.txt", "w+") as f:

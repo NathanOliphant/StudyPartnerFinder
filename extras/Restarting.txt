@@ -1,6 +1,21 @@
+Still need:
+1. Formatting for . . . 
+2. Join request/join accept
+3. Basic messaging?
+4. Add comments/clean up code.
+
+
 2. python manage.py makemigrations
 3. python manage.py migrate
 4. python manage.py createsuperuser . . .
+
+
+items to add to requirements.txt:
+Django==2.0.4
+django-bootstrap-breadcrumbs==0.9.1
+django-jquery==3.1.0
+django-static-jquery==2.1.4
+Twisted==18.9.0
 
 CHAT is based on:
 https://channels.readthedocs.io/en/latest/tutorial/part_2.html

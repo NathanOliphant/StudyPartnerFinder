@@ -14,8 +14,8 @@
     {{ form.email.id_for_label.errors }}
     {{ form.email.errors }}
     <p class="fieldWrapper">
-        <label for="{{ form.email.id_for_label }}" class="signuplabel">HSU Email Address:</label> 
-        <span class="signupinput"><input type="email" name="email" maxlength="254" required id="id_email" />
+        <label for="{{ form.email.id_for_label }}" class="signup_label">HSU Email Address:</label> 
+        <span class="signup_input"><input type="email" name="email" maxlength="254" required id="id_email" />
         (required)
         </span>
     </p>
@@ -24,8 +24,8 @@
     {{ form.first_name.id_for_label.errors }}
     {{ form.first_name.errors }}
     <p class="fieldWrapper">
-        <label for="{{ form.first_name.id_for_label }}" class="signuplabel">First Name:</label> 
-        <span class="signupinput"><input type="text" name="first_name" maxlength="30" id="id_first_name" />
+        <label for="{{ form.first_name.id_for_label }}" class="signup_label">First Name:</label> 
+        <span class="signup_input"><input type="text" name="first_name" maxlength="30" id="id_first_name" />
         (optional)
         </span>
     </p>
@@ -33,16 +33,16 @@
     {{ form.last_name.id_for_label.errors }}
     {{ form.last_name.errors }}
     <p class="fieldWrapper">
-        <label for="{{ form.last_name.id_for_label }}" class="signuplabel">Last Name:</label>
-        <span class="signupinput"><input type="text" name="last_name" maxlength="30" id="id_last_name"  />
+        <label for="{{ form.last_name.id_for_label }}" class="signup_label">Last Name:</label>
+        <span class="signup_input"><input type="text" name="last_name" maxlength="30" id="id_last_name"  />
         (optional)</span>
     </p>
     
     {{ form.gender.id_for_label.errors }}
     {{ form.gender.errors }}
     <p class="fieldWrapper">
-        <label for="{{ form.gender.id_for_label }}" class="signuplabel">Gender:</label> 
-        <span class="signupinput">
+        <label for="{{ form.gender.id_for_label }}" class="signup_label">Gender:</label> 
+        <span class="signup_input">
         <select name="gender" id="id_gender">
             <option value="U" selected>Select a gender</option>
             <option value="M">Male</option>
@@ -63,8 +63,8 @@
     {{ form.password1.id_for_label.errors }}
     {{ form.password1.errors }}
     <p class="fieldWrapper">
-        <label for="{{ form.password1.id_for_label }}" class="signuplabel">Password:</label>
-        <span class="signupinput"><input type="password" name="password1" required id="id_password1" />
+        <label for="{{ form.password1.id_for_label }}" class="signup_label">Password:</label>
+        <span class="signup_input"><input type="password" name="password1" required id="id_password1" />
         (required)
         </span>
         <br />
@@ -73,8 +73,8 @@
     {{ form.password2.id_for_label.errors }}
     {{ form.password2.errors }}
     <p class="fieldWrapper">
-        <label for="{{ form.password2.id_for_label }}" class="signuplabel">Confirm Password:</label>
-        <span class="signupinput"><input type="password" name="password2" required id="id_password2" />
+        <label for="{{ form.password2.id_for_label }}" class="signup_label">Confirm Password:</label>
+        <span class="signup_input"><input type="password" name="password2" required id="id_password2" />
         (required)
         </span>
         <br />

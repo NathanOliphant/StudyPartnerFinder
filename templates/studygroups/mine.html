@@ -7,7 +7,7 @@
 {% if user.is_authenticated %}
 <p align="center">My Studygroups</p>
 {% for studygroup in studygroup_joined_list %}
-<div {% if forloop.counter0|divisibleby:2 %}class="whiteSG"{% else %}class="greenSG"{% endif %}> 
+<div {% if forloop.counter0|divisibleby:2 %}class="white_sg"{% else %}class="green_sg"{% endif %}> 
     <p><a href="/studygroups/view/{{ studygroup.studygroup.id }}" style="color:blue">{{ forloop.counter }}:  {{ studygroup.studygroup.post_title }}</a></p>
     <p>Course: {{ studygroup.studygroup.course.class_name }}</p>
     <p>Section: {{ studygroup.studygroup.course.cn_number }}</p>

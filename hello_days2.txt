@@ -1,2 +1,0 @@
-days == ['Monday', 'Wednesday', 'Thursday']
-days passed in == ['Monday', 'Wednesday', 'Thursday']
