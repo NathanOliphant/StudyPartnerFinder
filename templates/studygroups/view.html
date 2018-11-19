@@ -9,7 +9,7 @@
 <p>Studygroup</p>
 {% if studygroup %}
 
-<p>ID: {{ studygroup.id }} {% if self_owned %} <a href="" style="color:#000000;">Edit</a> | <a href="" style="color:#000000;">Deactivate</a>{% endif %}</p>
+<p>ID: {{ studygroup.id }} {% if self_owned %} <a href="/studygroups/update/{{ studygroup.id }} " style="color:#000000;">Edit</a> | <a href="" style="color:#000000;">Deactivate</a>{% endif %}</p>
 <p>Post Title:  {{ studygroup.post_title }}</p>
 <p>Subject: {{ studygroup.course.subject }}</p>
 <p>Class: {{ studygroup.course.class_name }}</p>
@@ -18,7 +18,12 @@
 <p>Semester: {{ studygroup.course.semester }}</p>
 <p>Year: {{ studygroup.course.year }}</p>
 <p>Creator:  {{ studygroup.creator.username }} {% if self_owned %} ***{% endif %}</p>
-<p>Days Available:  <span id='days_available_{{ sg.studygroup.id }}'>{{ studygroup.days_available }}</span></p>
+<p>Days Available:  <span id='days_available_{{ studygroup.id }}'>
+ {% if days_available %}
+    {% for d in days_available %}
+    {{ d }}
+    {% endfor %}
+  {% endif %}</span></p>
 <p>Hours Available: {{ studygroup.hours_available_start }} to {{ studygroup.hours_available_end }}</p>
 <p>Maximum Members: {{ studygroup.max_members }}</p>
 <p>Online Only: {{ studygroup.online_only }}</p>
@@ -34,10 +39,17 @@
 <a href="" style="color:black;">Join Group</a>
 {% endif %}
 <script>
+
 days_string = 'Every Day';
+sg_days_{{ studygroup.id }} = '';
+{% if days_available %}
+{% for d in days_available %}
 {% autoescape off %}
-sg_days_{{ studygroup.id }} = {{ studygroup.days_available }};
+sg_days_{{ studygroup.id }} = {{ d }};
 {% endautoescape %}
+{% endfor %}
+{% endif %}
+
 // Create a string, as we are only showing selected.
 if (sg_days_{{ studygroup.id }}.length > 0)
 {
@@ -51,11 +63,17 @@ if (sg_days_{{ studygroup.id }}.length > 0)
         days_string += sg_days_{{ studygroup.id }}[i];
     }
 }
-$( "#days_available_{{ sg.studygroup.id }}" ).text(days_string);
+$( "#days_available_{{ studygroup.id }}" ).text(days_string);
  
 </script>
 <hr />
 {% endif %}
 </div>
+<script>
+$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
+$('#breadcrumbs').html( $bc.append(' &gt; <a href="/studygroups/">Studygroups</a>') );
+$('#breadcrumbs').html( $bc.append(' &gt; View') );
+</script>
+
 {% endblock %}
 

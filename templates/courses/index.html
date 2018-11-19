@@ -4,101 +4,15 @@
 {% block title %}Course Search{% endblock %}
 
 {% block content %}
-<div id="searchbox">
-<h1 class="strokeme">Study Buddy Search</h1>
-<span  class="strokeme">
-<form action="/courses/" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
-</form>
-</span>
-<div id="courseCount"><span class="strokeme_spaced"></span></div>
-</div>
-
-<script language="JavaScript" type="text/javascript">
-
-function course(id, name, instructor, semester, year, subject, cnn)
-{
-    this.id = id;
-    this.name = name;
-    this.instructor = instructor;
-    this.semester = semester;
-    this.year = year;
-    this.subject_id = subject;
-    this.cnn = cnn;
-}
-
-
-
-/*
-$('#mySelectBox option').each(function() {
-    if (this.selected)
-       alert('this option is selected');
-     else
-       alert('this is not');
-});*/
-//
-{% for subject in subject_list %}{% for year in year_list %}{% for s in semester_list %}
-let courses_{{ subject.id }}_{{ year.year }}_{{ s.semester }} = [];{% endfor %}{% endfor %}{% endfor %}
-
-{% if course_list %}
-{% for course in course_list %}
-c = new course({{ course.id }}, '{{ course.class_name }}', '{{ course.instructor }}', '{{ course.semester }}', {{ course.year }}, {{ course.subject_id }}, {{ course.cn_number }});
-courses_{{ course.subject_id }}_{{ course.year }}_{{ course.semester }}.push(c);{% endfor %}
-{% endif %}
-//alert(courses_66[0].name);
-$(document).ready(function(){
-	
-	function updateCourse()
-	{
-		
-		myString = $('#id_study_subject :selected').val() + '_' + $('#id_study_year :selected').val() + '_' + $('#id_study_semester :selected').val();
-        classList = '';
-        var option = '';
-        try
-        {
-            classList = eval(myString);
-        }
-        catch(err)
-        {
-            // Really do not need anything here, as we are just trying to stop error above.
-        }
-
-        // Check for existence of classList, as may not be available for all semester/year options.
-        if (typeof classList !== 'undefined' && classList.length > 0) {
-            for (var i=0;i<classList.length;i++){
-                option += '<option value="'+ classList[i].id + '">' + classList[i].name + ' (CN' + classList[i].cnn + ')</option>';
-             }
-        }
-        else {
-            option = '<option value="">No courses. Try another search.</option>';
-        }
-      $('#id_study_courses').empty().append(option);
-      
-      //alert($("#id_studySubject").val());
-      
-      $('#courseCount span').text('There are ' + classList.length + ' ' + $('#id_study_subject :selected').text() + ' courses for ' + $('#id_study_semester').val()  + ' ' + $('#id_study_year').val() );
-
-	}
-	
-	if ($('#id_study_subjects :selected').val() != "")
-    {
-        updateCourse();
-    }
-
-    $('#id_study_year').change(function() {
-        updateCourse();
-    });
-
-    $('#id_study_semester').change(function() {
-        updateCourse();
-    });
-
-      $('#id_study_subject').change(function(){
-          updateCourse();
-      });
-});
+{% comment %}
+    Include our courses searchbox.  This is used in multiple places, so we broke it out
+    as a separate template.
+{% endcomment %}
+{% include "courses/searchbox.html" %}
+<script>
+$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
+$('#breadcrumbs').html( $bc.append(' &gt; <a href="/courses/">Courses</a>') );
+$('#breadcrumbs').html( $bc.append(' &gt; Search') );
 </script>
 {% endblock %}
 

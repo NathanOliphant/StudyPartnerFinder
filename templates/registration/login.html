@@ -63,4 +63,9 @@ $(document).ready(function() {
     });
 });
 </script>
+<script>
+$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
+$('#breadcrumbs').html( $bc.append(' &gt; <a href="/accounts/">Accounts</a>') );
+$('#breadcrumbs').html( $bc.append(' &gt; Login') );
+</script>
 {% endblock %}

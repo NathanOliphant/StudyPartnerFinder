@@ -1,0 +1,1 @@
+Post Valid == <bound method BaseForm.is_valid of <SearchForm bound=True, valid=Unknown, fields=(study_subject;study_courses)>>

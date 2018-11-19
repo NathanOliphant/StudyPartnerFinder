@@ -3,6 +3,8 @@ from django.db import models
 from users.models import CustomUser
 import datetime
 from django.core.validators import MinValueValidator
+import datetime
+now = datetime.datetime.now()
 
 # Create your models here.
 class Subject(models.Model):
@@ -45,6 +47,21 @@ class Course(models.Model):
         #return '{}, {} {}, {}, {}'.format(self.className, self.semester, self.year, self.instructor, self.cNNumber)
         return '{}'.format(self.id)
     
+class Days(models.Model):
+    MY_DAY_CHOICES = (
+         ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'), 
+        ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday')
+    )
+    days_available = models.CharField(max_length=255, choices=MY_DAY_CHOICES, null=True)
+    
+    def __str__(self):
+        return '{}'.format(self.days_available)
+    
 # When StudyGroup created, also insert a record into StudyGroupUser.
 # This will simplify gathering all StudyGroups for a user.
 class StudyGroup(models.Model):
@@ -64,22 +81,30 @@ class StudyGroup(models.Model):
     )
     gender_specific = models.CharField(max_length=15, choices=MY_GENDER_CHOICES)
     
-    MY_DAY_CHOICES = (
-         ('Monday', 'Monday'),
-        ('Tuesday', 'Tuesday'),
-        ('Wednesday', 'Wednesday'),
-        ('Thursday', 'Thursday'), 
-        ('Friday', 'Friday'),
-        ('Saturday', 'Saturday'),
-        ('Sunday', 'Sunday')
-    )
-    days_available = models.CharField(default='', max_length=255)
+    #MY_DAY_CHOICES = (
+    #     ('Monday', 'Monday'),
+    #    ('Tuesday', 'Tuesday'),
+    #    ('Wednesday', 'Wednesday'),
+    #    ('Thursday', 'Thursday'), 
+    #    ('Friday', 'Friday'),
+    #    ('Saturday', 'Saturday'),
+    #    ('Sunday', 'Sunday')
+    #)
+    days_available = models.ManyToManyField(Days)
     hours_available_start = models.TimeField(auto_now_add=False, blank=True, null=True, default=datetime.time(0, 1))
     hours_available_end = models.TimeField(auto_now_add=False, blank=True, null=True, default=datetime.time(23, 59))
     online_only = models.BooleanField(default = False)
     
     #def __str__(self):
     #    return '{}, {}, {}'.format(self.id, self.creatorUserId, self.course)
+MY_SEMESTER_CHOICES = (
+         ('Fall', 'Fall'),
+        ('Spring', 'Spring'),
+        ('Summer', 'Summer'),
+    )  
+class CurrentSemester(models.Model):
+    semester = models.CharField(max_length=6, choices=MY_SEMESTER_CHOICES, default="Fall")
+    year = models.PositiveIntegerField(default = now.year)
     
 class BlockList(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='blocker')

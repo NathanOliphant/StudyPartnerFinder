@@ -1,10 +1,11 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import StudyGroup, BlockList, StudyGroupUser, Message, Filter, StudyGroupFilter, Subject, Course
+from .models import StudyGroup, BlockList, StudyGroupUser, Message, Filter, StudyGroupFilter, Subject, Course, CurrentSemester
 
 #admin.site.register(CustomUser)
 admin.site.register(StudyGroup)
+admin.site.register(CurrentSemester)
 admin.site.register(BlockList)
 admin.site.register(StudyGroupUser)
 admin.site.register(Message)

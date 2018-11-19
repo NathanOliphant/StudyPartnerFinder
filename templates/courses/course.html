@@ -4,50 +4,68 @@
 {% block title %}Course Search{% endblock %}
 
 {% block content %}
-<div class="greenBox">
-<h1>Course Details</h1>
+<div class="greenbox">
 {% if course_list %}
 {% for course in course_list %}
-<p>Course:  {{ course.class_name }}</p>
-<p>Instructor: {{ course.instructor }}</p>
-<p>Section: {{ course.cn_number }}</p>
-<p>Area of study:  {{ course.subject }}</p>
-<p>Semester:  {{ course.semester }} {{ course.year }}</p>
+<p>
+    {{ course.subject }}:  {{ course.class_name }}<br />
+    {{ course.semester }} {{ course.year }} Semester<br />
+    Instructor: {{ course.instructor }}<br />
+Section: {{ course.cn_number }}</p>
+
+{% if user.is_authenticated %}
 <div style="color: #000000;">
 <a href="/studygroups/add/{{ course.id }}">Add new StudyGroup</a>
 </div>
+{% endif %}
 {% endfor %}
 {% endif %}
 </div>
-
-<div style="color: #000000;">
+<p class="dark">Studygroups Under this course</p>
+<div id="studygroups">
 <!-- Study Group Links? -->
-<p>Studygroups Under this course</p>
+{% if user.is_authenticated %}
 {% if studygroup_list %}
 {% for sg in studygroup_list %}
-<p>ID: {{ sg.studygroup.id }} {% if sg.mine %} <a href="" style="color:#000000;">Edit</a> | <a href="" style="color:#000000;">Deactivate</a>{% endif %}</p>
-<p>Post Title:  {{ sg.studygroup.post_title }}</p>
-<p>Creator:  {{ sg.owner.username }} {% if sg.mine %} ***{% endif %}</p>
-<p>Days Available:  <span id='days_available_{{ sg.studygroup.id }}'>{{ sg.studygroup.days_available }}</span></p>
+<h2>{{ sg.studygroup.post_title }}</h2>
+<p>Creator:  {{ sg.owner.username }} {% if sg.mine %} - <a href="/studygroups/update/{{sg.studygroup.id}}" style="color:#000000;">Edit</a> or <a href="" style="color:#000000;">Deactivate</a> group{% endif %}</p>
+<p>Days Available:  <span id='days_available_{{ sg.studygroup.id }}'>
+    {% if sg.days_available %}
+    {% for d in sg.days_available %}
+    {{ d }}
+    {% endfor %}
+    {% endif %}</span></p>
 <p>Hours Available: {{ sg.studygroup.hours_available_start }} to {{ sg.studygroup.hours_available_end }}</p>
-<p>Maximum Members: {{ sg.studygroup.max_members }}</p>
-<p>Online Only: {{ sg.studygroup.online_only }}</p>
-<p>Gender Specific: {{ sg.studygroup.gender_specific }}</p>
+<p>Members:  {{ sg.members|length }} out of {{ sg.studygroup.max_members }}</p>
+{% if g.studygroup.online_only %}}
+<p>Online Only</p>
+{% endif %}
+{% if g.studygroup.gender_specific %}}
+<p>Gender Specific</p>
+{% endif %}
 <p>Members:
     <ul>
     {% for m in sg.members %}
-    <li>{{ m.user.username }}</li>
+    <li>{{ m.user.username }} ({{ m.user.email }})</li>
     {% endfor %}
     </ul>
 </p>
 {% if not sg.i_am_in_group %}
 <a href="/studygroups/join/{{ sg.studygroup.id }}" style="color:black;">Join Group</a>
+
 {% endif %}
+
 <script>
 days_string = 'Every Day';
+sg_days_{{ sg.studygroup.id }} = '';
+{% if sg.days_available %}
+{% for d in sg.days_available %}
 {% autoescape off %}
-sg_days_{{ sg.studygroup.id }} = {{ sg.studygroup.days_available }};
+sg_days_{{ sg.studygroup.id }} = {{ d }};
 {% endautoescape %}
+{% endfor %}
+{% endif %}
+
 // Create a string, as we are only showing selected.
 if (sg_days_{{ sg.studygroup.id }}.length > 0)
 {
@@ -67,7 +85,31 @@ $( "#days_available_{{ sg.studygroup.id }}" ).text(days_string);
 <hr /> 
 {% endfor %}
 
+{% else %}
+{% if course_list %}
+{% for course in course_list %}
+<div style="color: #000000;">
+<a href="/studygroups/add/{{ course.id }}">Add new StudyGroup</a>
+</div>
+{% endfor %}
+{% endif %}
+
+{% endif %}
+
+{% else %}
+<p>There are {{ studygroup_list|length }} studygroups available for this course.</p>
+<p>Do you wish to <a href="{% url 'signup' %}?next={{request.path}}">register</a> or <a href="{% url 'login' %}?next={{request.path}}">sign in</a> 
+so that you can join or create a studygroup?</p>
 {% endif %}
 </div>
+<script>
+$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
+$('#breadcrumbs').html( $bc.append(' &gt; <a href="/courses/">Courses</a>') );
+{% if course_list %}
+{% for course in course_list %}
+$('#breadcrumbs').html( $bc.append(' &gt; {{ course.class_name }}') );
+{% endfor %}
+{% endif %}
+</script>
 {% endblock %}
 

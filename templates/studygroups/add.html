@@ -6,21 +6,91 @@
 {% block content %}
 
 
-<div id="searchbox">
-<span  class="strokeme">
-<form action="/studygroups/add/" method="post" onsubmit="updatetime()">
+<div class="greenbox">
+<div style="margin-left: auto;margin-right:auto; align: left; text-align:left;">
+<form action="/studygroups/add/{{ course }}" method="post" onsubmit="return updatetime();">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
+    {{ form.non_field_errors }}
+    <p class="fieldWrapper">
+        <label for="{{ form.post_title.id_for_label }}" class="signuplabel">{{ form.post_title.label }}:</label> 
+        <span class="signupinput">{{ form.post_title }}
+        (required)
+        </span>
+        {{ form.post_title.id_for_label.errors }}
+        {{ form.post_title.errors }}
+    </p>
+    
+    <p class="fieldWrapper">
+        <label for="{{ form.max_members.id_for_label }}" class="signuplabel">{{ form.max_members.label }}:</label> 
+        <span class="signupinput">{{ form.max_members }}
+        (optional)
+        </span>
+        {{ form.max_members.id_for_label.errors }}
+        {{ form.max_members.errors }}
+    </p>
+    
+    <p class="fieldWrapper">
+        <label for="{{ form.gender_specific.id_for_label }}" class="signuplabel">{{ form.gender_specific.label }}:</label> 
+        <span class="signupinput">{{ form.gender_specific }}
+        (optional)
+        </span>
+        {{ form.gender_specific.id_for_label.errors }}
+        {{ form.gender_specific.errors }}
+    </p>
+    
+    <p class="fieldWrapper">
+        <label for="{{ form.days_available.id_for_label }}" class="signuplabel">{{ form.days_available.label }}:</label> 
+        <span class="signupinput">{{ form.days_available }}
+        (optional)
+        </span>
+        {{ form.days_available.id_for_label.errors }}
+        {{ form.days_available.errors }}
+    </p>
+    
+    <p class="fieldWrapper">
+        <label for="{{ form.hours_available_start.id_for_label }}" class="signuplabel">{{ form.hours_available_start.label }}:</label> 
+        <span class="signupinput">{{ form.hours_available_start }}
+        (optional)
+        </span>
+        {{ form.hours_available_start.id_for_label.errors }}
+        {{ form.hours_available_start.errors }}
+    </p>
+    
+   <p class="fieldWrapper">
+        <label for="{{ form.hours_available_end.id_for_label }}" class="signuplabel">{{ form.hours_available_end.label }}:</label> 
+        <span class="signupinput">{{ form.hours_available_end }}
+        (optional)
+        </span>
+         {{ form.hours_available_end.id_for_label.errors }}
+         {{ form.hours_available_end.errors }}
+    </p>
+    
+    <p class="fieldWrapper">
+        <label for="{{ form.online_only.id_for_label }}" class="signuplabel">{{ form.online_only.label }}:</label> 
+        <span class="signupinput">{{ form.online_only }}
+        (optional)
+        </span>
+        {{ form.online_only.id_for_label.errors }}
+        {{ form.online_only.errors }}
+    </p>
+    
+    {{ form.course }}
+    {{ form.creator }}
+    
+    <div align="center" style="padding-bottom: 3px;">
+    <input type="submit" value="Add Studygroup"  id="submit"/>
+    </div>
 </form>
 <script>
 $('#id_course').val('{{ course }}');
 </script>
-</span>
 </div>
+</div>
+
 <script>
 $('#id_hours_available_start').timepicker();
 $('#id_hours_available_end').timepicker();
+
 
 $( "#id_max_members" ).change(function() {
 	if ($( "#id_max_members" ).val() < 1)
@@ -30,11 +100,27 @@ $( "#id_max_members" ).change(function() {
 	} 
 });
 
-
+/*
+ *  Time format expected by Django is different from what is displayed here, so clean 
+ *  up before submitting.  Performing this client-side means less bad submissions.
+ */
 function updatetime()
 {
-	$('#id_hours_available_start').val(breakoutTime($('#id_hours_available_start').val()));
-	$('#id_hours_available_end').val(breakoutTime($('#id_hours_available_end').val()));	
+	ret = false;
+	start = breakoutTime($('#id_hours_available_start').val());
+	end = breakoutTime($('#id_hours_available_end').val());
+	
+	if (parseInt(start.replace(':', '')) >= parseInt(end.replace(':', '')))
+	{
+		alert("If using a starting and ending time available, the start time must be less than the end time.");
+	}
+	else
+	{
+		ret = true;
+		$('#id_hours_available_start').val(breakoutTime($('#id_hours_available_start').val()));
+	    $('#id_hours_available_end').val(breakoutTime($('#id_hours_available_end').val()));   
+	}
+	return ret;
 }
 
 function breakoutTime(time)
@@ -55,7 +141,7 @@ function breakoutTime(time)
     }
     if (ampm == "pm")
     {
-        hh = parseInt(hh) + 12;
+    	hh = parseInt(hh) + 12;
     }
     else
     {
@@ -63,11 +149,20 @@ function breakoutTime(time)
         {
             hh = "0" + hh;
         }
+        if (parseInt(hh) == 12)
+       	{
+        	hh = "00";
+        }
     }
     
     return(hh + ":" + mm);
     
 }
+</script>
+<script>
+$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
+$('#breadcrumbs').html( $bc.append(' &gt; <a href="/studygroups/">Studygroups</a>') );
+$('#breadcrumbs').html( $bc.append(' &gt; Add For Course {{ course }}') );
 </script>
 {% endblock %}
 

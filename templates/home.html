@@ -2,24 +2,27 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-
 {% block title %}Home{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
-<div class="greenBox">
-  <p>Where should this take an authenticated user?  This is the home page</p>
-  <p><a href="/courses/">Courses?</a></p>
-  <p><a href="accounts/view/{{ user.id }}">Profile/Account?</a></p>
-</div>
-{% else %}
 <div class="dark" align="center">
-  <h1>Welcome to Study Partner Finder/Study Buddy/The Site You Are Currently On!</h1>
-  <p>We should probably say something about our site here, or point out our tens of users (yes, slight exaggeration, but I'll allow it).</p>
-  <p>Instead, here's a cat:</p>
-  <p><img alt="Cat in a window" src="{% static "images/cat.jpg" %}" />
-  <p>If you are new around here, won't you <a href="{% url 'signup' %}" style="color:blue">join</a> us?</p>
+    <h1>Welcome to Study Partner Finder</h1>
+    {% if not user.is_authenticated %}
+    <div>
+        <p>Please sign in or sign up to see full results.</p>  
+        <p>You can still search for study groups, but will not be able to join or view 
+        studygroup details until you are 
+        <a href="{% url 'signup' %}" style="color:green">registered</a> and 
+        <a href="{% url 'login' %}" style="color:green">signed in.</a></p></div>
+    {% endif %}
 </div>
-{% endif %}
-</div>
+{% comment %}
+    Include our courses searchbox.  This is used in multiple places, so we broke it out
+    as a separate template.
+{% endcomment %}
+{% include "courses/searchbox.html" %}
+<script>
+$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
+$('#breadcrumbs').html( $bc.append('') );
+</script>
 {% endblock %}

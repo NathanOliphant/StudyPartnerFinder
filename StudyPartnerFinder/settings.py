@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',  # new
     'django_static_jquery',
     'accounts.apps.AccountsConfig',
+    'channels',
+    'chat',
+    'django_bootstrap_breadcrumbs'
 ]
 
 # Email
@@ -92,6 +95,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'StudyPartnerFinder.wsgi.application'
 
+ASGI_APPLICATION = 'StudyPartnerFinder.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            #"hosts": [('127.0.0.1', 6379)],
+            #"hosts": [('redis-11329.c60.us-west-1-2.ec2.cloud.redislabs.com', 11329)],
+            "hosts": ["redis://:qZOkKZ0GqiKAeqehJFsSzkoccX3WWO3G@redis-11329.c60.us-west-1-2.ec2.cloud.redislabs.com:11329/0"],
+            "symmetric_encryption_keys": [SECRET_KEY],
+        },
+    },
+}
+#CACHES = {
+#    'default': {
+#                'BACKEND': 'redis_cache.RedisCache',
+#                'LOCATION': 'redis-11329.c60.us-west-1-2.ec2.cloud.redislabs.com:11329',
+#    'OPTIONS': {
+#                'DB': 'StudyBuddy',
+#                'PASSWORD': 'qZOkKZ0GqiKAeqehJFsSzkoccX3WWO3G'
+#                }
+#    }
+#}
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -100,6 +125,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'TEST': {
+            'NAME': os.path.join(BASE_DIR, 'db_test.sqlite3')
+            }
     }
 }
 

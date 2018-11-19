@@ -5,53 +5,187 @@ body {
 
 p {
 
-	font-size: 100%;
+    font-size: 100%;
     font-family:  sans-serif;
 }
 
+ul.errorlist
+{
+    background: #ffffff;
+    margin: 5px;
+    color: red;
+} /* non field error list container */
+
+ul.errorlist li
+{
+    background: #ffffff;
+    margin: 5px;
+    color: red;
+} /* non field error */
+
+#email_error
+{
+     background: #ffffff;
+    margin: 5px;
+    color: red;
+}
+
 #main {
-	width: 100%;
-    display:flex;
+    width: 95%;
+    /*display:flex;*/
+    align:  center;
     /*align-items: center;  Vertical center alignment */
-    justify-content: center;
-	text-align: justify;
-	color: #ffffff;
+    /*justify-content: center;*/
+    text-align: center;
+    color: #ffffff;
 }
 
 #main a {
-	color: #ffffff;
+    color: #ffffff;
 }
 
 .dark
 {
+    color: #000000;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.dark a:link
+{
+    color: #006400;
+    text-decoration: underline;
+}
+
+.dark a:visited
+{
+    color: #006400;
+    text-decoration: underline;
+}
+
+.dark a:active
+{
+    color: #9fe37f;
+    text-decoration: underline;
+}
+
+.dark a:hover {
+    color:  #9fe37f;
+    text-decoration: underline;
+}
+
+#dark
+{
+    color: #000000;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#dark a:link
+{
+    color: #006400;
+    text-decoration: underline;
+}
+
+#dark a:visited
+{
+    color: #006400;
+    text-decoration: underline;
+}
+
+.dark a:active
+{
+    color: #9fe37f;
+    text-decoration: underline;
+}
+
+#dark a:hover {
+    color:  #9fe37f;
+    text-decoration: underline;
+}
+
+.signuplabel 
+{
+    display:inline-block;
+    *display: inline;     /* for IE7*/
+    zoom:1;              /* for IE7*/
+    float: left;
+    padding-top: 5px;
+    text-align: right;
+    width: 225px;
+}
+.signupinput {
+	margin-top: 1px;
+    margin-bottom: 1px;
+    display:inline-block;
+    *display: inline;     /* for IE7*/
+    zoom:1;              /* for IE7*/
+    vertical-align:middle;
+    margin-left:20px
+}
+
+
+.account_edit_label 
+{
+    display:inline-block;
+    *display: inline;     /* for IE7*/
+    zoom:1;              /* for IE7*/
+    float: left;
+    padding-top: 5px;
+    text-align: right;
+    width: 125px;
+}
+.account_edit_input {
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display:inline-block;
+    *display: inline;     /* for IE7*/
+    zoom:1;              /* for IE7*/
+    vertical-align:middle;
+    margin-left:20px
+}
+
+#studygroups
+{
+	border: 1px solid black;
+	width:  600px;
+	align:  center;
 	color: #000000;
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
+    overflow-y:  scroll; 
+    height:  350px;
 }
 
-.strokeme
+#studygroups a:link
 {
-    color: white;
-    text-shadow:
-    -1px -1px 0 #C0C0C0,
-    1px -1px 0 #C0C0C0,
-    -1px 1px 0 #C0C0C0,
-    1px 1px 0 #C0C0C0;
+    color: #006400;
+    text-decoration: underline;
 }
 
-.strokeme_spaced
+#studygroups a:visited
 {
-    color: white;
-    text-shadow:
-    -1px -1px 0 #C0C0C0,
-    1px -1px 0 #C0C0C0,
-    -1px 1px 0 #C0C0C0,
-    1px 1px 0 #C0C0C0;
-    /*letter-spacing: 1px;*/
+    color: #006400;
+    text-decoration: underline;
+}
 
+#studygroups a:active
+{
+    color: #9fe37f;
+    text-decoration: underline;
+}
+
+#studygroups a:hover {
+    color:  #9fe37f;
+    text-decoration: underline;
 }
 
 .button2 {
     background-color: #ffffff;
-    border: 1px solid green;
+    border: 1px solid #006400;
     color: green;
     padding: 5px 7px;
     text-align: center;
@@ -65,28 +199,28 @@ p {
 }
 
 .button2:hover {
-    background-color: green;
-    border: 1px solid white;
-    color: white;
+    background-color: #006400;
+    border: 1px solid #ffffff;
+    color: #ffffff;
 }
 
 
 
 #header {
-	border:  2px solid green;
-	background-color:  #9fe37f;
-	width: 100%;
-	height: 79px;
-	color:  #ffffff;
+    border:  2px solid #9fe37f;
+    background-color:  #006400;
+    width: 100%;
+    height: 79px;
+    color:  #ffffff;
 
-	 text-align: justify;
+     text-align: justify;
   -ms-text-justify: distribute-all-lines;
   text-justify: distribute-all-lines;
 
-	/*
-	   Add a drop shadow to our header.
-	*/
-	-webkit-box-shadow: 0px 4px 10px -2px rgba(0, 0, 0, 0.3);
+    /*
+       Add a drop shadow to our header.
+    */
+    -webkit-box-shadow: 0px 4px 10px -2px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 4px 10px -2px rgba(0, 0, 0, 0.3);
     box-shadow:  0 4px 10px -2px rgba(0, 0, 0, 0.3);
 
@@ -98,32 +232,21 @@ p {
   font-size: 0;
   line-height: 0
 }
-/*
-.header {
-	width: 100%;
-	height: 79px;
-	color:  #ffffff;
-	display:flex;
-    align-items: center;  Vertical center alignment
-    justify-content: left; /Horizontal alignment
-
-
-}*/
 
 .header div {
   white-space:nowrap;
 }
 
 .logo {
-	position: relative;
-	display: inline-block;
-	margin-left: 10px;
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
 
 }
 
 .header a {
-	color:  white;
-	text-decoration: none;
+    color:  white;
+    text-decoration: none;
 }
 
 a:hover {text-decoration: underline; }
@@ -149,7 +272,7 @@ a:hover {text-decoration: underline; }
 
 .button {
     background-color: #ffffff;
-    border: 1px solid green;
+    border: 1px solid #006400;
     color: green;
     padding: 10px 20px;
     text-align: center;
@@ -163,17 +286,20 @@ a:hover {text-decoration: underline; }
 }
 
 .button:hover {
-    background-color: green;
-    border: 1px solid white;
-    color: white;
+    background-color: #006400;
+    border: 1px solid #ffffff;
+    color: #ffffff;
 }
 
 #login
 {
-	position: relative;
-	align: center;
-	background-color: #9fe37f;
-	/* Rounded Corners */
+	display: block;
+	margin-left: auto;
+	margin-right:  auto;
+    position: relative;
+    align: center;
+    background-color: #006400;
+    /* Rounded Corners */
     border-radius: 17px;
     -webkit-border-radius: 17px;
     -moz-border-radius: 17px;
@@ -195,11 +321,14 @@ a:hover {text-decoration: underline; }
 
 #searchbox
 {
-	position: relative;
-	width:  550px;
-	background-color: #9fe37f;
-	text-align: justify;
-	border-radius: 17px;
+    position: relative;
+    display:  block;
+    margin-left: auto;
+    margin-right:  auto;
+    width:  550px;
+    background-color: #006400;
+    text-align: center;
+    border-radius: 17px;
     -webkit-border-radius: 17px;
     -moz-border-radius: 17px;
     margin-top: 20px;
@@ -213,11 +342,25 @@ a:hover {text-decoration: underline; }
     align: center;
 }
 
+#submit
+{
+    border-top:     2px solid #9fe37f;
+    border-left:        2px solid #9fe37f;
+    border-right:       2px solid #9fe37f;
+    border-bottom:      2px solid #9fe37f;
+    padding:        10px 20px !important;
+    font-size:      14px !important;
+    background-color:   #ffffff;
+    font-weight:        bold;
+    color:          #006400;
+    cursor: pointer;
+}
+
 .whiteSG
 {
-	border-style: solid;
+    border-style: solid;
     border-width: 1px;
-	background-color: #ffffff;
+    background-color: #ffffff;
     color: #000000;
     
     position: relative;
@@ -228,16 +371,17 @@ a:hover {text-decoration: underline; }
     padding-left: 10px;
     padding-right: 10px;
 }
+
 .greenSG
 {
-	color: #ffffff;
-	text-shadow:
+    color: #ffffff;
+    /*text-shadow:
     -1px -1px 0 #C0C0C0,
     1px -1px 0 #C0C0C0,
     -1px 1px 0 #C0C0C0,
-    1px 1px 0 #C0C0C0;
-	background-color: #9fe37f;
-	position: relative;
+    1px 1px 0 #C0C0C0;*/
+    background-color: #006400;
+    position: relative;
     align: center;
     margin-top: 0px;
     padding-top: 1px;
@@ -250,32 +394,76 @@ a:hover {text-decoration: underline; }
     
 }
 
-
-.greenBox
+#notice
 {
-	position: relative;
-	align: center;
-    background-color: #9fe37f;
+	color:  red;
+}
+
+#breadcrumbs
+{
+	width: 100%;
+	align: left;
+	color: #006400;
+	font-size: smaller;
+	margin-left: 0px;
+    margin-top: 1px;
+    padding-top: 1px;
+}
+
+#breadcrumbs a:link
+{
+    color: #006400;
+    
+    text-decoration: none;
+}
+
+#breadcrumbs a:visited
+{
+    color: #006400;
+    
+    text-decoration: none;
+}
+#breadcrumbs a:active
+{
+    color: #006400;
+    text-decoration: underline;
+}
+
+#breadcrumbs a:hover 
+{
+    color: #006400;
+    text-decoration: underline;
+}
+
+.greenbox
+{
+    /*position: relative;*/
+    width: 600px;
+    align:  center;
+    /*text-align: center;*/
+    background-color: #006400;
     /* Rounded Corners */
     border-radius: 17px;
     -webkit-border-radius: 17px;
     -moz-border-radius: 17px;
-    margin-top: 20px;
-    padding-top: 1px;
-    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    /*margin-top: 0px;*/
+    padding-top: 3px;
+    padding-bottom: 3px;
     padding-left: 10px;
     padding-right: 10px;
-    /*width: 375px;*/
-    text-align: justify;
-    -ms-text-justify: distribute-all-lines;
+    
+    /*-ms-text-justify: distribute-all-lines;
     text-justify: distribute-all-lines;
-    vertical-align: middle;
+    vertical-align: middle;*/
 }
 
 #id_username {
-	  width: 300px;
-	  color: green;
-	::-webkit-input-placeholder  { color:green; } /* Webkit */
+      width: 300px;
+      color: #006400;
+    ::-webkit-input-placeholder  { color:green; } /* Webkit */
     :-moz-placeholder { color:green; }  /* Firefox <= 18 */
     ::-moz-placeholder { color:green; }  /* Firefox >= 19 */
     :-ms-input-placeholder {  color:green; } /* Internet Explorer */
@@ -283,8 +471,8 @@ a:hover {text-decoration: underline; }
 }
 
 #id_password {
-	width: 300px;
-	color: green;
+    width: 300px;
+    color: #006400;
     ::-webkit-input-placeholder  { color:green } /* Webkit */
     :-moz-placeholder { color:green; }  /* Firefox <= 18 */
     ::-moz-placeholder { color:green; }  /* Firefox >= 19 */
@@ -402,8 +590,8 @@ background: -moz-linear-gradient( center bottom, rgb(89,222,27) 0%, rgb(83,179,3
 */
 /* Style The Dropdown Button */
 .dropbtn {
-    background-color: #9fe37f;
-    color: white;
+    background-color: #006400;
+    color: #ffffff;
     padding: 24px;
     font-size: 16px;
     border: none;
@@ -429,7 +617,7 @@ background: -moz-linear-gradient( center bottom, rgb(89,222,27) 0%, rgb(83,179,3
 
 /* Links inside the dropdown */
 .dropdown-content a {
-    color: black;
+    color: #000000;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -447,7 +635,7 @@ background: -moz-linear-gradient( center bottom, rgb(89,222,27) 0%, rgb(83,179,3
 .dropdown:hover .dropbtn {
     /*background-color: #3e8e41;*/
     background-color: #ffffff;
-    color: green;
+    color: #006400;
 }
 
 /*

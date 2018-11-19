@@ -2,6 +2,11 @@
 3. python manage.py migrate
 4. python manage.py createsuperuser . . .
 
+CHAT is based on:
+https://channels.readthedocs.io/en/latest/tutorial/part_2.html
+Requires docker and redis, so cannot run in our real application.
+Should we have non real-time messaging instead?
+
 Creating new app in project:
 python manage.py startapp <project name>
 
@@ -71,5 +76,12 @@ git remote add origin https://github.com/NathanOliphant/StudyBuddy.git
 push the changes:
 git push -u origin master
 
+
+git on pythonanywhere:
+back up StudyPartnerFinder on pythonanywhere
+git clone https://github.com/NathanOliphant/StudyPartnerFinder.git
+update settings.py to fix root
+python manage.py collectstatic
+restart server
 
 

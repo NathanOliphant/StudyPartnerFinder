@@ -14,41 +14,41 @@
 </head>
 <body>
     <div id='header' class='header'>
-        <div class="box1"><div class="logo"><img src="{% static "images/SPF-Logo.jpg" %}" width="150" height="75"  alt="Study Partner Finder" /></div></div>
-        
-       <!--  <div class="box3">
-			<form id="search-form_3">
-			<input type="text" class="search_3"/>
-			<input type="submit" class="submit_3" value="Search" />
-             </form>
-        </div> -->
-        
+        <div class="box1">
+            <div class="logo">
+                <a href="/"><img src="{% static "images/SPF-Logo.jpg" %}" width="150" height="75"  
+                            alt="Study Partner Finder" /></a>
+            </div>
+        </div>
         <div class="box1">
         {% if user.is_authenticated %}
            <div class="dropdown">
                 <button class="dropbtn">
-                {% if user.first_name != "" %} 
-                    {{ user.first_name }} 
+                {% if user.username != "" %} 
+                    {{ user.username }} 
                  {% else %}
-                    {{ user.username }}
+                    {{ user.first_name }}
                  {% endif %} &#9662;</button>
                 <div class="dropdown-content">
                     <a href="/accounts/view/">My Profile</a>
-                    <a href="#">My Study Groups</a>
+                    <a href="/studygroups/">My Study Groups</a>
                     <a href="/courses/">Courses</a>
                     <a href="{% url 'logout' %}">Logout</a>
                 </div>
             </div>
         {% else %}
-           <div><a class="header" href="{% url 'login' %}">Sign In</a> | <a href="{% url 'signup' %}">Register</a></div>
+            <div>
+                <a class="header" href="{% url 'login' %}">Sign In</a> | 
+                <a href="{% url 'signup' %}">Register</a>
+            </div>
         {% endif %}
         </div>
-        
         <span class="stretch"></span>
     </div>
+    <div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>
     <div id="main">
     <main>
-        {% block content %}
+       {% block content %}
         {% endblock %}
     </main>
     </div>
