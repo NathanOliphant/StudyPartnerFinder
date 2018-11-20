@@ -28,7 +28,9 @@ Section: {{ course.cn_number }}</p>
 {% if studygroup_list %}
 {% for sg in studygroup_list %}
 <h2>{{ sg.studygroup.post_title }}</h2>
-<p>Creator:  {{ sg.owner.username }} {% if sg.mine %} - <a href="/studygroups/update/{{sg.studygroup.id}}" style="color:#000000;">Edit</a> or <a href="" style="color:#000000;">Deactivate</a> group{% endif %}</p>
+{% if sg.mine %} 
+<p>Admin:  <a href="/studygroups/update/{{sg.studygroup.id}}" style="color:#000000;">Edit</a> or <a href="" style="color:#000000;">Deactivate</a> Studygroup</p>
+{% endif %}
 <p>Days Available:  <span id='days_available_{{ sg.studygroup.id }}'>
     {% if sg.days_available %}
     {% for d in sg.days_available %}
@@ -37,19 +39,26 @@ Section: {{ course.cn_number }}</p>
     {% endif %}</span></p>
 <p>Hours Available: {{ sg.studygroup.hours_available_start }} to {{ sg.studygroup.hours_available_end }}</p>
 <p>Members:  {{ sg.members|length }} out of {{ sg.studygroup.max_members }}</p>
-{% if g.studygroup.online_only %}}
+{% if sg.studygroup.online_only %}
 <p>Online Only</p>
 {% endif %}
-{% if g.studygroup.gender_specific %}}
-<p>Gender Specific</p>
-{% endif %}
-<p>Members:
-    <ul>
-    {% for m in sg.members %}
-    <li>{{ m.user.username }} ({{ m.user.email }})</li>
-    {% endfor %}
-    </ul>
+{% if sg.studygroup.gender_specific%}
+<p>
+    Gender Specific: 
+    {% if sg.studygroup.gender_specific == 'M' %}
+    Male Only
+    {% endif %}
+    {% if sg.studygroup.gender_specific == 'F' %}
+    Female Only
+    {% endif %}
+    {% if sg.studygroup.gender_specific == 'N' %}
+    Nonbinary Only
+    {% endif %}
+    {% if sg.studygroup.gender_specific == 'U' %}
+    Everyone Welcome!
+    {% endif %}
 </p>
+{% endif %}
 {% if not sg.i_am_in_group %}
 <a href="/studygroups/join/{{ sg.studygroup.id }}" style="color:black;">Join Group</a>
 

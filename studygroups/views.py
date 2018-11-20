@@ -1,18 +1,20 @@
 from django.shortcuts import render
 from .forms import StudyGroupCreationForm, StudyGroupEditForm
-from django import forms
+import simplejson
+#from django import forms
 # Create your views here.
+from django.http import JsonResponse
 from django.http import HttpResponse
 from .models import Course, StudyGroup, StudyGroupUser, BlockList
 from django.shortcuts import redirect
 from users.models import CustomUser
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .utils import SG, GetMyJoinedStudygroups
+#from django.contrib.auth.mixins import LoginRequiredMixin
+from .utils import GetMyJoinedStudygroups
 
-import datetime, time
-from courses.views import course
-from studygroups.models import Days
+import datetime
+#from courses.views import course
+from studygroups.models import Days, Message
 
 
 def index(request):
@@ -75,7 +77,7 @@ def add(request, pk=None):
                 sg.save()
             
             # All members should be in the StudyGroup, so add yourself now.
-            su = StudyGroupUser.objects.create(
+            StudyGroupUser.objects.create(
                 user = request.user,
                 studygroup = sg)
             
@@ -183,35 +185,29 @@ def update(request, id=None):
     return redirect('/studygroups/mine')
 
 def view(request, id=None):
-    #with open("sg_view_id.txt", "w+") as f:
-    #    f.write('Post == {}\n'.format(id))
     if id is not None:
-        #with open("sg_view_id2.txt", "w+") as f:
-        #    f.write('Post == {}\n'.format(id))
         mine = False
         in_group = False
         members_list = list()
         su = StudyGroupUser.objects.filter(studygroup = id).select_related('user', 'studygroup')
         # Only need the first entry to get sg details.
         studygroup =su[0].studygroup
-        #with open("sg_view_sg.txt", "w+") as f:
-        #    f.write('SG == {}\n'.format(studygroup.id))
+        
+        message_list = Message.objects.filter(studygroup = studygroup.id)
         
         if '{}'.format(request.user.id) is '{}'.format(studygroup.creator):
             mine = True
-        #with open("sg_view_mine.txt", "w+") as f:
-        #    f.write('Mine == {}\n'.format(mine))
+        
         for u in su:
             if u.user.id == request.user.id:
                 in_group = True
             members_list.append(u)   
-        #with open("sg_view_members_in_group.txt", "w+") as f:
-        #    f.write("in group? {}".format(in_group))
+        
         owner = studygroup.creator
         
         days_available = studygroup.days_available.all()
             
-    context = { 'id': id, 'studygroup': studygroup , 'self_owned': mine, 'am_a_member': in_group, 'members_list': members_list, 'days_available': days_available}
+    context = { 'id': id, 'studygroup': studygroup , 'message_list': message_list, 'self_owned': mine, 'am_a_member': in_group, 'members_list': members_list, 'days_available': days_available}
     template = 'studygroups/view.html'
     
     return render(request, template, context)
@@ -230,28 +226,21 @@ def join(request, id=None):
         is_blocked = False
         sg = StudyGroup.objects.get(id = id)
         
-        #with open("sg_join_uname.txt", "w+") as f:
-        #    f.write('SG Username? {}\n'.format(sg.creator.username))
-            
         # We don't need to join our own groups!
         if sg.creator == request.user.id:
             already_in_group = True
         
-        #with open("sg_join_id.txt", "w+") as f:
-        #    f.write('Already in group? {}\n'.format(already_in_group))
         group_full = False
         
         if already_in_group is False and sg is not None:
             # Also confirm that we haven't already joined, as it would be a waste to join again.
             su = StudyGroupUser.objects.filter(studygroup = id, user = request.user.id).select_related('user')
-            #with open("sg_join_users.txt", "w+") as f:
+            
             if su is not None:
                 if len(su) >= sg.max_members:
                     group_full = True
                 # Check if user already a member.
                 for u in su:
-                    #f.write('User? {}\n'.format(u.user.username))
-                    #f.write('Users {} and {}  match? {}\n'.format(u.user.id, request.user.id, u.user.id == request.user.id))
                     if u.user.id == request.user.id:
                         already_in_group = True
             # Also confirm that user hasn't been blocked by the creator of this SG.
@@ -265,8 +254,6 @@ def join(request, id=None):
             # If already a member, should notify that they are already a member.
             # Otherwise, add to the StudygroupUser table.
             if not is_blocked and not already_in_group and not group_full:
-            #with open("sg_join_create.txt", "w+") as f:
-            #    f.write("About to create StudyGroupUser")
                 s = StudyGroupUser.objects.create(
                     user = request.user,
                     studygroup = sg)
@@ -281,3 +268,56 @@ def join(request, id=None):
 @login_required
 def acceptJoin(request, id=None):
     pass
+
+
+# Receive message from user, save, and let user know success/failure.
+def message(request):
+    is_saved = False
+    error = True
+    msg = None
+    # Confirm that the following are valid:
+    body = request.GET.get('new_message', None)
+    sg = request.GET.get('studygroup', None)
+    title = request.GET.get('title', None)
+        
+    # Only a member of the studygroup should be able to post a message,
+    # so confirm that the user is a valid member before continuing.
+    # Save if valid
+    if body:
+        studygroup = StudyGroup.objects.get(id=sg)
+        msg = Message.objects.create(
+            user = request.user,
+            studygroup = studygroup,
+            title = title,
+            body = body
+            )
+        msg.save()
+        is_saved = True
+        error = False
+    
+    data = {
+        'is_saved': is_saved, 
+        'error': error, 
+        'msg_id': msg.id, 
+        # We probably want our date formatted a little more user-friendly
+        'msg_date': msg.date, 
+        'msg_title': msg.title, 
+        'msg_body': msg.body
+    }
+    return JsonResponse(data)
+
+# Deactivating a studygroup will make it no longer searchable.
+def deactivate(request, val):
+    # Only the creator should be able to perform a deactivation, so confirm that
+    # request.user is indeed the creator.
+    message = {'result':''}
+    with open("hello_ajax.txt", "w") as f:
+        f.write('R: {}'.format(request))
+        f.write('V: {}'.format(val))
+    if request.is_ajax():
+        with open("hello_ajax.txt", "w") as f:
+            f.write('R: {}'.format(request))
+            f.write('V: {}'.format(val))
+        # put logic here
+        #json = simplejson.dumps()   convert data into json
+        return HttpResponse(message, mimetype='application/json')

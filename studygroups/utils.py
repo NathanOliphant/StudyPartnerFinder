@@ -1,20 +1,22 @@
 #
 #    Studygroup utilities and classes used by all applications.
 #
-from .models import Course, StudyGroup, StudyGroupUser, BlockList
+from .models import Course, StudyGroup, StudyGroupUser, BlockList, Message
 from users.models import CustomUser
 
 
 # StudyGroups as displayed on the page need to have full member details, so we have 
 # a version that includes everything needed.
 class SG(object):
-    def __init__(self, studygroup, days_available=False, mine=False, members = [], owner=CustomUser, i_am_in_group = False):
+    def __init__(self, studygroup, days_available=False, mine=False, members = [], 
+                 owner=CustomUser, i_am_in_group = False, messages = False):
         self.mine = mine
         self.studygroup = studygroup
         self.owner = owner
         self.members = members
         self.days_available = days_available
         self.i_am_in_group = i_am_in_group
+        self.messages = messages
         
 def GetMyJoinedStudygroups(user):
     my_studygroups = list()
@@ -32,6 +34,8 @@ def GetMyJoinedStudygroups(user):
     # Now add the other members, although there HAS to be an easier way!
     for i, sg in enumerate(my_studygroups):
         other_members = list()
+        
+        sg.messages = Message.objects.filter(studygroup = sg.studygroup.id)
         
         sg.days_available = sg.studygroup.days_available.all()
         

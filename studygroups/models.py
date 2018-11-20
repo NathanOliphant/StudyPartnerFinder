@@ -1,12 +1,20 @@
 from django.db import models
-#from django.contrib.auth.models import User as AuthUser
 from users.models import CustomUser
 import datetime
 from django.core.validators import MinValueValidator
-import datetime
+from django.utils.timezone import now as dnow
+#
 now = datetime.datetime.now()
 
+MY_SEMESTER_CHOICES = (
+    ('Spring', 'Spring'),
+    ('Summer', 'Summer'),
+    ('Fall', 'Fall')
+)
+
 # Create your models here.
+
+# Subjects are used to categorize courses for search.
 class Subject(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=256)
@@ -15,7 +23,8 @@ class Subject(models.Model):
     
     def __str__(self):
         return self.name
-    
+
+#    
 class Course(models.Model):
     id = models.BigAutoField(primary_key=True)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
@@ -23,28 +32,13 @@ class Course(models.Model):
     class_name = models.CharField(max_length=200)
     instructor = models.CharField(max_length=100, default='')
     
-    MY_SEMESTER_CHOICES = (
-        ('Spring', 'Spring'),
-        ('Summer', 'Summer'),
-        ('Fall', 'Fall')
-    )
+    
     semester = models.CharField(max_length=6, choices=MY_SEMESTER_CHOICES)
     
-    MY_YEAR_CHOICES = (
-        (2018, 2018),
-        (2019, 2019),
-        (2020, 2020),
-        (2021, 2021),
-        (2022, 2022),
-        (2023, 2023),
-        (2024, 2024),
-        (2025, 2025)
-    )
-    year = models.IntegerField(default=2018, choices=MY_YEAR_CHOICES)
+    year = models.IntegerField(default=now.year)
     is_active = models.BooleanField(default=True)
     
     def __str__(self):
-        #return '{}, {} {}, {}, {}'.format(self.className, self.semester, self.year, self.instructor, self.cNNumber)
         return '{}'.format(self.id)
     
 class Days(models.Model):
@@ -57,7 +51,10 @@ class Days(models.Model):
         ('Saturday', 'Saturday'),
         ('Sunday', 'Sunday')
     )
-    days_available = models.CharField(max_length=255, choices=MY_DAY_CHOICES, null=True)
+    days_available = models.CharField(
+        max_length=255, 
+        choices=MY_DAY_CHOICES, 
+        null=True)
     
     def __str__(self):
         return '{}'.format(self.days_available)
@@ -72,7 +69,9 @@ class StudyGroup(models.Model):
     is_active = models.BooleanField(default=True)
     #weekday = models.BooleanField(default=True)
     #weekend = models.BooleanField(default=True)
-    max_members = models.PositiveIntegerField(default=1000, validators=[MinValueValidator(1)])
+    max_members = models.PositiveIntegerField(
+        default=1000, 
+        validators=[MinValueValidator(1)])
     MY_GENDER_CHOICES = (
          ('U', 'Undeclared'),
         ('M', 'Male'),
@@ -81,34 +80,37 @@ class StudyGroup(models.Model):
     )
     gender_specific = models.CharField(max_length=15, choices=MY_GENDER_CHOICES)
     
-    #MY_DAY_CHOICES = (
-    #     ('Monday', 'Monday'),
-    #    ('Tuesday', 'Tuesday'),
-    #    ('Wednesday', 'Wednesday'),
-    #    ('Thursday', 'Thursday'), 
-    #    ('Friday', 'Friday'),
-    #    ('Saturday', 'Saturday'),
-    #    ('Sunday', 'Sunday')
-    #)
     days_available = models.ManyToManyField(Days)
-    hours_available_start = models.TimeField(auto_now_add=False, blank=True, null=True, default=datetime.time(0, 1))
-    hours_available_end = models.TimeField(auto_now_add=False, blank=True, null=True, default=datetime.time(23, 59))
+    hours_available_start = models.TimeField(
+        auto_now_add=False, 
+        blank=True, 
+        null=True, 
+        default=datetime.time(0, 1))
+    hours_available_end = models.TimeField(
+        auto_now_add=False, 
+        blank=True, 
+        null=True, 
+        default=datetime.time(23, 59))
     online_only = models.BooleanField(default = False)
     
-    #def __str__(self):
-    #    return '{}, {}, {}'.format(self.id, self.creatorUserId, self.course)
-MY_SEMESTER_CHOICES = (
-         ('Fall', 'Fall'),
-        ('Spring', 'Spring'),
-        ('Summer', 'Summer'),
-    )  
+# Since we are limiting search to only the current semester, this will be updated every
+# semester.  
 class CurrentSemester(models.Model):
-    semester = models.CharField(max_length=6, choices=MY_SEMESTER_CHOICES, default="Fall")
+    semester = models.CharField(
+        max_length=6, 
+        choices=MY_SEMESTER_CHOICES, 
+        default="Fall")
     year = models.PositiveIntegerField(default = now.year)
     
 class BlockList(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='blocker')
-    blocked_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='blockee')
+    user = models.ForeignKey(
+        CustomUser, 
+        on_delete=models.CASCADE, 
+        related_name='blocker')
+    blocked_user = models.ForeignKey(
+        CustomUser, 
+        on_delete=models.CASCADE, 
+        related_name='blockee')
 
 class StudyGroupUser(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
@@ -119,7 +121,7 @@ class StudyGroupUser(models.Model):
 class Message(models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    date = models.DateTimeField()
+    date = models.DateTimeField(default=dnow)
     studygroup = models.ForeignKey(StudyGroup, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     body = models.CharField(max_length=2000)

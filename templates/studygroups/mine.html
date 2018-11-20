@@ -6,33 +6,63 @@
 <div style="position: relative; color: #000000; align:center;margin-top:15px; align:center; text-align: justify">
 {% if user.is_authenticated %}
 <p align="center">My Studygroups</p>
+
 {% for studygroup in studygroup_joined_list %}
 <div {% if forloop.counter0|divisibleby:2 %}class="white_sg"{% else %}class="green_sg"{% endif %}> 
-    <p><a href="/studygroups/view/{{ studygroup.studygroup.id }}" style="color:blue">{{ forloop.counter }}:  {{ studygroup.studygroup.post_title }}</a></p>
-    <p>Course: {{ studygroup.studygroup.course.class_name }}</p>
-    <p>Section: {{ studygroup.studygroup.course.cn_number }}</p>
-    <p>Instructor: {{ studygroup.studygroup.course.instructor }}</p>
-    <p>Semester: {{ studygroup.studygroup.course.semester }} {{ studygroup.studygroup.course.year }}</p>
-    <p>Owner: {{ studygroup.owner.username }}
-    {% if studygroup.mine  %}
-    ***MINE***
-    {% endif %}</p>
-    <p>Active: {{ studygroup.studygroup.is_active }}</p>
-    <p>Filters:</p>
-    <p>Gender:  {{ studygroup.studygroup.gender_specific }}</p>
-    <p>Days:  <span id='days_available_{{ studygroup.studygroup.id }}'>
+    <div style="display: inline-block; *display: inline; zoom: 1; width: 600px; text-align: left;">
+    <p>
+        <a href="/studygroups/view/{{ studygroup.studygroup.id }}" {% if forloop.counter0|divisibleby:2 %} style="color: #006400;"{% endif %}>{{ forloop.counter }}:  {{ studygroup.studygroup.post_title }}</a>
+        {% if studygroup.mine  %}
+        ***MINE***
+        {% endif %}
+    </p>
+    <p><span class="studygroup_label">Course:</span><span class="studygroup_data">{{ studygroup.studygroup.course.class_name }}</span></p>
+    <p><span class="studygroup_label">Section:</span><span class="studygroup_data">{{ studygroup.studygroup.course.cn_number }}</span></p>
+    <p><span class="studygroup_label">Instructor:</span><span class="studygroup_data">{{ studygroup.studygroup.course.instructor }}</span></p>
+    <p><span class="studygroup_label">Semester:</span><span class="studygroup_data">{{ studygroup.studygroup.course.semester }} {{ studygroup.studygroup.course.year }}</span></p>
+    <p><span class="studygroup_label">Active:</span><span class="studygroup_data">{{ studygroup.studygroup.is_active }}</span></p>
+    <p><span class="studygroup_label">Filters:</span><span class="studygroup_data"></span></p>
+    <p>
+        <span class="studygroup_label">Gender:</span><span class="studygroup_data">
+    {% if studygroup.studygroup.gender_specific == 'M' %}
+    Male Only
+    {% endif %}
+    {% if studygroup.studygroup.gender_specific == 'F' %}
+    Female Only
+    {% endif %}
+    {% if studygroup.studygroup.gender_specific == 'N' %}
+    Nonbinary Only
+    {% endif %}
+    {% if studygroup.studygroup.gender_specific == 'U' %}
+    Everyone Welcome!
+    {% endif %}
+        </span>
+    </p>
+    <p><span class="studygroup_label">Days:</span><span class="studygroup_data"><span id='days_available_{{ studygroup.studygroup.id }}'>
     {% if studygroup.days_available %}
     {% for d in studygroup.days_available %}
     {{ d }}
     {% endfor %}
-    {% endif %}</span></p>
-    <p>Hours:  {{ studygroup.studygroup.hours_available_start }} to {{ studygroup.studygroup.hours_available_end }}</p>
-    <p>Members/Max:  {{ studygroup.members|length }}/{{ studygroup.studygroup.max_members }}</p>
-    <p>Online only:  {{ studygroup.studygroup.online_only }}</p>
-    <p>Members:</p>
-    {% for member in studygroup.members %}
-    <p>{{ forloop.counter }}: {{ member.email }}{% if studygroup.mine and not member.id == user.id %} <a href="" style="color:blue">Block User</a>{% endif %}</p>
-    {% endfor %}
+    {% endif %}</span></span></p>
+    <p><span class="studygroup_label">Hours:</span><span class="studygroup_data">{{ studygroup.studygroup.hours_available_start }} to {{ studygroup.studygroup.hours_available_end }}</span></p>
+    <p><span class="studygroup_label">Members:</span><span class="studygroup_data">{{ studygroup.members|length }}/{{ studygroup.studygroup.max_members }}</span></p>
+    <p><span class="studygroup_label">Online:</span><span class="studygroup_data">{{ studygroup.studygroup.online_only }}</span></p>
+    </div>
+
+    {% if studygroup.messages %}
+    <div id="messages_{{ studygroup.studygroup.id }}" style="display: inline-block;* display: inline; zoom: 1; vertical-align: top; border: 1px black solid; width: 570px; height: 470px; overflow-y: auto; background-color: #ffffff; color: #000000">
+        <p>Messages</p>
+        {% for message in studygroup.messages %}
+        <span id="messages_{{ studygroup.studygroup.id }}_span">
+        <span id="message_{{  message.id }}">
+        <p>{{ message.date }} - {{ message.title }}</p>
+        <p>{{ message.body }}</p>
+        </span>
+        <hr />
+        </span>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
 <script>
 

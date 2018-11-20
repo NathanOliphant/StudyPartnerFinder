@@ -9,4 +9,6 @@ urlpatterns = [
     path('update/<slug:id>', views.update, name='index'),
     path('view/<slug:id>', views.view, name='view'),
     path('join/<slug:id>', views.join, name='join'),
+    path('message/', views.message, name='message')
+    #url(r'^ajax/validate_username/$', views.validate_username, name='validate_username'),
 ]

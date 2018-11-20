@@ -43,9 +43,9 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',  # new
     'django_static_jquery',
     'accounts.apps.AccountsConfig',
-    'channels',
-    'chat',
-    'django_bootstrap_breadcrumbs'
+    #'channels',
+    #'chat',
+    #'django_bootstrap_breadcrumbs'
 ]
 
 # Email
@@ -95,18 +95,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'StudyPartnerFinder.wsgi.application'
 
-ASGI_APPLICATION = 'StudyPartnerFinder.routing.application'
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
+# We only need ASGI if we enable chat.  
+#ASGI_APPLICATION = 'StudyPartnerFinder.routing.application'
+#CHANNEL_LAYERS = {
+#    'default': {
+#        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#        'CONFIG': {
             #"hosts": [('127.0.0.1', 6379)],
             #"hosts": [('redis-11329.c60.us-west-1-2.ec2.cloud.redislabs.com', 11329)],
-            "hosts": ["redis://:qZOkKZ0GqiKAeqehJFsSzkoccX3WWO3G@redis-11329.c60.us-west-1-2.ec2.cloud.redislabs.com:11329/0"],
-            "symmetric_encryption_keys": [SECRET_KEY],
-        },
-    },
-}
+#            "hosts": ["redis://:qZOkKZ0GqiKAeqehJFsSzkoccX3WWO3G@redis-11329.c60.us-west-1-2.ec2.cloud.redislabs.com:11329/0"],
+#            "symmetric_encryption_keys": [SECRET_KEY],
+#        },
+#    },
+#}
 #CACHES = {
 #    'default': {
 #                'BACKEND': 'redis_cache.RedisCache',

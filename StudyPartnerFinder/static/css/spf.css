@@ -106,6 +106,28 @@ ul.errorlist li
     text-decoration: underline;
 }
 
+.studygroup_label 
+{
+	display:inline-block;
+    *display: inline;     /* for IE7*/
+    zoom:1;              /* for IE7*/
+    float: left;
+    padding-top: 2px;
+    text-align: right;
+    width: 75px;
+}
+
+.studygroup_data {
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display:inline-block;
+    *display: inline;     /* for IE7*/
+    zoom:1;              /* for IE7*/
+    vertical-align:middle;
+    padding-top: 2px;
+    margin-left:10px
+}
+
 .signup_label 
 {
     display:inline-block;
@@ -285,6 +307,22 @@ a:hover {text-decoration: underline; }
     cursor: pointer;
 }
 
+.button_float {
+    background-color: #ffffff;
+    border: 1px solid #006400;
+    color: green;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    float: left;
+}
+
 .button:hover {
     background-color: #006400;
     border: 1px solid #ffffff;
@@ -358,8 +396,8 @@ a:hover {text-decoration: underline; }
 
 .white_sg
 {
-    border-style: solid;
-    border-width: 1px;
+    //border-style: solid;
+    //border-width: 1px;
     background-color: #ffffff;
     color: #000000;
     
@@ -391,7 +429,6 @@ a:hover {text-decoration: underline; }
     border-style: solid;
     border-color: #000000;
     border-width: 1px;
-    
 }
 
 #notice

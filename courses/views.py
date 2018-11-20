@@ -1,16 +1,15 @@
 from django.shortcuts import render
-from studygroups.models import Course, StudyGroup, StudyGroupUser, Subject, CurrentSemester, Days
+from studygroups.models import Course, Subject, CurrentSemester
 from django.shortcuts import redirect
 from .forms import SearchForm
-from users.models import CustomUser
-from studygroups.utils import SG, GetStudygroupsForCourse
+from studygroups.utils import GetStudygroupsForCourse
 
 class SearchTemplate(object):
     form = SearchForm() # An unbound form
     # Courses returned should be all active, unless query requests
     # by date or semester or subject.
     # Need to return a list of years to be used for courses, and semesters.
-     # Grab distinct year and semester from courses?  
+    # Grab distinct year and semester from courses?  
     # How about a default year/semester?
     current_semester = CurrentSemester.objects.get()
     subject_results = Subject.objects.all()
@@ -29,21 +28,17 @@ class SearchTemplate(object):
 
 # Create your views here.
 def index(request, course_id = None):
-    with open("hello_post.txt", "w+") as f:
-        f.write('Post == {}\n'.format(request.method)) 
     if request.method == 'POST': # If the form has been submitted...
             form = SearchForm(request.POST) # A form bound to the POST data
-            with open("hello_post_valid.txt", "w+") as f:
-                f.write('Post Valid == {}\n'.format(form.is_valid)) 
             if form.is_valid(): # All validation rules pass
                 # Process the data in form.cleaned_data
                 # ...
-                current_semester = CurrentSemester.objects.get()
+                #current_semester = CurrentSemester.objects.get()
                 
                 data = form.cleaned_data
-                year = current_semester.year
-                semester = current_semester.semester
-                subject = data['study_subject']
+                #year = current_semester.year
+                #semester = current_semester.semester
+                #subject = data['study_subject']
                 selected_course = data['study_courses']
                 
                 # Show results here.

@@ -1,9 +1,7 @@
 from django import forms
-from studygroups.models import Subject, Course, StudyGroup, StudyGroupUser
+from studygroups.models import Course, StudyGroup
 from users.models import CustomUser
-#import datetime
-import datetime, time
-from django.core.validators import MinValueValidator
+#from django.core.validators import MinValueValidator
 
 #used_his = forms.ModelMultipleChoiceField(queryset=Gun.objects.filter(user__id=1))
 
@@ -74,11 +72,6 @@ class StudyGroupCreationForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(StudyGroupCreationForm, self).__init__(*args, **kwargs)
-        #with open("hello_args.txt", "w+") as f:
-        #    f.write('args == {}\n'.format(args[0]['hoursAvailableEnd']))
-        #    f.write('args == {}\n'.format(args[0]['hoursAvailableStart']))
-        
-        #
         #user_id = args[-1]['userid']
         course_id = args[-1]['courseid']
         
@@ -147,13 +140,5 @@ class StudyGroupEditForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(StudyGroupEditForm, self).__init__(*args, **kwargs)
-        #with open("hello_args.txt", "w+") as f:
-        #    f.write('args == {}\n'.format(args[0]['hoursAvailableEnd']))
-        #    f.write('args == {}\n'.format(args[0]['hoursAvailableStart']))
         
-        #
-        #user_id = args[-1]['userid']
-        #course_id = args[-1]['courseid']
-        
-        #self.fields['course'].queryset = Course.objects.filter(pk = course_id)
         

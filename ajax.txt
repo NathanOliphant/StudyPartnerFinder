@@ -1,0 +1,3 @@
+SG: 3
+Body: Enter new message . . . 
+Request: <WSGIRequest: GET '/studygroups/message/?csrfmiddlewaretoken=isjg2Wyqx2EcemoRpd66fz2cqiDkQD7ySGDJiOdSDaEUnYTx3qYaytihIC0FEDKy&new_message=Enter%20new%20message%20.%20.%20.%20&title=This%20is%20the%20new%20message%20title&studygroup=3'>
