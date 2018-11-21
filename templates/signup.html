@@ -87,33 +87,39 @@
   </form>
   </div>
   </div>
-  <script language="JavaScript" type="text/javascript">
+{% endblock %}
+
+{% block javascript %}
+<script language="JavaScript" type="text/javascript">
   function confirmEmail()
   {
-	  ret = true;
-	  university = "humboldt.edu";
-	  emailExtension = $( "#id_email" ).val().split('@')[1];
-	  if (university != emailExtension)
-	  {
-		  $( "#email_error" ).text("Please enter a valid HSU email address.")
-		  $( "#id_email" ).val('');
-		  $( "#id_email" ).focus();
-		  ret =  false;
-	  }
-	  return ret;
-	  
+      ret = true;
+      university = "humboldt.edu";
+      emailExtension = $( "#id_email" ).val().split('@')[1];
+      if (university != emailExtension)
+      {
+          $( "#email_error" ).text("Please enter a valid HSU email address.")
+          $( "#id_email" ).val('');
+          $( "#id_email" ).focus();
+          ret =  false;
+      }
+      return ret;
+      
   }
   function updateUsername()
   {
-	  username = $( "#id_email" ).val().split('@')[0];
-	  alert(username);
-	  $( "#id_username" ).val( username );
-	  return confirmEmail();
+      username = $( "#id_email" ).val().split('@')[0];
+      alert(username);
+      $( "#id_username" ).val( username );
+      return confirmEmail();
   }
-  </script>
-  <script>
-$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
-$('#breadcrumbs').html( $bc.append(' &gt; <a href="/accounts/">Accounts</a>') );
-$('#breadcrumbs').html( $bc.append(' &gt; Signup') );
+  
+  $( document ).ready(function() 
+	{
+	  $bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
+	  $('#breadcrumbs').html( $bc.append(' &gt; <a href="/accounts/">Accounts</a>') );
+	  $('#breadcrumbs').html( $bc.append(' &gt; Signup') );
+	});
+
 </script>
 {% endblock %}

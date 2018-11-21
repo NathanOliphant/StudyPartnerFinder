@@ -14,58 +14,16 @@
 	<a href="/accounts/password_reset/">Update Password</a> | 
     <a href="/accounts/edit/">Update Account</a>
 </div>
-<div style="position: relative; color: #000000; align:center;margin-top:15px; align:center; text-align: justify">
-<p align="center">My Studygroups</p>
-{% for studygroup in studygroup_joined_list %}
-<div {% if forloop.counter0|divisibleby:2 %}class="white_sg"{% else %}class="green_sg"{% endif %}> 
-    <p><a href="/studygroups/view/{{ studygroup.studygroup.id }}" style="color:blue">{{ forloop.counter }}:  {{ studygroup.studygroup.post_title }}</a></p>
-    <p>Course: {{ studygroup.studygroup.course.class_name }}</p>
-    <p>Section: {{ studygroup.studygroup.course.cn_number }}</p>
-    <p>Instructor: {{ studygroup.studygroup.course.instructor }}</p>
-    <p>Semester: {{ studygroup.studygroup.course.semester }} {{ studygroup.studygroup.course.year }}</p>
-    <p>Owner: {{ studygroup.owner.username }}
-    {% if studygroup.mine  %}
-    ***MINE***
-    {% endif %}</p>
-    <p>Active: {{ studygroup.studygroup.is_active }}</p>
-    <p>Filters:</p>
-    <p>Gender:  {{ studygroup.studygroup.gender_specific }}</p>
-    <p>Days:  <span id='days_available_{{ sg.studygroup.id }}'>{{ studygroup.studygroup.days_available }}</span></p>
-    <p>Hours:  {{ studygroup.studygroup.hours_available_start }} to {{ studygroup.studygroup.hours_available_end }}</p>
-    <p>Members/Max:  {{ studygroup.members|length }}/{{ studygroup.studygroup.max_members }}</p>
-    <p>Online only:  {{ studygroup.studygroup.online_only }}</p>
-    <p>Members:</p>
-    {% for member in studygroup.members %}
-    <p>{{ forloop.counter }}: {{ member.email }}{% if studygroup.mine and not member.id == user.id %} <a href="" style="color:blue">Block User</a>{% endif %}</p>
-    {% endfor %}
-</div>
-<script>
-days_string = 'Every Day';
-{% autoescape off %}
-sg_days_{{ studygroup.studygroup.id }} = {{ studygroup.studygroup.days_available }};
-{% endautoescape %}
-// Create a string, as we are only showing selected.
-if (sg_days_{{ studygroup.studygroup.id }}.length > 0)
+{% endblock %}
+
+{% block javascript %}
+<script language="JavaScript" type="text/javascript">
+$( document ).ready(function() 
 {
-    days_string = '';
-    for (i = 0; i < sg_days_{{ studygroup.studygroup.id }}.length; i++)
-    {
-        if (i > 0)
-        {
-            days_string += ', ';
-        }
-        days_string += sg_days_{{ studygroup.studygroup.id }}[i];
-    }
-}
-$( "#days_available_{{ studygroup..studygroup.id }}" ).text(days_string);
- 
-</script>
-{% endfor %}
-</div>
-<script>
-$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
-$('#breadcrumbs').html( $bc.append(' &gt; <a href="/accounts/">Accounts</a>') );
-$('#breadcrumbs').html( $bc.append(' &gt; {{ user.username }}') );
+	$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
+	$('#breadcrumbs').html( $bc.append(' &gt; <a href="/accounts/">Accounts</a>') );
+	$('#breadcrumbs').html( $bc.append(' &gt; {{ user.username }}') );
+});
 </script>
 {% endblock %}
 

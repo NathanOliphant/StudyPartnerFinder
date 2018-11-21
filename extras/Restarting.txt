@@ -5,6 +5,17 @@ Still need:
 4. Add comments/clean up code.
 
 
+
+DaysAvailable:
+
+HoursAvailable:
+If user enters search hours start, 
+
+If SG has gender setting:
+If user does not match gender, do not show SG . . .
+
+
+
 2. python manage.py makemigrations
 3. python manage.py migrate
 4. python manage.py createsuperuser . . .
@@ -16,6 +27,7 @@ django-bootstrap-breadcrumbs==0.9.1
 django-jquery==3.1.0
 django-static-jquery==2.1.4
 Twisted==18.9.0
+simplejson
 
 CHAT is based on:
 https://channels.readthedocs.io/en/latest/tutorial/part_2.html

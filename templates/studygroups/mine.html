@@ -64,36 +64,6 @@
     </div>
     {% endif %}
 </div>
-<script>
-
-days_string = 'Every Day';
-sg_days_{{ studygroup.studygroup.id }} = '';
-
-{% if studygroup.days_available %}
-{% for d in studygroup.days_available %}
-{% autoescape off %}
-sg_days_{{ studygroup.studygroup.id }} = {{ d }};
-{% endautoescape %}
-{% endfor %}
-{% endif %}
-
-
-// Create a string, as we are only showing selected.
-if (sg_days_{{ studygroup.studygroup.id }}.length > 0)
-{
-    days_string = '';
-    for (i = 0; i < sg_days_{{ studygroup.studygroup.id }}.length; i++)
-    {
-        if (i > 0)
-        {
-            days_string += ', ';
-        }
-        days_string += sg_days_{{ studygroup.studygroup.id }}[i];
-    }
-}
-$( "#days_available_{{ studygroup.studygroup.id }}" ).text(days_string);
- 
-</script>
 {% endfor %}
 {% else %}
 <div align="center" id="dark">
@@ -106,11 +76,50 @@ $( "#days_available_{{ studygroup.studygroup.id }}" ).text(days_string);
         <a href="{% url 'login' %}" >signed in</a>.</p></div>
 {% endif %}
 </div>
+{% endblock %}
 
-<script>
-$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
-$('#breadcrumbs').html( $bc.append(' &gt; <a href="/studygroups/">Studygroups</a>') );
-$('#breadcrumbs').html( $bc.append(' &gt; {{ user.username }}') );
+{% block javascript %}
+<script language="JavaScript" type="text/javascript">
+function UpdateDays(sg_days, el)
+{
+    days_string = 'Every Day';
+    if (sg_days.length > 0)
+    {
+        days_string = '';
+        for (i = 0; i < sg_days.length; i++)
+        {
+            if (i > 0)
+            {
+                days_string += ', ';
+            }
+            days_string += sg_days[i];
+        }
+    }
+    el.text(days_string);
+}
+
+$( document ).ready(function() 
+{
+	$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
+	$('#breadcrumbs').html( $bc.append(' &gt; <a href="/studygroups/">Studygroups</a>') );
+	$('#breadcrumbs').html( $bc.append(' &gt; {{ user.username }}') );
+    
+    {% for studygroup in studygroup_joined_list %}
+    sg_days_{{ studygroup.studygroup.id }} = [];
+    {% if studygroup.days_available %}
+    {% for d in studygroup.days_available %}
+    {% autoescape off %}
+    sg_days_{{ studygroup.studygroup.id }} = {{ d }};
+    {% endautoescape %}
+    {% endfor %}
+    {% endif %}
+    
+    UpdateDays(
+            sg_days_{{ studygroup.studygroup.id }}, 
+            $( "#days_available_{{ studygroup.studygroup.id }}" ));
+    {% endfor %}
+    
+});
 </script>
 {% endblock %}
 

@@ -6,74 +6,40 @@
 {% block content %}
 <div style="color: #000000;display: inline-block; *display: inline; zoom: 1; width: 600px; text-align: left;">
 <!-- Study Group Links? -->
-<p>Studygroup</p>
 {% if studygroup %}
-<p><span class="studygroup_label">ID:</span><span class="studygroup_data">{{ studygroup.id }} {% if self_owned %} <a href="/studygroups/update/{{ studygroup.id }} " style="color:#000000;">Edit</a> | <a href="" style="color:#000000;">Deactivate</a>{% endif %}</span></p>
-<p><span class="studygroup_label">Post Title:</span><span class="studygroup_data">{{ studygroup.post_title }}</span></p>
+<p><span class="studygroup_label">Group:</span><span class="studygroup_data">{{ studygroup.post_title }}{% if self_owned %} <a href="/studygroups/update/{{ studygroup.id }} " style="color:#000000;">Edit</a> | <a href="" style="color:#000000;">Deactivate</a>{% endif %}</span></p>
 <p><span class="studygroup_label">Subject:</span><span class="studygroup_data">{{ studygroup.course.subject }}</span></p>
 <p><span class="studygroup_label">Class:</span><span class="studygroup_data">{{ studygroup.course.class_name }}</span></p>
 <p><span class="studygroup_label">Instructor:</span><span class="studygroup_data">{{ studygroup.course.instructor }}</span></p>
 <p><span class="studygroup_label">Section:</span><span class="studygroup_data">{{ studygroup.course.cn_number }}</span></p>
-<p><span class="studygroup_label">Semester:</span><span class="studygroup_data">{{ studygroup.course.semester }}</span></p>
-<p><span class="studygroup_label">Year:</span><span class="studygroup_data">{{ studygroup.course.year }}</span></p>
+<p><span class="studygroup_label">Semester:</span><span class="studygroup_data">{{ studygroup.course.semester }} {{ studygroup.course.year }}</span></p>
 <p><span class="studygroup_label">Creator:</span><span class="studygroup_data">{{ studygroup.creator.username }} {% if self_owned %} ***{% endif %}</span></p>
-<p><span class="studygroup_label">Days:</span><span class="studygroup_data"><span id='days_available_{{ studygroup.id }}'>
+<p><span class="studygroup_label">Meets:</span><span class="studygroup_data"><span id='days_available_{{ studygroup.id }}'>
  {% if days_available %}
     {% for d in days_available %}
     {{ d }}
     {% endfor %}
-  {% endif %}</span></span></p>
-<p><span class="studygroup_label">Hours:</span><span class="studygroup_data">{{ studygroup.hours_available_start }} to {{ studygroup.hours_available_end }}</span></p>
-<p><span class="studygroup_label">Online Only:</span><span class="studygroup_data">{{ studygroup.online_only }}</span></p>
-<p><span class="studygroup_label">Gender Specific:</span><span class="studygroup_data">{{ studygroup.gender_specific }}</span></p>
+  {% endif %}</span> {{ studygroup.hours_available_start }} to {{ studygroup.hours_available_end }}</span></p>
+<p><span class="studygroup_label">Online:</span><span class="studygroup_data">{{ studygroup.online_only }}</span></p>
+<p><span class="studygroup_label">Gender:</span><span class="studygroup_data">{{ studygroup.gender_specific }}</span></p>
 <p><span class="studygroup_label">Members:</span><span class="studygroup_data">{{ members_list|length }}/{{ studygroup.max_members }}</span></p>
 <ul>
     {% for m in members_list %}
     <li>{{ m.user.username }}  {% if studygroup.creator == user and not m.user.id == user.id %} <a href="" style="color:blue">Block User</a>{% endif %}</li>
     {% endfor %}
     </ul>
-
 {% if not am_a_member %}
 <a href="" style="color:black;">Join Group</a>
 {% endif %}
-<script>
-
-days_string = 'Every Day';
-sg_days_{{ studygroup.id }} = '';
-{% if days_available %}
-{% for d in days_available %}
-{% autoescape off %}
-sg_days_{{ studygroup.id }} = {{ d }};
-{% endautoescape %}
-{% endfor %}
-{% endif %}
-
-// Create a string, as we are only showing selected.
-if (sg_days_{{ studygroup.id }}.length > 0)
-{
-    days_string = '';
-    for (i = 0; i < sg_days_{{ studygroup.id }}.length; i++)
-    {
-        if (i > 0)
-        {
-            days_string += ', ';
-        }
-        days_string += sg_days_{{ studygroup.id }}[i];
-    }
-}
-$( "#days_available_{{ studygroup.id }}" ).text(days_string);
- 
-</script>
-<hr />
 {% endif %}
 </div>
 
-<div id="messages"  style="display: inline-block;* display: inline; zoom: 1; vertical-align: top; border: 1px black solid; width: 570px; height: 562px; background-color: #ffffff; color: #000000">
-<table style="width: 100%; height: 560px;">
+<div id="messages"  
+    style="display: inline-block;* display: inline; zoom: 1; vertical-align: top; border: 1px black solid; width: 570px; height: 532px; background-color: #ffffff; color: #000000">
+<table style="width: 100%; height: 530px;">
 <tr style="height: 453px;">
     <td style="vertical-align: top">
-    <p>Messages</p>
-    <div id="msg_list" style="overflow-y: auto; height: 435px; ">
+    <div id="msg_list" style="overflow-y: auto; height: 450px; ">
     {% if message_list %}
     <span id="messages_{{ studygroup.studygroup.id }}_span">
     {% for message in message_list %}
@@ -93,7 +59,7 @@ $( "#days_available_{{ studygroup.id }}" ).text(days_string);
     <span style="vertical-align: middle; text-align: left">
 <form method="post" data-send-message-url="/studygroups/message/" id="message_form">
 {% csrf_token %}
-<input type="text" placeholder="Enter message title" id="id_title"  name="title"  style="width: 425px; margin-left:20px;"/><br />
+<input type="text" placeholder="Enter message title" id="id_title"  name="title"  style="width: 426px; margin-left:20px;"/><br />
 <textarea name="new_message" id="id_new_message"  style="width: 430px; height: 40px; display: inline-block;float: left; margin-left: 20px; margin-right: 5px; vertical-align: middle" placeholder="Enter message"></textarea>
 <input type="button" value="Send"  class="button_float" id="buttn" />
 <input type="hidden" value="{{ studygroup.id }}" id="id_studygroup" name="studygroup" />
@@ -103,40 +69,33 @@ $( "#days_available_{{ studygroup.id }}" ).text(days_string);
 </tr>
 </table>
 </div>
+{% endblock %}
 
-<script>
-$("#buttn").click(function () {
-	if ($("#id_title").val() == "" || $("#id_new_message").val() == "")
-	{
-		alert("Enter a message title and message body before sending message.");
-	}
-	else
-	{
-	var form = $("#message_form");
-	$.ajax({
-        url: form.attr("data-send-message-url"),
-        data: form.serialize(),
-        dataType: 'json',
-        success: function (data) {
-          if (data.is_saved == "False") {
-            alert(data.error);
-          }
-          else {
-        	  // Update the messages here by appending a new message above the existing messages.
-        	  // We also want to reset the title and body . . . 
-        	  $("#messages_{{ studygroup.studygroup.id }}_span").append('<span id="message_'+data.msg_id+'"><p>'+data.msg_date+' - '+data.msg_title+'</p><p>'+data.msg_body+'</p><hr style="width: 200px;" /></span>');
-        	  $("#id_title").val("");
-        	  $("#id_new_message").val("");
-        	  $("#msg_list").scrollTop($("#msg_list")[0].scrollHeight);
-          }
+{% block javascript %}
+<script language="JavaScript" type="text/javascript">
+function UpdateDays(sg_days, el)
+{
+    days_string = 'Every Day';
+    if (sg_days.length > 0)
+    {
+        days_string = '';
+        for (i = 0; i < sg_days.length; i++)
+        {
+            if (i > 0)
+            {
+                days_string += ', ';
+            }
+            days_string += sg_days[i];
         }
-      });
-	}
-});
+    }
+    el.text(days_string);
+}
+
+
 
 function deactivate()
 {
-	$.ajax({
+    $.ajax({
         url: '/studygroups/deactivate/',
         data: {
           'studygroup': {{ studygroup.id }}
@@ -149,16 +108,59 @@ function deactivate()
           }
           else
         {
-        	  alert("Could not deactivate this Studygroup:")
+              alert("Could not deactivate this Studygroup:")
         }
         }
       });
 }
 
-$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
-$('#breadcrumbs').html( $bc.append(' &gt; <a href="/studygroups/">Studygroups</a>') );
-$('#breadcrumbs').html( $bc.append(' &gt; View') );
+$( document ).ready(function() 
+{
+	$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
+	$('#breadcrumbs').html( $bc.append(' &gt; <a href="/studygroups/">Studygroups</a>') );
+	$('#breadcrumbs').html( $bc.append(' &gt; View') );
+    
+    sg_days_{{ studygroup.id }} = [];
+    {% for d in days_available %}
+    {% autoescape off %}
+    sg_days_{{ studygroup.id }} = {{ d }};
+    {% endautoescape %}
+    {% endfor %}
+    
+    UpdateDays(
+            sg_days_{{ studygroup.id }}, 
+            $( "#days_available_{{ studygroup.id }}" ));
+    
+    $("#buttn").click(function () {
+        if ($("#id_title").val() == "" || $("#id_new_message").val() == "")
+        {
+            alert("Enter a message title and message body before sending message.");
+        }
+        else
+        {
+        var form = $("#message_form");
+        $.ajax({
+            url: form.attr("data-send-message-url"),
+            data: form.serialize(),
+            dataType: 'json',
+            success: function (data) {
+              if (data.is_saved == "False") {
+                alert(data.error);
+              }
+              else {
+                  // Update the messages here by appending a new message above the existing messages.
+                  // We also want to reset the title and body . . . 
+                  $("#messages_{{ studygroup.studygroup.id }}_span").append('<span id="message_'+data.msg_id+'"><p>'+data.msg_date+' - '+data.msg_title+'</p><p>'+data.msg_body+'</p><hr style="width: 200px;" /></span>');
+                  $("#id_title").val("");
+                  $("#id_new_message").val("");
+                  $("#msg_list").scrollTop($("#msg_list")[0].scrollHeight);
+              }
+            }
+          });
+        }
+    });
+    
+});
 </script>
-
 {% endblock %}
 
