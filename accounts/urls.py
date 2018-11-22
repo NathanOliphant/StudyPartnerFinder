@@ -9,4 +9,5 @@ urlpatterns = [
     path('edit/', views.Edit.as_view(), name='edit'),
     path('view/', views.View, name='view'),
     path('', views.View, name='view'),
+    path('blockuser/', views.BlockUser, name='blockuser')
 ]

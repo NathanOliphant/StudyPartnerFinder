@@ -81,7 +81,7 @@ class StudyGroupEditForm(forms.ModelForm):
     class Meta:
         model = StudyGroup
         fields=['post_title', 'course', 'max_members', 'gender_specific' ,'days_available',
-                'hours_available_start', 'hours_available_end', 'online_only']
+                'hours_available_start', 'hours_available_end', 'online_only', 'is_active']
         exclude = ['creator']
     # Need to add better labels.
     # Need to get the actual course list.
@@ -137,6 +137,8 @@ class StudyGroupEditForm(forms.ModelForm):
         )
     
     online_only = forms.BooleanField(required=False, help_text='Optional.')
+    
+    is_active = forms.BooleanField(required=False, help_text='Optional')
     
     def __init__(self, *args, **kwargs):
         super(StudyGroupEditForm, self).__init__(*args, **kwargs)

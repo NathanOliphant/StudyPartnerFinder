@@ -156,6 +156,7 @@ def update(request, id=None):
                 sg.hours_available_start = data['hours_available_start'] if data['hours_available_start'] is not None else datetime.time(0, 1)
                 sg.hours_available_end = data['hours_available_end'] if data['hours_available_end'] is not None else datetime.time(23, 59) 
                 sg.online_only = data['online_only'] if data['online_only'] is not None else False
+                sg.is_active = data['is_active']
             
                 if d is not None:
                     old_days_available.delete()
@@ -205,9 +206,15 @@ def view(request, id=None):
         
         owner = studygroup.creator
         
+        #MyModel.objects.values_list('description', flat=True)[0]
+        blocked_list = BlockList.objects.filter(user = request.user).values_list('blocked_user', flat=True)
+            
         days_available = studygroup.days_available.all()
             
-    context = { 'id': id, 'studygroup': studygroup , 'message_list': message_list, 'self_owned': mine, 'am_a_member': in_group, 'members_list': members_list, 'days_available': days_available}
+    context = { 'id': id, 'studygroup': studygroup , 
+               'message_list': message_list, 'self_owned': mine, 
+               'am_a_member': in_group, 'members_list': members_list, 
+               'days_available': days_available, 'block_list': blocked_list}
     template = 'studygroups/view.html'
     
     return render(request, template, context)
@@ -305,19 +312,3 @@ def message(request):
         'msg_body': msg.body
     }
     return JsonResponse(data)
-
-# Deactivating a studygroup will make it no longer searchable.
-def deactivate(request, val):
-    # Only the creator should be able to perform a deactivation, so confirm that
-    # request.user is indeed the creator.
-    message = {'result':''}
-    with open("hello_ajax.txt", "w") as f:
-        f.write('R: {}'.format(request))
-        f.write('V: {}'.format(val))
-    if request.is_ajax():
-        with open("hello_ajax.txt", "w") as f:
-            f.write('R: {}'.format(request))
-            f.write('V: {}'.format(val))
-        # put logic here
-        #json = simplejson.dumps()   convert data into json
-        return HttpResponse(message, mimetype='application/json')

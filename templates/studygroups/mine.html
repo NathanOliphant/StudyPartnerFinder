@@ -11,7 +11,7 @@
 <div {% if forloop.counter0|divisibleby:2 %}class="white_sg"{% else %}class="green_sg"{% endif %}> 
     <div style="display: inline-block; *display: inline; zoom: 1; width: 600px; text-align: left;">
     <p>
-        <a href="/studygroups/view/{{ studygroup.studygroup.id }}" {% if forloop.counter0|divisibleby:2 %} style="color: #006400;"{% endif %}>{{ forloop.counter }}:  {{ studygroup.studygroup.post_title }}</a>
+        <a href="/studygroups/view/{{ studygroup.studygroup.id }}" {% if forloop.counter0|divisibleby:2 %} class="green"{% endif %}>{{ forloop.counter }}:  {{ studygroup.studygroup.post_title }}</a>
         {% if studygroup.mine  %}
         ***MINE***
         {% endif %}
@@ -21,7 +21,6 @@
     <p><span class="studygroup_label">Instructor:</span><span class="studygroup_data">{{ studygroup.studygroup.course.instructor }}</span></p>
     <p><span class="studygroup_label">Semester:</span><span class="studygroup_data">{{ studygroup.studygroup.course.semester }} {{ studygroup.studygroup.course.year }}</span></p>
     <p><span class="studygroup_label">Active:</span><span class="studygroup_data">{{ studygroup.studygroup.is_active }}</span></p>
-    <p><span class="studygroup_label">Filters:</span><span class="studygroup_data"></span></p>
     <p>
         <span class="studygroup_label">Gender:</span><span class="studygroup_data">
     {% if studygroup.studygroup.gender_specific == 'M' %}

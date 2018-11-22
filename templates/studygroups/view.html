@@ -4,10 +4,15 @@
 {% block title %}Studygroup{% endblock %}
 
 {% block content %}
-<div style="color: #000000;display: inline-block; *display: inline; zoom: 1; width: 600px; text-align: left;">
+<div id="sg_main">
 <!-- Study Group Links? -->
 {% if studygroup %}
-<p><span class="studygroup_label">Group:</span><span class="studygroup_data">{{ studygroup.post_title }}{% if self_owned %} <a href="/studygroups/update/{{ studygroup.id }} " style="color:#000000;">Edit</a> | <a href="" style="color:#000000;">Deactivate</a>{% endif %}</span></p>
+<p>
+    <span class="studygroup_label">Group:</span>
+    <span class="studygroup_data">{{ studygroup.post_title }}
+    {% if self_owned %} <a href="/studygroups/update/{{ studygroup.id }}" class="green">Edit</a>{% endif %}
+    </span>
+</p>
 <p><span class="studygroup_label">Subject:</span><span class="studygroup_data">{{ studygroup.course.subject }}</span></p>
 <p><span class="studygroup_label">Class:</span><span class="studygroup_data">{{ studygroup.course.class_name }}</span></p>
 <p><span class="studygroup_label">Instructor:</span><span class="studygroup_data">{{ studygroup.course.instructor }}</span></p>
@@ -21,19 +26,41 @@
     {% endfor %}
   {% endif %}</span> {{ studygroup.hours_available_start }} to {{ studygroup.hours_available_end }}</span></p>
 <p><span class="studygroup_label">Online:</span><span class="studygroup_data">{{ studygroup.online_only }}</span></p>
-<p><span class="studygroup_label">Gender:</span><span class="studygroup_data">{{ studygroup.gender_specific }}</span></p>
+<p>
+    <span class="studygroup_label">Gender:</span>
+    <span class="studygroup_data">
+    {% if studygroup.gender_specific == 'M' %}
+    Male Only
+    {% endif %}
+    {% if studygroup.gender_specific == 'F' %}
+    Female Only
+    {% endif %}
+    {% if studygroup.gender_specific == 'N' %}
+    Nonbinary Only
+    {% endif %}
+    {% if studygroup.gender_specific == 'U' %}
+    Everyone Welcome!
+    {% endif %}
+    </span>
+</p>
 <p><span class="studygroup_label">Members:</span><span class="studygroup_data">{{ members_list|length }}/{{ studygroup.max_members }}</span></p>
+{% if am_a_member %}
 <ul>
     {% for m in members_list %}
-    <li>{{ m.user.username }}  {% if studygroup.creator == user and not m.user.id == user.id %} <a href="" style="color:blue">Block User</a>{% endif %}</li>
+    <li>{{ m.user.username }}  
+    {% if studygroup.creator == user and not m.user.id == user.id %} 
+    <a href="#" onclick="blockUser({{ m.user.id }});">
+    <span id="userblock_{{ m.user.id }}">{% if m.user.id in block_list %}Unblock User{% else %}Block User{% endif %}</span></a>{% endif %}
+    </li>
     {% endfor %}
     </ul>
+{% endif %}
 {% if not am_a_member %}
-<a href="" style="color:black;">Join Group</a>
+<a href="/studygroups/join/{{ studygroup.id }}">Join Group</a>
 {% endif %}
 {% endif %}
 </div>
-
+{% if am_a_member %}
 <div id="messages"  
     style="display: inline-block;* display: inline; zoom: 1; vertical-align: top; border: 1px black solid; width: 570px; height: 532px; background-color: #ffffff; color: #000000">
 <table style="width: 100%; height: 530px;">
@@ -69,6 +96,7 @@
 </tr>
 </table>
 </div>
+{% endif %}
 {% endblock %}
 
 {% block javascript %}
@@ -91,34 +119,53 @@ function UpdateDays(sg_days, el)
     el.text(days_string);
 }
 
-
-
-function deactivate()
+function blockUser(id)
 {
-    $.ajax({
-        url: '/studygroups/deactivate/',
-        data: {
-          'studygroup': {{ studygroup.id }}
-        },
-        dataType: 'json',
-        success: function (data) {
-          if (data.deactivated) {
-            alert("Studygroup deactivated");
-            // Update to show no longer active, remove deactivate link.
-          }
-          else
+	block_action = 'block';
+	/*
+	       We are using the same call for blocking and unblocking.  
+	       So base what we want to do on the text for the call.
+	 */
+	if ( $('#userblock_'+id).text() == "Unblock User")
+	{
+		block_action = 'unblock';
+	}
+	
+	alert("Block action: " + block_action);
+	
+$.ajax(
+{
+	url: '/accounts/blockuser/',
+    data: {
+    	'block_action': block_action,
+        'user': id,
+        'studygroup': {{ studygroup.id }}
+    },
+    dataType: 'json',
+    success: function (data) {
+        if (data.blocked) 
         {
-              alert("Could not deactivate this Studygroup:")
+            //alert("User Blocked");
+            // Update to show no longer active, remove deactivate link.
+            // userblock_{{ id}} text needs to now read unblock.
+            $('#userblock_'+id).text("Unblock User");
         }
+        else
+        {
+            //alert("User Unblocked");
+        	$('#userblock_'+id).text("Block User");
         }
-      });
+    }
+  });
 }
+
 
 $( document ).ready(function() 
 {
 	$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
 	$('#breadcrumbs').html( $bc.append(' &gt; <a href="/studygroups/">Studygroups</a>') );
 	$('#breadcrumbs').html( $bc.append(' &gt; View') );
+	$('#breadcrumbs').html( $bc.append(' &gt; {{ studygroup.id }}') );
     
     sg_days_{{ studygroup.id }} = [];
     {% for d in days_available %}
@@ -130,6 +177,9 @@ $( document ).ready(function()
     UpdateDays(
             sg_days_{{ studygroup.id }}, 
             $( "#days_available_{{ studygroup.id }}" ));
+    
+    
+    
     
     $("#buttn").click(function () {
         if ($("#id_title").val() == "" || $("#id_new_message").val() == "")

@@ -9,6 +9,11 @@ p {
     font-family:  sans-serif;
 }
 
+.white
+{
+    color: #ffffff;
+}
+
 ul.errorlist
 {
     background: #ffffff;
@@ -37,12 +42,52 @@ ul.errorlist li
     /*align-items: center;  Vertical center alignment */
     /*justify-content: center;*/
     text-align: center;
-    color: #ffffff;
+    //color: #ffffff;
 }
 
 #main a {
-    color: #ffffff;
+    //color: #ffffff;
 }
+
+#sg_main
+{
+	color: #000000; 
+	display: inline-block; 
+	*display: inline; 
+	zoom: 1; 
+	width: 600px; 
+	text-align: left;	
+}
+
+#sg_main a
+{
+	color: #006400;
+    text-decoration: underline;
+}
+
+#sg_main a:link
+{
+    color: #006400;
+    text-decoration: underline;
+}
+
+#sg_main a:visited
+{
+    color: #006400;
+    text-decoration: underline;
+}
+
+#sg_main a:active
+{
+    color: #9fe37f;
+    text-decoration: underline;
+}
+
+#sg_main a:hover {
+    color:  #9fe37f;
+    text-decoration: underline;
+}
+
 
 .dark
 {
@@ -75,6 +120,63 @@ ul.errorlist li
     text-decoration: underline;
 }
 
+.green
+{
+	color: black;
+}
+
+a.green
+{
+    color: #006400;
+    text-decoration: underline;
+}
+
+a.green:link
+{
+    color: #006400;
+    text-decoration: underline;
+}
+
+a.green:visited
+{
+    color: #006400;
+    text-decoration: underline;
+}
+
+a.green:active
+{
+    color: #9fe37f;
+    text-decoration: underline;
+}
+
+a.green:hover {
+    color:  #9fe37f;
+    text-decoration: underline;
+}
+
+.green a:link
+{
+    color: #006400;
+    text-decoration: underline;
+}
+
+.green a:visited
+{
+    color: #006400;
+    text-decoration: underline;
+}
+
+.green a:active
+{
+    color: #9fe37f;
+    text-decoration: underline;
+}
+
+.green a:hover {
+    color:  #9fe37f;
+    text-decoration: underline;
+}
+
 #dark
 {
     color: #000000;
@@ -95,7 +197,7 @@ ul.errorlist li
     text-decoration: underline;
 }
 
-.dark a:active
+#dark a:active
 {
     color: #9fe37f;
     text-decoration: underline;
@@ -495,6 +597,37 @@ a:hover {text-decoration: underline; }
     /*-ms-text-justify: distribute-all-lines;
     text-justify: distribute-all-lines;
     vertical-align: middle;*/
+    color: #ffffff;
+}
+
+.greenbox a
+{
+	color: #ffffff;
+}
+
+.greenbox a:link
+{
+    color: #ffffff;
+    
+    text-decoration: underline;
+}
+
+.greenbox a:visited
+{
+    color: #ffffff;
+    
+    text-decoration: underline;
+}
+.greenbox a:active
+{
+    color: #9fe37f;
+    text-decoration: underline;
+}
+
+.greenbox a:hover 
+{
+    color: #9fe37f;
+    text-decoration: underline;
 }
 
 #id_username {

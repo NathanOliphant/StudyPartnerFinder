@@ -74,6 +74,15 @@
         {{ form.online_only.errors }}
     </p>
     
+    <p class="fieldWrapper">
+        <label for="{{ form.is_active.id_for_label }}" class="signup_label">{{ form.is_active.label }}:</label> 
+        <span class="signup_input">{{ form.is_active }}
+        (optional)
+        </span>
+        {{ form.is_active.id_for_label.errors }}
+        {{ form.is_active.errors }}
+    </p>
+    
     {{ form.course }}
     {{ form.creator }}
     

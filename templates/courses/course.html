@@ -14,7 +14,7 @@
 Section: {{ course.cn_number }}</p>
 
 {% if user.is_authenticated %}
-<div style="color: #000000;">
+<div>
 <a href="/studygroups/add/{{ course.id }}">Add new StudyGroup</a>
 </div>
 {% endif %}
@@ -29,7 +29,7 @@ Section: {{ course.cn_number }}</p>
 {% for sg in studygroup_list %}
 <h2>{{ sg.studygroup.post_title }}</h2>
 {% if sg.mine %} 
-<p>Admin:  <a href="/studygroups/update/{{sg.studygroup.id}}" style="color:#000000;">Edit</a> or <a href="" style="color:#000000;">Deactivate</a> Studygroup</p>
+<p>Admin:  <a href="/studygroups/update/{{sg.studygroup.id}}">Edit</a> Studygroup</p>
 {% endif %}
 <p>Days Available:  <span id='days_available_{{ sg.studygroup.id }}'>
     {% if sg.days_available %}
@@ -60,7 +60,7 @@ Section: {{ course.cn_number }}</p>
 </p>
 {% endif %}
 {% if not sg.i_am_in_group %}
-<a href="/studygroups/join/{{ sg.studygroup.id }}" style="color:black;">Join Group</a>
+<a href="/studygroups/join/{{ sg.studygroup.id }}">Join Group</a> | <a href="/studygroups/view/{{ sg.studygroup.id}}">View Group</a>
 
 {% endif %}
 

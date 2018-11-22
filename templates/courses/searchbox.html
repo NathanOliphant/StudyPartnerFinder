@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 {% block content %}
-<div id="searchbox">
+<div id="searchbox" class="white">
     <h1 align="center">Study Buddy Search</h1>
         <form action="/courses/" method="post">
             <p>Courses for {{ current_semester.semester }} {{ current_semester.year }}
