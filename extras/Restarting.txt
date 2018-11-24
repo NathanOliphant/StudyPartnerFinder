@@ -1,23 +1,10 @@
-Still need:
-1. Formatting for . . . 
-2. Join request/join accept
-3. Basic messaging?
-4. Add comments/clean up code.
-
-
-
-DaysAvailable:
-
-HoursAvailable:
-If user enters search hours start, 
-
 If SG has gender setting:
 If user does not match gender, do not show SG . . .
 
-
-
-2. python manage.py makemigrations
+When updating the models:
+python manage.py makemigrations
 3. python manage.py migrate
+Only run this after CustomUser is in place:
 4. python manage.py createsuperuser . . .
 
 

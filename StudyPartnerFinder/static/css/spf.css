@@ -154,6 +154,35 @@ a.green:hover {
     text-decoration: underline;
 }
 
+a.white
+{
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+a.white:link
+{
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+a.white:visited
+{
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+a.white:active
+{
+    color: #9fe37f;
+    text-decoration: underline;
+}
+
+a.white:hover {
+    color:  #9fe37f;
+    text-decoration: underline;
+}
+
 .green a:link
 {
     color: #006400;
@@ -531,6 +560,29 @@ a:hover {text-decoration: underline; }
     border-style: solid;
     border-color: #000000;
     border-width: 1px;
+}
+
+a.green_sg:link
+{
+    color: #fffff;
+    text-decoration: underline;
+}
+
+a.green_sg:visited
+{
+    color: #fffff;
+    text-decoration: underline;
+}
+
+a.green_sg:active
+{
+    color: #9fe37f;
+    text-decoration: underline;
+}
+
+a.green_sg:hover {
+    color:  #9fe37f;
+    text-decoration: underline;
 }
 
 #notice

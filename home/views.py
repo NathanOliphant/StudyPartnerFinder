@@ -1,15 +1,10 @@
 from django.shortcuts import render
-from django import forms
-from django.http import HttpResponse
-from studygroups.models import Course, CurrentSemester, Subject
-from courses.forms import SearchForm
 from courses.views import SearchTemplate
-from django.shortcuts import redirect
 
 def index(request):
     template = 'home.html'
-    form = SearchForm() # An unbound form
-     
+    # Use the course SearchTemplate class as our context.
+    # This means form and all our data are already included.
     context = SearchTemplate.context
     
     return render(request, template, context)

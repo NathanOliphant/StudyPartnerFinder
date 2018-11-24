@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from users.models import CustomUser
-#from studygroups.models import StudyGroupUser
 from django.urls import reverse_lazy
 from django.views import generic
 from users.forms import CustomUserCreationForm
@@ -8,15 +7,22 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from studygroups.utils import GetMyJoinedStudygroups
 from django.http import JsonResponse
-from django.http import HttpResponse
 from studygroups.models import BlockList
 
-# 
+#
+#    All accounts-related views are defined here.  Account and User/CustomUser
+#    are being used interchangeably throughout the application, so some of what 
+#    probably should be here is instead covered in the users app.
+#
+
+# For signup, we will use a custom form and a class model of the view,
+# which means we do not have to do much for this view.
 class SignUp(generic.CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'signup.html'
  
+# Users can only edit a few fields, so limit the fields ere, and provide some redirects.
 class Edit(LoginRequiredMixin, generic.edit.UpdateView):
     # Make sure only the registered user can change this!
     fields = ['first_name', 'last_name', 'gender']
@@ -35,7 +41,8 @@ class Edit(LoginRequiredMixin, generic.edit.UpdateView):
 @login_required
 def View(request):
     template_name = 'users/index.html'
-    #
+    
+    # Retrieving studygroups now done via studygroups utils.
     my_studygroups = GetMyJoinedStudygroups(request.user)
         
     # Let's add some order to our studygroups.  Should we try for our groups first, in 
@@ -55,7 +62,7 @@ def View(request):
 # or join your studygroups.
 def BlockUser(request):
     # We should verify all of these.
-    # Only the creator should be able to perform a deactivation, so confirm that
+    # Only the creator should be able to perform a block, so confirm that
     # request.user is indeed the creator.
     is_blocked = False
     
@@ -63,7 +70,6 @@ def BlockUser(request):
     blockee = CustomUser.objects.filter(id=blockee).get()
     # Either block or unblock.
     block_action = request.GET.get('block_action')
-    sg = request.GET.get('studygroup')
     
     # If the request is to block, and we are already blocked, we do not need to do anything.
     block_exists = BlockList.objects.filter(
@@ -84,9 +90,7 @@ def BlockUser(request):
         pass
         # Only need this if we want to catch invalid calls.
     
+    # We should let the user know which action was performed.
     data = {'blocked': is_blocked}
     
-
-        # put logic here
-        #json = simplejson.dumps()   convert data into json
     return JsonResponse(data)

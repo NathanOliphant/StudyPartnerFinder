@@ -66,8 +66,7 @@
 <table style="width: 100%; height: 530px;">
 <tr style="height: 453px;">
     <td style="vertical-align: top">
-    <div id="msg_list" style="overflow-y: auto; height: 450px; ">
-    {% if message_list %}
+    <div id="msg_list" style="overflow-y: auto; height: 450px; word-break: break-all; word-wrap: break-word;">
     <span id="messages_{{ studygroup.studygroup.id }}_span">
     {% for message in message_list %}
         <span id="message_{{  message.id }}">
@@ -77,7 +76,6 @@
         </span>
         {% endfor %}
     </span>
-    {% endif %}
     </div>
     </td>
 </tr>
@@ -121,23 +119,22 @@ function UpdateDays(sg_days, el)
 
 function blockUser(id)
 {
-	block_action = 'block';
-	/*
-	       We are using the same call for blocking and unblocking.  
-	       So base what we want to do on the text for the call.
-	 */
-	if ( $('#userblock_'+id).text() == "Unblock User")
-	{
-		block_action = 'unblock';
-	}
-	
-	alert("Block action: " + block_action);
-	
+    block_action = 'block';
+    /*
+           We are using the same call for blocking and unblocking.  
+           So base what we want to do on the text for the call.
+     */
+    if ( $('#userblock_'+id).text() == "Unblock User")
+    {
+        block_action = 'unblock';
+    }
+    
+    
 $.ajax(
 {
-	url: '/accounts/blockuser/',
+    url: '/accounts/blockuser/',
     data: {
-    	'block_action': block_action,
+        'block_action': block_action,
         'user': id,
         'studygroup': {{ studygroup.id }}
     },
@@ -153,7 +150,7 @@ $.ajax(
         else
         {
             //alert("User Unblocked");
-        	$('#userblock_'+id).text("Block User");
+            $('#userblock_'+id).text("Block User");
         }
     }
   });
@@ -161,11 +158,11 @@ $.ajax(
 
 
 $( document ).ready(function() 
-{
-	$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
-	$('#breadcrumbs').html( $bc.append(' &gt; <a href="/studygroups/">Studygroups</a>') );
-	$('#breadcrumbs').html( $bc.append(' &gt; View') );
-	$('#breadcrumbs').html( $bc.append(' &gt; {{ studygroup.id }}') );
+{   
+    $bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
+    $('#breadcrumbs').html( $bc.append(' &gt; <a href="/studygroups/">Studygroups</a>') );
+    $('#breadcrumbs').html( $bc.append(' &gt; View') );
+    $('#breadcrumbs').html( $bc.append(' &gt; {{ studygroup.id }}') );
     
     sg_days_{{ studygroup.id }} = [];
     {% for d in days_available %}
@@ -197,10 +194,12 @@ $( document ).ready(function()
               if (data.is_saved == "False") {
                 alert(data.error);
               }
-              else {
-                  // Update the messages here by appending a new message above the existing messages.
+              else 
+              {
+            	  new_span = '<span id="message_'+data.msg_id+'"><p>'+data.msg_date+' - '+data.msg_title+'</p><p>'+data.msg_body+'</p><hr style="width: 200px;" /></span>';
+            	  // Update the messages here by appending a new message above the existing messages.
                   // We also want to reset the title and body . . . 
-                  $("#messages_{{ studygroup.studygroup.id }}_span").append('<span id="message_'+data.msg_id+'"><p>'+data.msg_date+' - '+data.msg_title+'</p><p>'+data.msg_body+'</p><hr style="width: 200px;" /></span>');
+                  $("#messages_{{ studygroup.studygroup.id }}_span").append(new_span);
                   $("#id_title").val("");
                   $("#id_new_message").val("");
                   $("#msg_list").scrollTop($("#msg_list")[0].scrollHeight);

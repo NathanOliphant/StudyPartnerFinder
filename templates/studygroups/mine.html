@@ -11,7 +11,7 @@
 <div {% if forloop.counter0|divisibleby:2 %}class="white_sg"{% else %}class="green_sg"{% endif %}> 
     <div style="display: inline-block; *display: inline; zoom: 1; width: 600px; text-align: left;">
     <p>
-        <a href="/studygroups/view/{{ studygroup.studygroup.id }}" {% if forloop.counter0|divisibleby:2 %} class="green"{% endif %}>{{ forloop.counter }}:  {{ studygroup.studygroup.post_title }}</a>
+        {{ forloop.counter }}:  <a href="/studygroups/view/{{ studygroup.studygroup.id }}" {% if forloop.counter0|divisibleby:2 %} class="green"{% else %}class="white"{% endif %}>{{ studygroup.studygroup.post_title }}</a>
         {% if studygroup.mine  %}
         ***MINE***
         {% endif %}
@@ -49,7 +49,7 @@
     </div>
 
     {% if studygroup.messages %}
-    <div id="messages_{{ studygroup.studygroup.id }}" style="display: inline-block;* display: inline; zoom: 1; vertical-align: top; border: 1px black solid; width: 570px; height: 470px; overflow-y: auto; background-color: #ffffff; color: #000000">
+     <div id="messages_{{ studygroup.studygroup.id }}" style="display: inline-block;* display: inline; zoom: 1; vertical-align: top; border: 1px black solid; width: 570px; word-break: break-all; word-wrap: break-word; height: 470px; overflow-y: auto; background-color: #ffffff; color: #000000">
         <p>Messages</p>
         {% for message in studygroup.messages %}
         <span id="messages_{{ studygroup.studygroup.id }}_span">
@@ -60,6 +60,10 @@
         <hr />
         </span>
         {% endfor %}
+    </div>
+    {% else %}
+    <div id="messages_{{ studygroup.studygroup.id }}" style="display: inline-block;* display: inline; zoom: 1; vertical-align: top;  width: 570px; height: 470px; overflow-y: auto;">
+    No messages
     </div>
     {% endif %}
 </div>

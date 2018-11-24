@@ -1,3 +1,8 @@
+# 
+#	Scraper is used to scrape the courses from HSU's course listings.
+#	Example usage: python3 scraper.py --year=yyyy --semester=[Spring/Summer/Fall]
+# 	python3 scraper.py --year=2018 --semester=Fall
+
 # BS Code from:
 # https://medium.freecodecamp.org/how-to-scrape-websites-with-python-and-beautifulsoup-5946935d93fe
 # SQLite stuff from:  http://www.sqlitetutorial.net/sqlite-python/insert/
@@ -10,7 +15,9 @@ from sqlite3 import Error
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import argparse
+import os
 
+#
 class Course(object):
 	subject_abbrev = ''
 	subject_id = 0
@@ -19,38 +26,39 @@ class Course(object):
 		self.subject_abbrev = subject_abbrev
 		self.subject_id = subject_id
 
-def makeCourse(subj, id):
-	crs = Course(subj, id)
+#
+def makeCourse(subj, course_id):
+	crs = Course(subj, course_id)
 	return crs
 
-
+#
 def create_connection(db_file):
-    """ create a database connection to the SQLite database
-        specified by the db_file
-    :param db_file: database file
-    :return: Connection object or None
-    """
-    try:
-        conn = sqlite3.connect(db_file)
-        conn.row_factory = sqlite3.Row
-        return conn
-    except Error as e:
-        print(e)
+	""" create a database connection to the SQLite database
+		specified by the db_file
+	:param db_file: database file
+	:return: Connection object or None
+	"""
+	try:
+		conn = sqlite3.connect(db_file)
+		conn.row_factory = sqlite3.Row
+		return conn
+	except Error as e:
+		print(e)
 
-    return None
+	return None
 
 def select_all_subjects(conn):
-    """
-    Query all rows in the subject table
-    :param conn: the Connection object
-    :return:
-    """
-    cur = conn.cursor()
-    cur.execute("SELECT id, name, schedule_abbreviation FROM studygroups_subject")
+	"""
+	Query all rows in the subject table
+	:param conn: the Connection object
+	:return:
+	"""
+	cur = conn.cursor()
+	cur.execute("SELECT id, name, schedule_abbreviation FROM studygroups_subject")
 
-    rows = cur.fetchall()
+	rows = cur.fetchall()
 
-    return rows
+	return rows
 
 def check_class_exists(subject_id, cn, subj, instructor, semester, year, conn):
 	# If we already have this class, do not add it.
@@ -85,7 +93,7 @@ def scrape_pages(subject, semester):
 	url = '{}{}{}.out'.format(url_base, semester, subject['schedule_abbreviation'])
 
 	#
-	subject_id = subject['id']
+	#subject_id = subject['id']
 
 	# query the website and return the html to the variable 'page'
 	page = urlopen(url)
@@ -138,8 +146,12 @@ def add_classes(class_rows, semester, year, subject_id, conn):
 					cur.execute(sql,(subject_id, cn, subj, instructor, semester, year, 1))
 
 
+
 def main():
-	database = "/Users/nathan/documents/workspace/StudyBuddy/db.sqlite3"
+	# If not installed in the default location, database path will need to be updated.
+	# Should be one directory below the current directory.
+	#
+	database = os.path.join( os.path.dirname ( __file__), os.path.pardir, 'db.sqlite3')
 
 	#
 	parser = argparse.ArgumentParser()

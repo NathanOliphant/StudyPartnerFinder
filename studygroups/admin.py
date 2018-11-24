@@ -7,7 +7,8 @@ from django.contrib import admin
 #
 
 # Register your models here.
-from .models import StudyGroup, BlockList, StudyGroupUser, Message, Filter, StudyGroupFilter, Subject, Course, CurrentSemester
+from .models import StudyGroup, BlockList, StudyGroupUser, Message,  \
+    Subject, Course, CurrentSemester, DayChoice, GenderChoice, SemesterChoice
 
 class CurrentSemesterAdmin(admin.ModelAdmin):
     model = CurrentSemester
@@ -61,10 +62,31 @@ class MessageAdmin(admin.ModelAdmin):
     list_display = ['title', 'date', 'creator', 'studygroup_id' ]
 
 admin.site.register(Message, MessageAdmin)
+
+class SemesterChoiceAdmin(admin.ModelAdmin):
+    model = SemesterChoice
     
+    list_display = ['semester']
+    
+admin.site.register(SemesterChoice, SemesterChoiceAdmin)
+
+class DayChoiceAdmin(admin.ModelAdmin):
+    model = DayChoice
+    
+    list_display = ['id', 'day']
+
+admin.site.register(DayChoice, DayChoiceAdmin)
+    
+class GenderChoiceAdmin(admin.ModelAdmin):
+    model = GenderChoice
+    
+    list_display = ['abbrev', 'gender']
+
+admin.site.register(GenderChoice, GenderChoiceAdmin)
+
 # The following will not have custom admin functionality:
 admin.site.register(BlockList)
-admin.site.register(Filter)
-admin.site.register(StudyGroupFilter)
+#admin.site.register(Filter)
+#admin.site.register(StudyGroupFilter)
 admin.site.register(Subject)
 

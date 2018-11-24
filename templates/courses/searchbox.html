@@ -7,32 +7,31 @@
             <p>Courses for {{ current_semester.semester }} {{ current_semester.year }}
             {% csrf_token %}
              {{ form.non_field_errors }}
-            <table width="100%">
+            <table style="width: 100%">
             <tr>
                 <th align="center">
                     <label for="{{ form.study_subject.id_for_label }}">Subject:</label>
-                </th>
-                
+                </th> 
             </tr>
             <tr>
                 <td align="center">{{ form.study_subject }}{{ form.study_subject.errors }}</td>
             </tr>
             <tr>
-                <th align=""center"">
+                <th align="center">
                     <label for="{{ form.study_courses.id_for_label }}">Course:</label>
                 </th>
-                
             </tr>
-            <tr>
-                
-                <td align=""center"">{{ form.study_courses}}{{ form.study_courses.errors }}</td>
+            <tr>  
+                <td align="center">{{ form.study_courses}}{{ form.study_courses.errors }}</td>
             </tr>
             </table>
             <p><input type="submit" value="Go To Course"  id="submit" /></p>
         </form>
     <div id="courseCount" align="center"><span></span></div>
 </div>
+{% endblock %}
 
+{% block javascript %}
 <script language="JavaScript" type="text/javascript">
 function course(id, name, instructor, subject, cnn)
 {
@@ -71,18 +70,20 @@ $(document).ready(function(){
         }
 
         // Check for existence of classList, as may not be available for all semester/year options.
-        if (typeof classList !== 'undefined' && classList.length > 0) {
-            for (var i=0;i<classList.length;i++){
+        if (typeof classList !== 'undefined' && classList.length > 0) 
+        {
+            for (var i=0;i<classList.length;i++)
+            {
                 option += '<option value="'+ classList[i].id + '">' + classList[i].name + ' (CN' + classList[i].cnn + ')</option>';
              }
         }
-        else {
+        else 
+        {
             option = '<option value="">No courses. Try another search.</option>';
         }
-      $('#id_study_courses').empty().append(option);
+        $('#id_study_courses').empty().append(option);
       
-      $('#courseCount span').text('There are ' + classList.length + ' ' + $('#id_study_subject :selected').text() + ' courses for {{ current_semester.semester}} {{ current_semester.year }}');
-
+        $('#courseCount span').text('There are ' + classList.length + ' ' + $('#id_study_subject :selected').text() + ' courses for {{ current_semester.semester}} {{ current_semester.year }}');
     }
     
     if ($('#id_study_subjects :selected').val() != "")
@@ -90,9 +91,10 @@ $(document).ready(function(){
         updateCourse();
     }
 
-      $('#id_study_subject').change(function(){
-          updateCourse();
-      });
+    $('#id_study_subject').change(function()
+    {
+        updateCourse();
+    });
 });
 </script>
 {% endblock %}

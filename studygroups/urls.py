@@ -2,13 +2,15 @@ from django.urls import path
 
 from . import views
 
+# URL patterns used by the studygroups view.  
+# The bulk of our app is here.
 urlpatterns = [
     path('', views.index, name='index'),
     path('add/<slug:pk>', views.add, name='add'),
     path('add/', views.add, name='add'),
-    path('update/<slug:id>', views.update, name='index'),
-    path('view/<slug:id>', views.view, name='view'),
-    path('join/<slug:id>', views.join, name='join'),
+    path('update/<slug:pk>', views.update, name='update'),
+    path('view/<slug:pk>', views.view, name='view'),
+    path('join/<slug:pk>', views.join, name='join'),
     path('message/', views.message, name='message')
     #url(r'^ajax/validate_username/$', views.validate_username, name='validate_username'),
 ]
