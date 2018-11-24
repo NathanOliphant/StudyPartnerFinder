@@ -6,54 +6,48 @@
 {% block content %}
 <p>Edit Account Here</p>
 <div class="greenbox">
-  <h2>Edit Account</h2>
-  
-  <form method="post">
-    {% csrf_token %}
-    <div style="margin-left: auto;margin-right:auto; align: left; text-align:left;">
-    <p class="fieldWrapper">
-        <label for="id_first_name" class="account_edit_label">First name:</label> 
-        <span class="account_edit_input"><input type="text" name="first_name" value="{{ user.first_name }}" maxlength="30" id="id_first_name" /></span>
-    </p>
-    <p class="fieldWrapper">
-        <label for="id_last_name" class="account_edit_label">Last name:</label> 
-        <span class="account_edit_input"><input type="text" name="last_name" value="{{ user.last_name }}" maxlength="150" id="id_last_name" /></span>
-    </p>
-    
-    <p class="fieldWrapper">
-        <label for="id_gender" class="account_edit_label">Gender:</label> 
-        <span class="account_edit_input"><select name="gender" required id="id_gender">
-            <option value="">---------</option>
-            <option value="U">Undeclared</option>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-            <option value="N">Nonbinary</option>
-        </select>
-        </span>
-    </p>
-
-    </div>
-    <button type="submit" id="submit">Submit</button>
-    <p><a href="/accounts/password_reset/">Update Password</a></p>
-  </form>
-  
-  </div>
- <script>
-
+    <h2>Edit Account</h2>
+    <form method="post">
+	    {% csrf_token %}
+	    <div style="margin-left: auto;margin-right:auto; align: left; text-align:left;">
+		    <p class="fieldWrapper">
+		        <label for="id_first_name" class="account_edit_label">First name:</label> 
+		        <span class="account_edit_input"><input type="text" name="first_name" value="{{ user.first_name }}" maxlength="30" id="id_first_name" /></span>
+		    </p>
+		    <p class="fieldWrapper">
+		        <label for="id_last_name" class="account_edit_label">Last name:</label> 
+		        <span class="account_edit_input"><input type="text" name="last_name" value="{{ user.last_name }}" maxlength="150" id="id_last_name" /></span>
+		    </p>
+		    <p class="fieldWrapper">
+		        <label for="id_gender" class="account_edit_label">Gender:</label> 
+		        <span class="account_edit_input"><select name="gender" required id="id_gender">
+		            <option value="">---------</option>
+		            <option value="U">Undeclared</option>
+		            <option value="M">Male</option>
+		            <option value="F">Female</option>
+		            <option value="N">Nonbinary</option>
+		        </select>
+		        </span>
+		    </p>
+	    </div>
+	    <button type="submit" id="submit">Submit</button>
+	    <p><a href="/accounts/password_reset/">Update Password</a></p>
+    </form>
+</div>
 {% endblock %}
 
 {% block javascript %}
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 $( document ).ready(function() 
 {
 	$('#id_gender option[value={{ user.gender }}]').attr('selected','selected');
 	$("#id_gender").val("{{ user.gender }}").change();
+	
+	$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
+	$('#breadcrumbs').html( $bc.append(' &gt; <a href="/accounts/">Accounts</a>') );
+	$('#breadcrumbs').html( $bc.append(' &gt; {{ user.username }}') );
+	$('#breadcrumbs').html( $bc.append(' &gt; Edit') );
 });
-
-$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
-$('#breadcrumbs').html( $bc.append(' &gt; <a href="/accounts/">Accounts</a>') );
-$('#breadcrumbs').html( $bc.append(' &gt; {{ user.username }}') );
-$('#breadcrumbs').html( $bc.append(' &gt; Edit') );
 </script>
 {% endblock %}
 

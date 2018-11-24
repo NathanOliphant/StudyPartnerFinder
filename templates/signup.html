@@ -5,121 +5,116 @@
 
 {% block content %}
 <div class="greenbox">
-  <h2>Create Account</h2>
-  <div style="margin-left: auto;margin-right:auto; align: left; text-align:left;">
-  <form method="post" onsubmit="return updateUsername()">
-    {% csrf_token %}
-    {{ form.username }}
-    {{ form.non_field_errors }}
-    {{ form.email.id_for_label.errors }}
-    {{ form.email.errors }}
-    <p class="fieldWrapper">
-        <label for="{{ form.email.id_for_label }}" class="signup_label">HSU Email Address:</label> 
-        <span class="signup_input"><input type="email" name="email" maxlength="254" required id="id_email" />
-        (required)
-        </span>
-    </p>
-    <div align="center">Your username will be your hsu email before the @</div>
-    
-    {{ form.first_name.id_for_label.errors }}
-    {{ form.first_name.errors }}
-    <p class="fieldWrapper">
-        <label for="{{ form.first_name.id_for_label }}" class="signup_label">First Name:</label> 
-        <span class="signup_input"><input type="text" name="first_name" maxlength="30" id="id_first_name" />
-        (optional)
-        </span>
-    </p>
-    
-    {{ form.last_name.id_for_label.errors }}
-    {{ form.last_name.errors }}
-    <p class="fieldWrapper">
-        <label for="{{ form.last_name.id_for_label }}" class="signup_label">Last Name:</label>
-        <span class="signup_input"><input type="text" name="last_name" maxlength="30" id="id_last_name"  />
-        (optional)</span>
-    </p>
-    
-    {{ form.gender.id_for_label.errors }}
-    {{ form.gender.errors }}
-    <p class="fieldWrapper">
-        <label for="{{ form.gender.id_for_label }}" class="signup_label">Gender:</label> 
-        <span class="signup_input">
-        <select name="gender" id="id_gender">
-            <option value="U" selected>Select a gender</option>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-            <option value="N">Nonbinary</option>
-        </select>
-        (optional)
-        </span>
-    </p>
-    
-    <ul>
+    <h2>Create Account</h2>
+    <div style="margin-left: auto;margin-right:auto; align: left; text-align:left;">
+        <form method="post" onsubmit="return updateUsername()">
+		    {% csrf_token %}
+		    {{ form.username }}
+		    {{ form.non_field_errors }}
+		    {{ form.email.id_for_label.errors }}
+		    {{ form.email.errors }}
+		    <p class="fieldWrapper">
+		        <label for="{{ form.email.id_for_label }}" class="signup_label">HSU Email Address:</label> 
+		        <span class="signup_input"><input type="email" name="email" maxlength="254" required id="id_email" />
+		        (required)
+		        </span>
+		    </p>
+		    <div align="center">Your username will be your hsu email before the @</div>
+		    {{ form.first_name.id_for_label.errors }}
+		    {{ form.first_name.errors }}
+		    <p class="fieldWrapper">
+		        <label for="{{ form.first_name.id_for_label }}" class="signup_label">First Name:</label> 
+		        <span class="signup_input"><input type="text" name="first_name" maxlength="30" id="id_first_name" />
+		        (optional)
+		        </span>
+		    </p>
+		    
+		    {{ form.last_name.id_for_label.errors }}
+		    {{ form.last_name.errors }}
+		    <p class="fieldWrapper">
+		        <label for="{{ form.last_name.id_for_label }}" class="signup_label">Last Name:</label>
+		        <span class="signup_input"><input type="text" name="last_name" maxlength="30" id="id_last_name"  />
+		        (optional)</span>
+		    </p>
+		    
+		    {{ form.gender.id_for_label.errors }}
+		    {{ form.gender.errors }}
+		    <p class="fieldWrapper">
+		        <label for="{{ form.gender.id_for_label }}" class="signup_label">Gender:</label> 
+		        <span class="signup_input">
+		        <select name="gender" id="id_gender">
+		            <option value="U" selected>Select a gender</option>
+		            <option value="M">Male</option>
+		            <option value="F">Female</option>
+		            <option value="N">Nonbinary</option>
+		        </select>
+		        (optional)
+		        </span>
+		    </p>
+		    <ul>
                 <li>Your password can't be too similar to your other personal information.</li>
                 <li>Your password must contain at least 8 characters.</li>
                 <li>Your password can't be a commonly used password.</li>
                 <li>Your password can't be entirely numeric.</li>
-        </ul>
-    
-    {{ form.password1.id_for_label.errors }}
-    {{ form.password1.errors }}
-    <p class="fieldWrapper">
-        <label for="{{ form.password1.id_for_label }}" class="signup_label">Password:</label>
-        <span class="signup_input"><input type="password" name="password1" required id="id_password1" />
-        (required)
-        </span>
-        <br />
-    </p>
-    
-    {{ form.password2.id_for_label.errors }}
-    {{ form.password2.errors }}
-    <p class="fieldWrapper">
-        <label for="{{ form.password2.id_for_label }}" class="signup_label">Confirm Password:</label>
-        <span class="signup_input"><input type="password" name="password2" required id="id_password2" />
-        (required)
-        </span>
-        <br />
-    </p>
-    
-    <div align="center"><p>Enter the same password as before, for verification.</p>
-    <button type="submit" id="submit">Submit</button>
-    <p><span id="email_error"></span></p>
+		    </ul>
+		    {{ form.password1.id_for_label.errors }}
+		    {{ form.password1.errors }}
+		    <p class="fieldWrapper">
+		        <label for="{{ form.password1.id_for_label }}" class="signup_label">Password:</label>
+		        <span class="signup_input"><input type="password" name="password1" required id="id_password1" />
+		        (required)
+		        </span>
+		        <br />
+		    </p>
+		    
+		    {{ form.password2.id_for_label.errors }}
+		    {{ form.password2.errors }}
+		    <p class="fieldWrapper">
+		        <label for="{{ form.password2.id_for_label }}" class="signup_label">Confirm Password:</label>
+		        <span class="signup_input"><input type="password" name="password2" required id="id_password2" />
+		        (required)
+		        </span>
+		        <br />
+		    </p>
+		    
+		    <div align="center"><p>Enter the same password as before, for verification.</p>
+			    <button type="submit" id="submit">Submit</button>
+			    <p><span id="email_error"></span></p>
+		    </div>
+        </form>
     </div>
-  </form>
-  </div>
-  </div>
+</div>
 {% endblock %}
 
 {% block javascript %}
-<script language="JavaScript" type="text/javascript">
-  function confirmEmail()
-  {
-      ret = true;
-      university = "humboldt.edu";
-      emailExtension = $( "#id_email" ).val().split('@')[1];
-      if (university != emailExtension)
-      {
-          $( "#email_error" ).text("Please enter a valid HSU email address.")
-          $( "#id_email" ).val('');
-          $( "#id_email" ).focus();
-          ret =  false;
-      }
-      return ret;
-      
-  }
-  function updateUsername()
-  {
-      username = $( "#id_email" ).val().split('@')[0];
-      //alert(username);
-      $( "#id_username" ).val( username );
-      return confirmEmail();
-  }
-  
-  $( document ).ready(function() 
-	{
-	  $bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
-	  $('#breadcrumbs').html( $bc.append(' &gt; <a href="/accounts/">Accounts</a>') );
-	  $('#breadcrumbs').html( $bc.append(' &gt; Signup') );
-	});
-
+<script type="text/javascript">
+ function confirmEmail()
+ {
+     ret = true;
+     university = "humboldt.edu";
+     emailExtension = $( "#id_email" ).val().split('@')[1];
+     if (university != emailExtension)
+     {
+         $( "#email_error" ).text("Please enter a valid HSU email address.")
+         $( "#id_email" ).val('');
+         $( "#id_email" ).focus();
+         ret =  false;
+     }
+     return ret;    
+ }
+ 
+ function updateUsername()
+ {
+     username = $( "#id_email" ).val().split('@')[0];
+     $( "#id_username" ).val( username );
+     return confirmEmail();
+ }
+ 
+$( document ).ready(function() 
+{
+    $bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
+    $('#breadcrumbs').html( $bc.append(' &gt; <a href="/accounts/">Accounts</a>') );
+    $('#breadcrumbs').html( $bc.append(' &gt; Signup') );
+});
 </script>
 {% endblock %}

@@ -860,6 +860,41 @@ background: -moz-linear-gradient( center bottom, rgb(89,222,27) 0%, rgb(83,179,3
     color: #006400;
 }
 
+#my_studygroups
+{
+	position: relative; 
+	color: #000000; 
+	align:center;
+	margin-top:15px; 
+	align:center; 
+	text-align: justify;
+}
+
+.my_studygroup_description
+{
+	display: inline-block; 
+	*display: inline;
+	zoom: 1; 
+	width: 600px; 
+	text-align: left;
+}
+
+.my_studygroup_messages
+{
+	display: inline-block; 
+	*display: inline; 
+	zoom: 1; 
+	vertical-align: top; 
+	border: 1px black solid; 
+	width: 570px; 
+	word-break: break-all; 
+	word-wrap: break-word; 
+	height: 470px; 
+	overflow-y: auto; 
+	background-color: #ffffff; 
+	color: #000000;
+}
+
 /*
     Tree logo from:
     https://clipartion.com/free-clipart-7017/

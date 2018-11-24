@@ -5,100 +5,136 @@
 
 {% block content %}
 <div id="sg_main">
-<!-- Study Group Links? -->
-{% if studygroup %}
-<p>
-    <span class="studygroup_label">Group:</span>
-    <span class="studygroup_data">{{ studygroup.post_title }}
-    {% if self_owned %} <a href="/studygroups/update/{{ studygroup.id }}" class="green">Edit</a>{% endif %}
-    </span>
-</p>
-<p><span class="studygroup_label">Subject:</span><span class="studygroup_data">{{ studygroup.course.subject }}</span></p>
-<p><span class="studygroup_label">Class:</span><span class="studygroup_data">{{ studygroup.course.class_name }}</span></p>
-<p><span class="studygroup_label">Instructor:</span><span class="studygroup_data">{{ studygroup.course.instructor }}</span></p>
-<p><span class="studygroup_label">Section:</span><span class="studygroup_data">{{ studygroup.course.cn_number }}</span></p>
-<p><span class="studygroup_label">Semester:</span><span class="studygroup_data">{{ studygroup.course.semester }} {{ studygroup.course.year }}</span></p>
-<p><span class="studygroup_label">Creator:</span><span class="studygroup_data">{{ studygroup.creator.username }} {% if self_owned %} ***{% endif %}</span></p>
-<p><span class="studygroup_label">Meets:</span><span class="studygroup_data"><span id='days_available_{{ studygroup.id }}'>
- {% if days_available %}
-    {% for d in days_available %}
-    {{ d }}
-    {% endfor %}
-  {% endif %}</span> {{ studygroup.hours_available_start }} to {{ studygroup.hours_available_end }}</span></p>
-<p><span class="studygroup_label">Online:</span><span class="studygroup_data">{{ studygroup.online_only }}</span></p>
-<p>
-    <span class="studygroup_label">Gender:</span>
-    <span class="studygroup_data">
-    {% if studygroup.gender_specific == 'M' %}
-    Male Only
-    {% endif %}
-    {% if studygroup.gender_specific == 'F' %}
-    Female Only
-    {% endif %}
-    {% if studygroup.gender_specific == 'N' %}
-    Nonbinary Only
-    {% endif %}
-    {% if studygroup.gender_specific == 'U' %}
-    Everyone Welcome!
-    {% endif %}
-    </span>
-</p>
-<p><span class="studygroup_label">Members:</span><span class="studygroup_data">{{ members_list|length }}/{{ studygroup.max_members }}</span></p>
-{% if am_a_member %}
-<ul>
-    {% for m in members_list %}
-    <li>{{ m.user.username }}  
-    {% if studygroup.creator == user and not m.user.id == user.id %} 
-    <a href="#" onclick="blockUser({{ m.user.id }});">
-    <span id="userblock_{{ m.user.id }}">{% if m.user.id in block_list %}Unblock User{% else %}Block User{% endif %}</span></a>{% endif %}
-    </li>
-    {% endfor %}
-    </ul>
-{% endif %}
-{% if not am_a_member %}
-<a href="/studygroups/join/{{ studygroup.id }}">Join Group</a>
-{% endif %}
-{% endif %}
-</div>
-{% if am_a_member %}
-<div id="messages"  
-    style="display: inline-block;* display: inline; zoom: 1; vertical-align: top; border: 1px black solid; width: 570px; height: 532px; background-color: #ffffff; color: #000000">
-<table style="width: 100%; height: 530px;">
-<tr style="height: 453px;">
-    <td style="vertical-align: top">
-    <div id="msg_list" style="overflow-y: auto; height: 450px; word-break: break-all; word-wrap: break-word;">
-    <span id="messages_{{ studygroup.studygroup.id }}_span">
-    {% for message in message_list %}
-        <span id="message_{{  message.id }}">
-        <p>{{ message.date }} - {{ message.title }}</p>
-        <p>{{ message.body }}</p>
-        <hr style="width: 200px;" />
-        </span>
-        {% endfor %}
-    </span>
-    </div>
-    </td>
-</tr>
-<tr>
-    <td>
-    <span style="vertical-align: middle; text-align: left">
-<form method="post" data-send-message-url="/studygroups/message/" id="message_form">
-{% csrf_token %}
-<input type="text" placeholder="Enter message title" id="id_title"  name="title"  style="width: 426px; margin-left:20px;"/><br />
-<textarea name="new_message" id="id_new_message"  style="width: 430px; height: 40px; display: inline-block;float: left; margin-left: 20px; margin-right: 5px; vertical-align: middle" placeholder="Enter message"></textarea>
-<input type="button" value="Send"  class="button_float" id="buttn" />
-<input type="hidden" value="{{ studygroup.id }}" id="id_studygroup" name="studygroup" />
-</form>
-</span>
-    </td>
-</tr>
-</table>
+	<!-- Study Group Links -->
+	{% if studygroup %}
+	<p>
+         <span class="studygroup_label">Group:</span>
+	     <span class="studygroup_data">{{ studygroup.post_title }}
+	     {% if self_owned %} 
+	         <a href="/studygroups/update/{{ studygroup.id }}" class="green">Edit</a>
+	     {% endif %}
+	    </span>
+	</p>
+	<p>
+	    <span class="studygroup_label">Subject:</span>
+	    <span class="studygroup_data">{{ studygroup.course.subject }}</span>
+    </p>
+	<p>
+	    <span class="studygroup_label">Class:</span>
+	    <span class="studygroup_data">{{ studygroup.course.class_name }}</span>
+	 </p>
+	<p>
+	    <span class="studygroup_label">Instructor:</span>
+	    <span class="studygroup_data">{{ studygroup.course.instructor }}</span>
+	</p>
+	<p>
+	    <span class="studygroup_label">Section:</span>
+	    <span class="studygroup_data">{{ studygroup.course.cn_number }}</span>
+	</p>
+	<p>
+	    <span class="studygroup_label">Semester:</span>
+	    <span class="studygroup_data">{{ studygroup.course.semester }} 
+	    {{ studygroup.course.year }}</span>
+	</p>
+	<p>
+	    <span class="studygroup_label">Creator:</span>
+	    <span class="studygroup_data">{{ studygroup.creator.username }} 
+	    {% if self_owned %} ***{% endif %}</span>
+	</p>
+	<p>
+	    <span class="studygroup_label">Meets:</span>
+	    <span class="studygroup_data">
+	    <span id='days_available_{{ studygroup.id }}'>
+	    {% if days_available %}
+	        {% for d in days_available %}
+	            {{ d }}
+	        {% endfor %}
+	   {% endif %}</span> 
+	   {{ studygroup.hours_available_start }} to {{ studygroup.hours_available_end }}
+	   </span>
+	</p>
+	<p>
+	    <span class="studygroup_label">Online:</span>
+	    <span class="studygroup_data">{{ studygroup.online_only }}</span>
+	</p>
+	<p>
+	    <span class="studygroup_label">Gender:</span>
+	    <span class="studygroup_data">
+	    {% if studygroup.gender_specific == 'M' %}
+	    Male Only
+	    {% endif %}
+	    {% if studygroup.gender_specific == 'F' %}
+	    Female Only
+	    {% endif %}
+	    {% if studygroup.gender_specific == 'N' %}
+	    Nonbinary Only
+	    {% endif %}
+	    {% if studygroup.gender_specific == 'U' %}
+	    Everyone Welcome!
+	    {% endif %}
+	    </span>
+	</p>
+	<p>
+	    <span class="studygroup_label">Members:</span>
+	    <span class="studygroup_data">
+	    {{ members_list|length }}/{{ studygroup.max_members }}
+	    </span>
+	</p>
+	{% if am_a_member %}
+	<ul>
+	    {% for m in members_list %}
+	    <li>{{ m.user.username }}  
+	    {% if studygroup.creator == user and not m.user.id == user.id %} 
+	    <a href="#" onclick="blockUser({{ m.user.id }});">
+	    <span id="userblock_{{ m.user.id }}">{% if m.user.id in block_list %}Unblock User{% else %}Block User{% endif %}</span></a>{% endif %}
+	    </li>
+	    {% endfor %}
+	    </ul>
+	{% endif %}
+	{% if not am_a_member %}
+	<a href="/studygroups/join/{{ studygroup.id }}">Join Group</a>
+	{% endif %}
+	{% endif %}
+	</div>
+	{% if am_a_member %}
+	<div id="messages"  
+	    style="display: inline-block;* display: inline; zoom: 1; vertical-align: top; border: 1px black solid; width: 570px; height: 532px; background-color: #ffffff; color: #000000">
+	<table style="width: 100%; height: 530px;">
+	<tr style="height: 453px;">
+	    <td style="vertical-align: top">
+	    <div id="msg_list" style="overflow-y: auto; height: 450px; word-break: break-all; word-wrap: break-word;">
+	    <span id="messages_{{ studygroup.studygroup.id }}_span">
+	    {% for message in message_list %}
+	        <span id="message_{{  message.id }}">
+	        <p>{{ message.date }} - {{ message.title }}</p>
+	        <p>{{ message.body }}</p>
+	        <hr style="width: 200px;" />
+	        </span>
+	        {% endfor %}
+	    </span>
+	    </div>
+	    </td>
+	</tr>
+	<tr>
+	    <td>
+	    <span style="vertical-align: middle; text-align: left">
+	<form method="post" data-send-message-url="/studygroups/message/" id="message_form">
+	{% csrf_token %}
+	<input type="text" placeholder="Enter message title" id="id_title"  name="title"  style="width: 426px; margin-left:20px;"/><br />
+	<textarea name="new_message" id="id_new_message"  style="width: 430px; height: 40px; display: inline-block;float: left; margin-left: 20px; margin-right: 5px; vertical-align: middle" placeholder="Enter message"></textarea>
+	<input type="button" value="Send"  class="button_float" id="buttn" />
+	<input type="hidden" value="{{ studygroup.id }}" id="id_studygroup" name="studygroup" />
+	</form>
+	</span>
+	    </td>
+	</tr>
+	</table>
 </div>
 {% endif %}
 {% endblock %}
 
 {% block javascript %}
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 function UpdateDays(sg_days, el)
 {
     days_string = 'Every Day';
