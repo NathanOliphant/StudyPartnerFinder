@@ -243,13 +243,6 @@ $( document ).ready(function()
               }
               else 
               {
-            	  //d = data.msg_date;
-            	  //var dt_to = $.datepicker.formatDate('yy-mm-dd', d);
-            	  //d = $.format.toBrowserTimeZone(d, "MMM. dd, yyyy, h, mm a")
-            	  //d = DateFormat.format.date(data.msg_date, "MMM. dd, yyyy, h, mm a");
-            	  //d = $.format.date(d, "MMM. dd, yyyy, h, mm a"); 
-            	  //alert(d);
-            	  
             	  var utcDate = data.msg_date;  // ISO-8601 formatted date returned from server
             	  var localDate = new Date(utcDate);
             	  localDate = formatDate(localDate);
