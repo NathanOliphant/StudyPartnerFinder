@@ -190,9 +190,14 @@ def view(request, pk=None):
         members_list = list()
         # Can only view full details if you are a member.
         su = StudyGroupUser.objects.filter(studygroup = pk).select_related('user', 'studygroup')
-        # Only need the first entry to get sg details.
-        studygroup =su[0].studygroup
         
+        # Only need the first entry to get sg details.
+        # We are using StudyGroupUser so that we also get a list of users.
+        if su is not None and su.count() > 0:
+            studygroup =su[0].studygroup
+        else:
+            studygroup = StudyGroup.objects.filter(id = pk).first()
+            
         message_list = Message.objects.filter(studygroup = studygroup.id)
         
         if request.user ==  studygroup.creator:

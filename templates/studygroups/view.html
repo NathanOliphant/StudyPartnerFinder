@@ -192,6 +192,20 @@ $.ajax(
   });
 }
 
+const month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	
+function formatDate(date) {
+	var hours = date.getHours();
+	var minutes = date.getMinutes();
+	var ampm = hours >= 12 ? 'p.m.' : 'a.m.';
+	hours = hours % 12;
+	hours = hours ? hours : 12; // the hour '0' should be '12'
+	minutes = minutes < 10 ? '0'+minutes : minutes;
+	var strTime = hours + ':' + minutes + ' ' + ampm;
+	month = month_names[date.getMonth()];
+	return month + ". " + date.getDate() + ", " + date.getFullYear() + ",  " + strTime;
+}
+
 
 $( document ).ready(function() 
 {   
@@ -211,9 +225,6 @@ $( document ).ready(function()
             sg_days_{{ studygroup.id }}, 
             $( "#days_available_{{ studygroup.id }}" ));
     
-    
-    
-    
     $("#buttn").click(function () {
         if ($("#id_title").val() == "" || $("#id_new_message").val() == "")
         {
@@ -232,7 +243,17 @@ $( document ).ready(function()
               }
               else 
               {
-            	  new_span = '<span id="message_'+data.msg_id+'"><p>'+data.msg_date+' - '+data.msg_title+'</p><p>'+data.msg_body+'</p><hr style="width: 200px;" /></span>';
+            	  //d = data.msg_date;
+            	  //var dt_to = $.datepicker.formatDate('yy-mm-dd', d);
+            	  //d = $.format.toBrowserTimeZone(d, "MMM. dd, yyyy, h, mm a")
+            	  //d = DateFormat.format.date(data.msg_date, "MMM. dd, yyyy, h, mm a");
+            	  //d = $.format.date(d, "MMM. dd, yyyy, h, mm a"); 
+            	  //alert(d);
+            	  
+            	  var utcDate = data.msg_date;  // ISO-8601 formatted date returned from server
+            	  var localDate = new Date(utcDate);
+            	  localDate = formatDate(localDate);
+            	  new_span = '<span id="message_'+data.msg_id+'"><p>'+localDate+' - '+data.msg_title+'</p><p>'+data.msg_body+'</p><hr style="width: 200px;" /></span>';
             	  // Update the messages here by appending a new message above the existing messages.
                   // We also want to reset the title and body . . . 
                   $("#messages_{{ studygroup.studygroup.id }}_span").append(new_span);

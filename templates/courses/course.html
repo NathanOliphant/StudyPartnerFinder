@@ -75,9 +75,8 @@
 				</p>
 				{% endif %}
 				{% if not sg.i_am_in_group %}
-				    <a href="/studygroups/join/{{ sg.studygroup.id }}">Join Group</a> | 
+				    <a href="/studygroups/join/{{ sg.studygroup.id }}">Join Group</a> |{% endif %} 
 				    <a href="/studygroups/view/{{ sg.studygroup.id}}">View Group</a>
-				{% endif %}
 				
 				<script>
 				days_string = 'Every Day';

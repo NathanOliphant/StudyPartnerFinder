@@ -4,8 +4,6 @@
 {% block title %}Add StudyGroup{% endblock %}
 
 {% block content %}
-
-
 <div class="greenbox">
 <div style="margin-left: auto;margin-right:auto; align: left; text-align:left;">
 <form action="/studygroups/add/{{ course }}" method="post" onsubmit="return updatetime();">
@@ -104,68 +102,69 @@ $(document).ready(function()
 		} 
 	});
 	
-	/*
-	 *  Time format expected by Django is different from what is displayed here, so clean 
-	 *  up before submitting.  Performing this client-side means less bad submissions.
-	 */
-	function updatetime()
-	{
-		ret = false;
-		start = breakoutTime($('#id_hours_available_start').val());
-		end = breakoutTime($('#id_hours_available_end').val());
-		
-		if (parseInt(start.replace(':', '')) >= parseInt(end.replace(':', '')))
-		{
-			alert("If using a starting and ending time available, the start time must be less than the end time.");
-		}
-		else
-		{
-			ret = true;
-			$('#id_hours_available_start').val(breakoutTime($('#id_hours_available_start').val()));
-		    $('#id_hours_available_end').val(breakoutTime($('#id_hours_available_end').val()));   
-		}
-		return ret;
-	}
-	
-	function breakoutTime(time)
-	{
-		//hour == xx before :
-	    //minute == xx after :
-	    //am/pm == am/pm at end
-	    hh = 0;
-	    mm = 0;
-	    if (time != "")
-	    {
-	        myArray = time.split(/([0-9]+)/)
-	        hh = myArray[1];
-	        //#hh= time.split(':')[0];
-	        //mm = time.plit(':')[1];
-	        mm = myArray[3];
-	        ampm = myArray[4];
-	    }
-	    if (ampm == "pm")
-	    {
-	    	hh = parseInt(hh) + 12;
-	    }
-	    else
-	    {
-	        if (parseInt(hh) < 10)
-	        {
-	            hh = "0" + hh;
-	        }
-	        if (parseInt(hh) == 12)
-	       	{
-	        	hh = "00";
-	        }
-	    }
-	    
-	    return(hh + ":" + mm);
-	    
-	}
 	$bc = $('<div id="breadcrumbs" style="width: 100%"><a href="/">Home</a></div>');
 	$('#breadcrumbs').html( $bc.append(' &gt; <a href="/studygroups/">Studygroups</a>') );
 	$('#breadcrumbs').html( $bc.append(' &gt; Add For Course {{ course }}') );
 });
+
+/*
+ *  Time format expected by Django is different from what is displayed here, so clean 
+ *  up before submitting.  Performing this client-side means less bad submissions.
+ */
+function updatetime()
+{
+    ret = false;
+    start = breakoutTime($('#id_hours_available_start').val());
+    end = breakoutTime($('#id_hours_available_end').val());
+    
+    if (parseInt(start.replace(':', '')) >= parseInt(end.replace(':', '')))
+    {
+        alert("If using a starting and ending time available, the start time must be less than the end time.");
+    }
+    else
+    {
+        ret = true;
+        $('#id_hours_available_start').val(breakoutTime($('#id_hours_available_start').val()));
+        $('#id_hours_available_end').val(breakoutTime($('#id_hours_available_end').val()));   
+    }
+    return ret;
+}
+
+function breakoutTime(time)
+{
+    //hour == xx before :
+    //minute == xx after :
+    //am/pm == am/pm at end
+    hh = 0;
+    mm = 0;
+    if (time != "")
+    {
+        myArray = time.split(/([0-9]+)/)
+        hh = myArray[1];
+        //#hh= time.split(':')[0];
+        //mm = time.plit(':')[1];
+        mm = myArray[3];
+        ampm = myArray[4];
+    }
+    if (ampm == "pm")
+    {
+        hh = parseInt(hh) + 12;
+    }
+    else
+    {
+        if (parseInt(hh) < 10)
+        {
+            hh = "0" + hh;
+        }
+        if (parseInt(hh) == 12)
+        {
+            hh = "00";
+        }
+    }
+    
+    return(hh + ":" + mm);
+    
+}
 </script>
 {% endblock %}
 
