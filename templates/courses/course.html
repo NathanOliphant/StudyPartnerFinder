@@ -4,6 +4,13 @@
 {% block title %}Course Detail{% endblock %}
 
 {% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 <div class="greenbox">
     {% if course %}
 	    <p>
@@ -75,7 +82,13 @@
 				</p>
 				{% endif %}
 				{% if not sg.i_am_in_group %}
-				    <a href="/studygroups/join/{{ sg.studygroup.id }}">Join Group</a> |{% endif %} 
+				    {% if  sg.members|length < sg.studygroup.max_members %}
+				    <a href="/studygroups/join/{{ sg.studygroup.id }}">Join Group</a>
+				    {% else %}
+				    Sorry, group full
+				    {% endif %} |
+				{% endif %} 
+				    
 				    <a href="/studygroups/view/{{ sg.studygroup.id}}">View Group</a>
 				
 				<script>

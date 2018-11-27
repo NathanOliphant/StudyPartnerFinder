@@ -3,7 +3,7 @@ from studygroups.models import Course, Subject, CurrentSemester
 from django.shortcuts import redirect
 from .forms import SearchForm
 from studygroups.utils import GetStudygroupsForCourse
-
+from django.contrib import messages
 #
 #    The courses.SearchTemplate class provides a searchbox and search functionality
 #     for courses.  As a class, it can be easily imported into other views and templates.
@@ -79,7 +79,7 @@ def course(request, course_id = None):
     # 
     course_results = Course.objects.filter(is_active=1, id=course_id).first()
     # We should probably check that course_results returned a valid result, and if not,
-    # redirect back to search.  That will be in the next iteration.
+    # redirect back to search.  That will be in the next iteration.    
     
     context = { 'course': course_results, 'studygroup_list': course_studygroups }
     return render(request, 'courses/course.html', context)

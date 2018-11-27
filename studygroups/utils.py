@@ -99,6 +99,11 @@ def GetStudygroupsForCourse(user, course_id):
         if user.is_authenticated:
             if not mine:
                 is_blocked = BlockList.objects.filter(user=u.studygroup.creator, blocked_user=user).exists()
+         
+        # Now check for gender filter.
+        if u.studygroup.gender_specific != 'U' and user.gender in ('M', 'F', 'N'):
+            if user.gender != u.studygroup.gender_specific:
+                is_blocked = True 
             
         if not is_blocked:
             # Now add to our list of studygroups.

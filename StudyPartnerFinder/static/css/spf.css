@@ -37,12 +37,12 @@ ul.errorlist li
 
 #main {
     width: 95%;
+    position: relative;
     /*display:flex;*/
     align:  center;
     /*align-items: center;  Vertical center alignment */
     /*justify-content: center;*/
     text-align: center;
-    //color: #ffffff;
 }
 
 #main a {

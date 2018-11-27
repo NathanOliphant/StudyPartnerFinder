@@ -7,6 +7,7 @@ python manage.py makemigrations
 Only run this after CustomUser is in place:
 4. python manage.py createsuperuser . . .
 
+python manage.py collectstatic
 
 items to add to requirements.txt:
 Django==2.0.4

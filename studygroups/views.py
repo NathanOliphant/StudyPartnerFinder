@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .utils import GetMyJoinedStudygroups
 import datetime
 from studygroups.models import Days, Message
+from django.contrib import messages
 
 # Create your views here.
 # index view displays all studygroups associated with a specific user, both created 
@@ -275,19 +276,39 @@ def join(request, pk=None):
                     user = request.user,
                     studygroup = sg
                 )
-            
+            else:
+                # Add the messages, as mentioned above
+                messages.add_message(request, messages.ERROR, 'Sorry, we were unable to add you to the studygroup you requested.')
+                if is_blocked:
+                    messages.add_message(request, messages.ERROR, 'You are blocked from joining that studygroup.')
+                if already_in_group:
+                    messages.add_message(request, messages.ERROR, 'You are already in the studygroup.')
+                if group_full:
+                    messages.add_message(request, messages.ERROR, 'The requested studygroup is full.')
+                return redirect(request.META.get('HTTP_REFERER', '/'))
             # 
             #template = 'view.html'
         else:
             pass
-            # Set template to return?  With error message of some sort?
+        
+    # Set template to return?  With error message of some sort?
     return redirect('/studygroups/view/{}'.format(pk))
 
 @login_required
 def acceptJoin(request, pk=None):
     pass
 
-
+# Reload all messages for a studygroup.
+@login_required
+def reload_messages(request):
+    sg = request.GET.get('studygroup', None)
+    studygroup = StudyGroup.objects.get(id=sg)
+    message_list = list(Message.objects.filter(studygroup=studygroup).values())
+    
+    data = { 'messages': message_list }
+            
+    return JsonResponse(data)
+    
 # Receive message from user, save, and let user know success/failure.
 @login_required
 def message(request):

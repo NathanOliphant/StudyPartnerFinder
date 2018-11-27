@@ -4,8 +4,16 @@
 {% block title %}Studygroup{% endblock %}
 
 {% block content %}
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+
 <div id="sg_main">
-	<!-- Study Group Links -->
+    <!-- Study Group Links -->
 	{% if studygroup %}
 	<p>
          <span class="studygroup_label">Group:</span>
@@ -90,9 +98,15 @@
 	    </li>
 	    {% endfor %}
 	    </ul>
+	    
 	{% endif %}
+	
 	{% if not am_a_member %}
-	<a href="/studygroups/join/{{ studygroup.id }}">Join Group</a>
+	    {% if  members_list|length < studygroup.max_members %}
+	        <a href="/studygroups/join/{{ studygroup.id }}">Join Group</a>
+	    {% else %}
+            Sorry, group full
+        {% endif %}
 	{% endif %}
 	{% endif %}
 	</div>
@@ -120,7 +134,8 @@
 	    <span style="vertical-align: middle; text-align: left">
 	<form method="post" data-send-message-url="/studygroups/message/" id="message_form">
 	{% csrf_token %}
-	<input type="text" placeholder="Enter message title" id="id_title"  name="title"  style="width: 426px; margin-left:20px;"/><br />
+	<input type="text" placeholder="Enter message title" id="id_title"  name="title"  style="width: 426px; margin-left:20px;"/>
+	<br />
 	<textarea name="new_message" id="id_new_message"  style="width: 430px; height: 40px; display: inline-block;float: left; margin-left: 20px; margin-right: 5px; vertical-align: middle" placeholder="Enter message"></textarea>
 	<input type="button" value="Send"  class="button_float" id="buttn" />
 	<input type="hidden" value="{{ studygroup.id }}" id="id_studygroup" name="studygroup" />
@@ -224,6 +239,7 @@ $( document ).ready(function()
     UpdateDays(
             sg_days_{{ studygroup.id }}, 
             $( "#days_available_{{ studygroup.id }}" ));
+   
     
     $("#buttn").click(function () {
         if ($("#id_title").val() == "" || $("#id_new_message").val() == "")
@@ -259,6 +275,36 @@ $( document ).ready(function()
         }
     });
     
+    /*
+        Reload the messages regularly.
+    */
+    const HALF_MINUTE = 30;
+    const MINUTE = 60;
+    const SECOND = 1000;
+    setInterval(function() {
+    	$.ajax({
+            url: "/studygroups/reloadmessages/",
+            data: {
+                'studygroup': {{ studygroup.id }}
+            },
+            dataType: 'json',
+            success: function (data)
+            {
+                var messages = JSON.stringify(data.messages);
+                var message_list = eval('(' + messages + ')');
+                $("#messages_{{ studygroup.studygroup.id }}_span").empty();
+                for (i in message_list)
+                {
+                   var utcDate = message_list[i]["date"];  // ISO-8601 formatted date returned from server
+                   var localDate = new Date(utcDate);
+                   localDate = formatDate(localDate);
+                   new_span = '<span id="message_'+message_list[i]["id"]+'"><p>'+localDate+' - '+message_list[i]["title"]+'</p><p>'+message_list[i]["body"]+'</p><hr style="width: 200px;" /></span>';
+                   $("#messages_{{ studygroup.studygroup.id }}_span").append(new_span);
+                }
+                $("#msg_list").scrollTop($("#msg_list")[0].scrollHeight);
+            }
+          });
+    }, HALF_MINUTE * SECOND); // 60 * 1000 milsec 
 });
 </script>
 {% endblock %}
