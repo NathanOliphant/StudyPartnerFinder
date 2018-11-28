@@ -33,7 +33,7 @@
 
 {% block javascript %}
 <script type="text/javascript">
-function course(id, name, instructor, subject, cnn)
+function Course(id, name, instructor, subject, cnn)
 {
     this.id = id;
     this.name = name;
@@ -48,33 +48,33 @@ let courses_{{ subject.id }} = [];{% endfor %}
 
 {% if course_list %}
 {% for course in course_list %}
-c = new course({{ course.id }}, '{{ course.class_name }}', '{{ course.instructor }}', {{ course.subject_id }}, {{ course.cn_number }});
+c = new Course({{ course.id }}, '{{ course.class_name }}', '{{ course.instructor }}', {{ course.subject_id }}, {{ course.cn_number }});
 courses_{{ course.subject_id }}.push(c);{% endfor %}
 {% endif %}
 //alert(courses_66[0].name);
 $(document).ready(function(){
     
     /* Then id_study_semester */
-    function updateCourse()
+    function UpdateCourse()
     {
-        myString = $('#id_study_subject :selected').val();
-        classList = '';
+        my_string = $('#id_study_subject :selected').val();
+        class_list = '';
         var option = '';
         try
         {
-            classList = eval(myString);
+            class_list = eval(my_string);
         }
         catch(err)
         {
             // Really do not need anything here, as we are just trying to stop error above.
         }
 
-        // Check for existence of classList, as may not be available for all semester/year options.
-        if (typeof classList !== 'undefined' && classList.length > 0) 
+        // Check for existence of class_list, as may not be available for all semester/year options.
+        if (typeof class_list !== 'undefined' && class_list.length > 0) 
         {
-            for (var i=0;i<classList.length;i++)
+            for (var i=0;i<class_list.length;i++)
             {
-                option += '<option value="'+ classList[i].id + '">' + classList[i].name + ' (CN' + classList[i].cnn + ')</option>';
+                option += '<option value="'+ class_list[i].id + '">' + class_list[i].name + ' (CN' + class_list[i].cnn + ')</option>';
              }
         }
         else 
@@ -83,17 +83,17 @@ $(document).ready(function(){
         }
         $('#id_study_courses').empty().append(option);
       
-        $('#courseCount span').text('There are ' + classList.length + ' ' + $('#id_study_subject :selected').text() + ' courses for {{ current_semester.semester}} {{ current_semester.year }}');
+        $('#courseCount span').text('There are ' + class_list.length + ' ' + $('#id_study_subject :selected').text() + ' courses for {{ current_semester.semester}} {{ current_semester.year }}');
     }
     
     if ($('#id_study_subjects :selected').val() != "")
     {
-        updateCourse();
+    	UpdateCourse();
     }
 
     $('#id_study_subject').change(function()
     {
-        updateCourse();
+        UpdateCourse();
     });
 });
 </script>

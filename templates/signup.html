@@ -7,7 +7,7 @@
 <div class="greenbox">
     <h2>Create Account</h2>
     <div style="margin-left: auto;margin-right:auto; align: left; text-align:left;">
-        <form method="post" onsubmit="return updateUsername()">
+        <form method="post" onsubmit="return UpdateUsername()">
 		    {% csrf_token %}
 		    {{ form.username }}
 		    {{ form.non_field_errors }}
@@ -88,12 +88,12 @@
 
 {% block javascript %}
 <script type="text/javascript">
- function confirmEmail()
+ function ConfirmEmail()
  {
      ret = true;
      university = "humboldt.edu";
-     emailExtension = $( "#id_email" ).val().split('@')[1];
-     if (university != emailExtension)
+     email_extension = $( "#id_email" ).val().split('@')[1];
+     if (university != email_extension)
      {
          $( "#email_error" ).text("Please enter a valid HSU email address.")
          $( "#id_email" ).val('');
@@ -103,11 +103,11 @@
      return ret;    
  }
  
- function updateUsername()
+ function UpdateUsername()
  {
      username = $( "#id_email" ).val().split('@')[0];
      $( "#id_username" ).val( username );
-     return confirmEmail();
+     return ConfirmEmail();
  }
  
 $( document ).ready(function() 

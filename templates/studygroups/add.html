@@ -6,7 +6,7 @@
 {% block content %}
 <div class="greenbox">
 <div style="margin-left: auto;margin-right:auto; align: left; text-align:left;">
-<form action="/studygroups/add/{{ course }}" method="post" onsubmit="return updatetime();">
+<form action="/studygroups/add/{{ course }}" method="post" onsubmit="return UpdateTime();">
     {% csrf_token %}
     {{ form.non_field_errors }}
     <p class="fieldWrapper">
@@ -93,7 +93,6 @@ $(document).ready(function()
 	$('#id_hours_available_start').timepicker();
 	$('#id_hours_available_end').timepicker();
 	
-	
 	$( "#id_max_members" ).change(function() {
 		if ($( "#id_max_members" ).val() < 1)
 		{
@@ -111,11 +110,11 @@ $(document).ready(function()
  *  Time format expected by Django is different from what is displayed here, so clean 
  *  up before submitting.  Performing this client-side means less bad submissions.
  */
-function updatetime()
+function UpdateTime()
 {
     ret = false;
-    start = breakoutTime($('#id_hours_available_start').val());
-    end = breakoutTime($('#id_hours_available_end').val());
+    start = BreakoutTime($('#id_hours_available_start').val());
+    end = BreakoutTime($('#id_hours_available_end').val());
     
     if (parseInt(start.replace(':', '')) >= parseInt(end.replace(':', '')))
     {
@@ -124,13 +123,13 @@ function updatetime()
     else
     {
         ret = true;
-        $('#id_hours_available_start').val(breakoutTime($('#id_hours_available_start').val()));
-        $('#id_hours_available_end').val(breakoutTime($('#id_hours_available_end').val()));   
+        $('#id_hours_available_start').val(BreakoutTime($('#id_hours_available_start').val()));
+        $('#id_hours_available_end').val(BreakoutTime($('#id_hours_available_end').val()));   
     }
     return ret;
 }
 
-function breakoutTime(time)
+function BreakoutTime(time)
 {
     //hour == xx before :
     //minute == xx after :
@@ -139,12 +138,12 @@ function breakoutTime(time)
     mm = 0;
     if (time != "")
     {
-        myArray = time.split(/([0-9]+)/)
-        hh = myArray[1];
+        my_array = time.split(/([0-9]+)/)
+        hh = my_array[1];
         //#hh= time.split(':')[0];
         //mm = time.plit(':')[1];
-        mm = myArray[3];
-        ampm = myArray[4];
+        mm = my_array[3];
+        ampm = my_array[4];
     }
     if (ampm == "pm")
     {
@@ -163,7 +162,6 @@ function breakoutTime(time)
     }
     
     return(hh + ":" + mm);
-    
 }
 </script>
 {% endblock %}

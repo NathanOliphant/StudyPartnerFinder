@@ -1,6 +1,6 @@
-# 
-#	Scraper is used to scrape the courses from HSU's course listings.
-#	Example usage: python3 scraper.py --year=yyyy --semester=[Spring/Summer/Fall]
+#
+# 	Scraper is used to scrape the courses from HSU's course listings.
+# 	Example usage: python3 scraper.py --year=yyyy --semester=[Spring/Summer/Fall]
 # 	python3 scraper.py --year=2018 --semester=Fall
 
 # BS Code from:
@@ -17,6 +17,7 @@ from bs4 import BeautifulSoup
 import argparse
 import os
 
+
 #
 class Course(object):
 	subject_abbrev = ''
@@ -26,10 +27,12 @@ class Course(object):
 		self.subject_abbrev = subject_abbrev
 		self.subject_id = subject_id
 
+
 #
 def makeCourse(subj, course_id):
 	crs = Course(subj, course_id)
 	return crs
+
 
 #
 def create_connection(db_file):
@@ -47,6 +50,7 @@ def create_connection(db_file):
 
 	return None
 
+
 def select_all_subjects(conn):
 	"""
 	Query all rows in the subject table
@@ -60,6 +64,7 @@ def select_all_subjects(conn):
 
 	return rows
 
+
 def check_class_exists(subject_id, cn, subj, instructor, semester, year, conn):
 	# If we already have this class, do not add it.
 	# Check against subject_id, cNNumber, className,
@@ -68,7 +73,7 @@ def check_class_exists(subject_id, cn, subj, instructor, semester, year, conn):
 		 AND class_name=? AND instructor=? AND semester=? AND year=? AND is_active=1 '''
 
 	cur = conn.cursor()
-	cur.execute(sql,(subject_id, cn, subj, instructor, semester, year))
+	cur.execute(sql, (subject_id, cn, subj, instructor, semester, year))
 
 	countValue = cur.fetchone()[0]
 	ret = False
@@ -93,7 +98,7 @@ def scrape_pages(subject, semester):
 	url = '{}{}{}.out'.format(url_base, semester, subject['schedule_abbreviation'])
 
 	#
-	#subject_id = subject['id']
+	# subject_id = subject['id']
 
 	# query the website and return the html to the variable 'page'
 	page = urlopen(url)
@@ -103,8 +108,8 @@ def scrape_pages(subject, semester):
 
 	tables = soup.findChildren('table')
 
-	#rows = [row in BeautifulSoup(page).find('table').find_all('tr')]
-	#iplist = [row.find('td').getText() for row in rows]
+	# rows = [row in BeautifulSoup(page).find('table').find_all('tr')]
+	# iplist = [row.find('td').getText() for row in rows]
 
 	my_table = tables[0]
 
@@ -143,26 +148,25 @@ def add_classes(class_rows, semester, year, subject_id, conn):
 						instructor, semester, year, is_active)
 						VALUES(?,?,?,?,?,?,?) '''
 					cur = conn.cursor()
-					cur.execute(sql,(subject_id, cn, subj, instructor, semester, year, 1))
-
+					cur.execute(sql, (subject_id, cn, subj, instructor, semester, year, 1))
 
 
 def main():
 	# If not installed in the default location, database path will need to be updated.
 	# Should be one directory below the current directory.
 	#
-	database = os.path.join( os.path.dirname ( __file__), os.path.pardir, 'db.sqlite3')
+	database = os.path.join(os.path.dirname (__file__), os.path.pardir, 'db.sqlite3')
 
 	#
 	parser = argparse.ArgumentParser()
-	parser.add_argument("-s", "--semester", help="Semester to retrieve")
-	parser.add_argument("-y", "--year", help="Year to retrieve", type=int)
+	parser.add_argument("-s", "--semester", help = "Semester to retrieve")
+	parser.add_argument("-y", "--year", help = "Year to retrieve", type = int)
 	#
 	args = parser.parse_args()
 	#
 	semester = args.semester
 	year = args.year
-	
+
 	print("Semester: {} {}".format(semester, year))
 
 	# If semester or year not passed, do not run!!!
@@ -193,6 +197,7 @@ def main():
 	else:
 		print("Usage: python3 scraper.py --year=yyyy --semester=[Spring/Summer/Fall]")
 		print("You passed semester {} and year {}".format(semester, year))
+
 
 if __name__ == '__main__':
 	main()

@@ -93,7 +93,7 @@
 	    {% for m in members_list %}
 	    <li>{{ m.user.username }}  
 	    {% if studygroup.creator == user and not m.user.id == user.id %} 
-	    <a href="#" onclick="blockUser({{ m.user.id }});">
+	    <a href="#" onclick="BlockUser({{ m.user.id }});">
 	    <span id="userblock_{{ m.user.id }}">{% if m.user.id in block_list %}Unblock User{% else %}Block User{% endif %}</span></a>{% endif %}
 	    </li>
 	    {% endfor %}
@@ -168,7 +168,7 @@ function UpdateDays(sg_days, el)
     el.text(days_string);
 }
 
-function blockUser(id)
+function BlockUser(id)
 {
     block_action = 'block';
     /*
@@ -209,7 +209,7 @@ $.ajax(
 
 const month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 	
-function formatDate(date) {
+function FormatDate(date) {
 	var hours = date.getHours();
 	var minutes = date.getMinutes();
 	var ampm = hours >= 12 ? 'p.m.' : 'a.m.';
@@ -259,10 +259,10 @@ $( document ).ready(function()
               }
               else 
               {
-            	  var utcDate = data.msg_date;  // ISO-8601 formatted date returned from server
-            	  var localDate = new Date(utcDate);
-            	  localDate = formatDate(localDate);
-            	  new_span = '<span id="message_'+data.msg_id+'"><p>'+localDate+' - '+data.msg_title+'</p><p>'+data.msg_body+'</p><hr style="width: 200px;" /></span>';
+            	  var utc_date = data.msg_date;  // ISO-8601 formatted date returned from server
+            	  var local_date = new Date(utc_date);
+            	  local_date = FormatDate(local_date);
+            	  new_span = '<span id="message_'+data.msg_id+'"><p>'+local_date+' - '+data.msg_title+'</p><p>'+data.msg_body+'</p><hr style="width: 200px;" /></span>';
             	  // Update the messages here by appending a new message above the existing messages.
                   // We also want to reset the title and body . . . 
                   $("#messages_{{ studygroup.studygroup.id }}_span").append(new_span);
@@ -295,10 +295,10 @@ $( document ).ready(function()
                 $("#messages_{{ studygroup.studygroup.id }}_span").empty();
                 for (i in message_list)
                 {
-                   var utcDate = message_list[i]["date"];  // ISO-8601 formatted date returned from server
-                   var localDate = new Date(utcDate);
-                   localDate = formatDate(localDate);
-                   new_span = '<span id="message_'+message_list[i]["id"]+'"><p>'+localDate+' - '+message_list[i]["title"]+'</p><p>'+message_list[i]["body"]+'</p><hr style="width: 200px;" /></span>';
+                   var utc_date = message_list[i]["date"];  // ISO-8601 formatted date returned from server
+                   var local_date = new Date(utc_date);
+                   local_date = FormatDate(local_date);
+                   new_span = '<span id="message_'+message_list[i]["id"]+'"><p>'+local_date+' - '+message_list[i]["title"]+'</p><p>'+message_list[i]["body"]+'</p><hr style="width: 200px;" /></span>';
                    $("#messages_{{ studygroup.studygroup.id }}_span").append(new_span);
                 }
                 $("#msg_list").scrollTop($("#msg_list")[0].scrollHeight);

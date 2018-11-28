@@ -11,11 +11,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from django.conf.global_settings import EMAIL_BACKEND
+#from django.conf.global_settings import EMAIL_BACKEND
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -27,7 +26,6 @@ SECRET_KEY = 'abu8nj9#!p^%1^xr)65k9cp5o7qf_i=p_21r@@u=ns+fvnt781'
 DEBUG = True
 
 ALLOWED_HOSTS = ['no2.pythonanywhere.com', '127.0.0.1']
-
 
 # Application definition
 
@@ -41,11 +39,9 @@ INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
     'studygroups.apps.StudygroupsConfig',
     'users.apps.UsersConfig',  # new
-    'django_static_jquery',
     'accounts.apps.AccountsConfig',
-    #'channels',
-    #'chat',
-    #'django_bootstrap_breadcrumbs'
+    # 'channels',
+    # 'chat'
 ]
 
 # Email
@@ -95,20 +91,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'StudyPartnerFinder.wsgi.application'
 
-# We only need ASGI if we enable chat.  
-#ASGI_APPLICATION = 'StudyPartnerFinder.routing.application'
-#CHANNEL_LAYERS = {
+# We only need ASGI if we enable chat.
+# ASGI_APPLICATION = 'StudyPartnerFinder.routing.application'
+# CHANNEL_LAYERS = {
 #    'default': {
 #        'BACKEND': 'channels_redis.core.RedisChannelLayer',
 #        'CONFIG': {
-            #"hosts": [('127.0.0.1', 6379)],
-            #"hosts": [('redis-11329.c60.us-west-1-2.ec2.cloud.redislabs.com', 11329)],
+            # "hosts": [('127.0.0.1', 6379)],
+            # "hosts": [('redis-11329.c60.us-west-1-2.ec2.cloud.redislabs.com', 11329)],
 #            "hosts": ["redis://:qZOkKZ0GqiKAeqehJFsSzkoccX3WWO3G@redis-11329.c60.us-west-1-2.ec2.cloud.redislabs.com:11329/0"],
 #            "symmetric_encryption_keys": [SECRET_KEY],
 #        },
 #    },
-#}
-#CACHES = {
+# }
+# CACHES = {
 #    'default': {
 #                'BACKEND': 'redis_cache.RedisCache',
 #                'LOCATION': 'redis-11329.c60.us-west-1-2.ec2.cloud.redislabs.com:11329',
@@ -117,7 +113,7 @@ WSGI_APPLICATION = 'StudyPartnerFinder.wsgi.application'
 #                'PASSWORD': 'qZOkKZ0GqiKAeqehJFsSzkoccX3WWO3G'
 #                }
 #    }
-#}
+# }
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -131,7 +127,6 @@ DATABASES = {
             }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -151,7 +146,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -165,12 +159,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 # STATIC_ROOT = '/home/no2/StudyPartnerFinder/StudyPartnerFinder/static/'
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
-STATIC_ROOT = os.path.join( os.path.dirname ( __file__), os.path.pardir, 'static/')
+STATIC_ROOT = os.path.join(os.path.dirname (__file__), os.path.pardir, 'static/')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
   os.path.join(SITE_ROOT, 'static/'),
