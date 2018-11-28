@@ -1,6 +1,15 @@
 If SG has gender setting:
 If user does not match gender, do not show SG . . .
 
+Future:
+Multiple universities
+Email verification
+Email as username
+Move blocklist under account/profile
+Order studygroups
+More studygroup filters
+CSS based on university
+
 When updating the models:
 python manage.py makemigrations
 3. python manage.py migrate

@@ -1,4 +1,64 @@
 Report Abuse
 Reload messages
 
+1. git pull/clone https://github.com/NathanOliphant/StudyPartnerFinder.git
+2. Enter directory . . . 
+3. pip install requirements.txt
+4. Move db.sqlite3 from extras to StudyPartnerFinder (just move to outer directory), replacing the dev version that already exists in the main directory
+5. Create admin super user:  python manage.py createsuperuser
+
+
+sqlite3 -- how to truncate tables:
+DELETE FROM your_table;    
+DELETE FROM sqlite_sequence WHERE name = 'your_table';
+
+If you skip step 4, I recommend you do the following in the dev version of db.sqlite3:
+--studygroups_day:
+DELETE FROM studygroups_day;    
+DELETE FROM sqlite_sequence WHERE name = 'studygroups_day';        
+    
+--studygroups_message                  
+DELETE FROM studygroups_message;    
+DELETE FROM sqlite_sequence WHERE name = 'studygroups_message';
+
+--auth_permission                        
+DELETE FROM auth_permission;    
+DELETE FROM sqlite_sequence WHERE name = 'auth_permission';
+
+--studygroups_studygroup               
+DELETE FROM studygroups_studygroup;    
+DELETE FROM sqlite_sequence WHERE name = 'studygroups_studygroup';
+
+--django_admin_log                       
+DELETE FROM django_admin_log;    
+DELETE FROM sqlite_sequence WHERE name = 'django_admin_log';
+
+--studygroups_studygroup_days_available
+DELETE FROM studygroups_studygroup_days_available;    
+DELETE FROM sqlite_sequence WHERE name = 'studygroups_studygroup_days_available';
+
+--studygroups_studygroup_member        
+DELETE FROM studygroups_studygroup_member;    
+DELETE FROM sqlite_sequence WHERE name = 'studygroups_studygroup_member';
+
+--django_session                         
+DELETE FROM django_session;    
+DELETE FROM sqlite_sequence WHERE name = 'django_session';
+
+--users_customuser                     
+DELETE FROM users_customuser;    
+DELETE FROM sqlite_sequence WHERE name = 'users_customuser';
+
+--studygroups_blocklist                  
+DELETE FROM studygroups_blocklist;    
+DELETE FROM sqlite_sequence WHERE name = 'studygroups_blocklist';
+
+--users_customuser_groups              
+DELETE FROM users_customuser_groups;    
+DELETE FROM sqlite_sequence WHERE name = 'users_customuser_groups';
+
+--users_customuser_user_permissions    
+DELETE FROM users_customuser_user_permissions;    
+DELETE FROM sqlite_sequence WHERE name = 'users_customuser_user_permissions';
+
 
